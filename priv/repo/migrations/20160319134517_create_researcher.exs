@@ -3,14 +3,14 @@ defmodule EmotionsWheelBackend.Repo.Migrations.CreateResearcher do
 
   def change do
     create table(:researchers) do
-      add :login, :string
+      add :email, :string
       add :encrypted_password, :string
       add :first_name, :string
       add :last_name, :string
-      add :email, :string
       add :phone, :string
       timestamps
     end
 
+    create unique_index(:researchers, [:email])
   end
 end

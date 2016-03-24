@@ -2,18 +2,17 @@ defmodule EmotionsWheelBackend.Researcher do
   use EmotionsWheelBackend.Web, :model
 
   schema "researchers" do
-    field :login, :string
+    field :email, :string
     field :encrypted_password, :string
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
     field :first_name, :string
     field :last_name, :string
-    field :email, :string
     field :phone, :string
     timestamps
   end
 
-  @required_fields ~w(login password password_confirmation)
+  @required_fields ~w(email password password_confirmation)
   @optional_fields ~w()
 
   @doc """
@@ -25,7 +24,7 @@ defmodule EmotionsWheelBackend.Researcher do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_unique(:login, on: EmotionsWheelBackend.Repo, downcase: true)
+    |> unique_constraint(:email)
     |> validate_length(:password, min: 6)
     |> validate_length(:password_confirmation, min: 6)
     |> validate_confirmation(:password)
