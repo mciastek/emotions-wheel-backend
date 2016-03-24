@@ -1,15 +1,17 @@
-defmodule EmotionsWheelBackend.Experiment do
+defmodule EmotionsWheelBackend.Rate do
   use EmotionsWheelBackend.Web, :model
 
-  schema "experiments" do
+  schema "rates" do
     field :name, :string
-    field :kind, :string
+    field :pos_x, :decimal
+    field :pos_y, :decimal
     field :start_date, Ecto.DateTime
     field :end_date, Ecto.DateTime
+    field :time, :integer
     timestamps
   end
 
-  @required_fields ~w(name kind)
+  @required_fields ~w(name pos_x pos_y)
   @optional_fields ~w()
 
   @doc """
