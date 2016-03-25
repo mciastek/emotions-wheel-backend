@@ -6,6 +6,9 @@ config :emotions_wheel_backend, EmotionsWheelBackend.Endpoint,
   http: [port: 4001],
   server: false
 
+# Comeonin config
+config :comeonin, bcrypt_log_rounds: 4
+
 # Print only warnings and errors during test
 config :logger, level: :warn
 

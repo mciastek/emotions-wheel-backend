@@ -1,4 +1,5 @@
 defmodule EmotionsWheelBackend.Researcher do
+  import Comeonin.Bcrypt, only: [hashpwsalt: 1]
   use EmotionsWheelBackend.Web, :model
 
   schema "researchers" do
@@ -26,10 +27,20 @@ defmodule EmotionsWheelBackend.Researcher do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> hash_password
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 6)
     |> validate_length(:password_confirmation, min: 6)
     |> validate_confirmation(:password, message: "password did not match")
   end
+
+  defp hash_password(changeset) do
+  if password = get_change(changeset, :password) do
+    changeset
+    |> put_change(:encrypted_password, hashpwsalt(password))
+  else
+    changeset
+  end
+end
 end
