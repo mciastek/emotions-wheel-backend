@@ -27,8 +27,9 @@ defmodule EmotionsWheelBackend.Researcher do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 6)
     |> validate_length(:password_confirmation, min: 6)
-    |> validate_confirmation(:password)
+    |> validate_confirmation(:password, message: "password did not match")
   end
 end

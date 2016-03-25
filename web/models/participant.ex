@@ -19,7 +19,7 @@ defmodule EmotionsWheelBackend.Participant do
     has_many :experiments, through: [:experiments_has_participants, :experiments]
   end
 
-  @required_fields ~w(first_name last_name birthdate age gender)
+  @required_fields ~w(first_name last_name age gender)
   @optional_fields ~w()
 
   @doc """
@@ -31,5 +31,6 @@ defmodule EmotionsWheelBackend.Participant do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_format(:email, ~r/@/)
   end
 end
