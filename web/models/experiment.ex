@@ -18,7 +18,7 @@ defmodule EmotionsWheelBackend.Experiment do
   end
 
   @required_fields ~w(name kind)
-  @optional_fields ~w()
+  @optional_fields ~w(start_date end_date)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

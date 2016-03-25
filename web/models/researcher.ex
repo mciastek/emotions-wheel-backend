@@ -16,7 +16,7 @@ defmodule EmotionsWheelBackend.Researcher do
   end
 
   @required_fields ~w(email password password_confirmation)
-  @optional_fields ~w()
+  @optional_fields ~w(first_name last_name phone)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -27,20 +27,20 @@ defmodule EmotionsWheelBackend.Researcher do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> hash_password
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 6)
     |> validate_length(:password_confirmation, min: 6)
     |> validate_confirmation(:password, message: "password did not match")
+    |> hash_password
   end
 
   defp hash_password(changeset) do
-  if password = get_change(changeset, :password) do
-    changeset
-    |> put_change(:encrypted_password, hashpwsalt(password))
-  else
-    changeset
+    if password = get_change(changeset, :password) do
+      changeset
+      |> put_change(:encrypted_password, hashpwsalt(password))
+    else
+      changeset
+    end
   end
-end
 end

@@ -15,8 +15,8 @@ defmodule EmotionsWheelBackend.Rate do
     has_one :photo, Photo
   end
 
-  @required_fields ~w(name pos_x pos_y)
-  @optional_fields ~w()
+  @required_fields ~w(name pos_x pos_y start_date end_date)
+  @optional_fields ~w(time)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

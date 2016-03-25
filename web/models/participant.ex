@@ -20,7 +20,7 @@ defmodule EmotionsWheelBackend.Participant do
   end
 
   @required_fields ~w(first_name last_name age gender)
-  @optional_fields ~w()
+  @optional_fields ~w(email birthdate)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

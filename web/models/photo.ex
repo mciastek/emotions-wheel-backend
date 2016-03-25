@@ -15,7 +15,7 @@ defmodule EmotionsWheelBackend.Photo do
   end
 
   @required_fields ~w(name url)
-  @optional_fields ~w()
+  @optional_fields ~w(author_type author_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
