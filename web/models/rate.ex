@@ -9,6 +9,10 @@ defmodule EmotionsWheelBackend.Rate do
     field :end_date, Ecto.DateTime
     field :time, :integer
     timestamps
+
+    belongs_to :participants, Participant
+
+    has_one :photo, Photo
   end
 
   @required_fields ~w(name pos_x pos_y)

@@ -9,6 +9,14 @@ defmodule EmotionsWheelBackend.Participant do
     field :age, :integer
     field :gender, :string
     timestamps
+
+    belongs_to :countries, Country
+    belongs_to :cities, City
+    belongs_to :languages, Language
+
+    has_many :rates, Rate
+    has_many :experiments_has_participants, ExperimentsHasParticipants
+    has_many :experiments, through: [:experiments_has_participants, :experiments]
   end
 
   @required_fields ~w(first_name last_name birthdate age gender)

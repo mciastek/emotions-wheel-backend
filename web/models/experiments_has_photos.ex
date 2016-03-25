@@ -1,15 +1,14 @@
-defmodule EmotionsWheelBackend.Country do
+defmodule EmotionsWheelBackend.ExperimentsHasPhotos do
   use EmotionsWheelBackend.Web, :model
 
-  schema "countries" do
-    field :name, :string
+  schema "experiments_has_photos" do
     timestamps
 
-    has_many :participants, Participant
-    has_many :cities, City
+    belongs_to :experiments, Experiment
+    belongs_to :photos, Photo
   end
 
-  @required_fields ~w(name)
+  @required_fields ~w()
   @optional_fields ~w()
 
   @doc """

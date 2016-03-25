@@ -10,6 +10,8 @@ defmodule EmotionsWheelBackend.Researcher do
     field :last_name, :string
     field :phone, :string
     timestamps
+
+    has_many :experiments, Experiment
   end
 
   @required_fields ~w(email password password_confirmation)

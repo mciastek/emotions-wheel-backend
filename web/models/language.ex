@@ -5,6 +5,8 @@ defmodule EmotionsWheelBackend.Language do
     field :name, :string
     field :code, :string
     timestamps
+
+    has_many :participants, Participant
   end
 
   @required_fields ~w(code)

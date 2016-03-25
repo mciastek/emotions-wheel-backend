@@ -4,6 +4,10 @@ defmodule EmotionsWheelBackend.City do
   schema "cities" do
     field :name, :string
     timestamps
+
+    belongs_to :countries, Country
+
+    has_many :participants, Participant
   end
 
   @required_fields ~w(name)

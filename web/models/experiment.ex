@@ -7,6 +7,14 @@ defmodule EmotionsWheelBackend.Experiment do
     field :start_date, Ecto.DateTime
     field :end_date, Ecto.DateTime
     timestamps
+
+    belongs_to :researcher, Researcher
+
+    has_many :rates, Rate
+    has_many :experiments_has_photos, ExperimentsHasPhotos
+    has_many :photos, through: [:experiments_has_photos, :photos]
+    has_many :experiments_has_participants, ExperimentsHasParticipants
+    has_many :participants, through: [:experiments_has_participants, :participants]
   end
 
   @required_fields ~w(name kind)

@@ -7,6 +7,11 @@ defmodule EmotionsWheelBackend.Photo do
     field :author_type, :string
     field :author_id, :integer
     timestamps
+
+    belongs_to :rate, Rate
+
+    has_many :experiments_has_photos, ExperimentsHasPhotos
+    has_many :experiments, through: [:experiments_has_photos, :experiments]
   end
 
   @required_fields ~w(name url)

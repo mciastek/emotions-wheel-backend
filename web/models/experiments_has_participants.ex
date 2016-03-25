@@ -1,15 +1,15 @@
-defmodule EmotionsWheelBackend.Country do
+defmodule EmotionsWheelBackend.ExperimentsHasParticipants do
   use EmotionsWheelBackend.Web, :model
 
-  schema "countries" do
-    field :name, :string
+  schema "experiments_has_participants" do
+    field :uuid, Ecto.UUID
     timestamps
 
-    has_many :participants, Participant
-    has_many :cities, City
+    belongs_to :experiments, Experiment
+    belongs_to :participants, Participant
   end
 
-  @required_fields ~w(name)
+  @required_fields ~w(uuid)
   @optional_fields ~w()
 
   @doc """
