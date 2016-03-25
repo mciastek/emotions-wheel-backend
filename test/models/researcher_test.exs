@@ -3,7 +3,16 @@ defmodule EmotionsWheelBackend.ResearcherTest do
 
   alias EmotionsWheelBackend.Researcher
 
-  @valid_attrs %{}
+  @valid_attrs %{
+    email: "researcher@mail.com",
+    encrypted_password: "secret",
+    password: "password",
+    password_confirmation: "password",
+    first_name: "Jon",
+    last_name: "Doe",
+    phone: "123123123"
+  }
+
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

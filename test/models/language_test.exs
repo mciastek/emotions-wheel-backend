@@ -3,7 +3,7 @@ defmodule EmotionsWheelBackend.LanguageTest do
 
   alias EmotionsWheelBackend.Language
 
-  @valid_attrs %{}
+  @valid_attrs %{name: "Polish", code: "pl"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

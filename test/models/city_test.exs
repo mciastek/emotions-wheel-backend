@@ -3,7 +3,7 @@ defmodule EmotionsWheelBackend.CityTest do
 
   alias EmotionsWheelBackend.City
 
-  @valid_attrs %{}
+  @valid_attrs %{name: "Warsaw"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

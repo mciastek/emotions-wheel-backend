@@ -1,9 +1,10 @@
 defmodule EmotionsWheelBackend.ExperimentTest do
   use EmotionsWheelBackend.ModelCase
+  use Timex
 
   alias EmotionsWheelBackend.Experiment
 
-  @valid_attrs %{}
+  @valid_attrs %{name: "Experiment 2", kind: "free play", start_date: DateTime.today, end_date: DateTime.today}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

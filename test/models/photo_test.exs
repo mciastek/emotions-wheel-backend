@@ -3,7 +3,7 @@ defmodule EmotionsWheelBackend.PhotoTest do
 
   alias EmotionsWheelBackend.Photo
 
-  @valid_attrs %{}
+  @valid_attrs %{name: "photo_1", url: "url/to/photo_1.jpg", author_type: "participant", author_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

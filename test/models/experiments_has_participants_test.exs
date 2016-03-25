@@ -3,7 +3,7 @@ defmodule EmotionsWheelBackend.ExperimentsHasParticipantsTest do
 
   alias EmotionsWheelBackend.ExperimentsHasParticipants
 
-  @valid_attrs %{}
+  @valid_attrs %{uuid: "5976423a-ee35-11e3-8569-14109ff1a304"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

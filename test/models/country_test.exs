@@ -3,7 +3,7 @@ defmodule EmotionsWheelBackend.CountryTest do
 
   alias EmotionsWheelBackend.Country
 
-  @valid_attrs %{}
+  @valid_attrs %{name: "Poland"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
