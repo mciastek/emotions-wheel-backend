@@ -24,4 +24,5 @@
   "ranch": {:hex, :ranch, "1.2.1"},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0"},
   "timex": {:hex, :timex, "2.0.0"},
+  "timex_ecto": {:hex, :timex_ecto, "1.0.0"},
   "tzdata": {:hex, :tzdata, "0.5.7"}}

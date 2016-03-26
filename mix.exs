@@ -39,6 +39,7 @@ defmodule EmotionsWheelBackend.Mixfile do
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:timex, "~> 2.0.0"},
+     {:timex_ecto, "~> 1.0.0"},
      {:comeonin, "~> 2.2.0"}]
   end
 
