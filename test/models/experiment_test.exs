@@ -4,7 +4,12 @@ defmodule EmotionsWheelBackend.ExperimentTest do
 
   alias EmotionsWheelBackend.Experiment
 
-  @valid_attrs %{name: "Experiment 2", kind: "free play", start_date: DateTime.today, end_date: DateTime.today}
+  @valid_attrs %{
+    name: "Experiment 2",
+    kind: "free play",
+    start_date: Convertable.to_erlang_datetime(DateTime.now),
+    end_date: Convertable.to_erlang_datetime(DateTime.now)
+  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

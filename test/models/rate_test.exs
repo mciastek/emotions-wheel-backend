@@ -4,7 +4,14 @@ defmodule EmotionsWheelBackend.RateTest do
 
   alias EmotionsWheelBackend.Rate
 
-  @valid_attrs %{name: "Rate 1", pos_x: 50.25, pos_y: 60.24, start_time: DateTime.now, end_time: DateTime.now, time: 1232133}
+  @valid_attrs %{
+    name: "Rate 1",
+    pos_x: 50.25,
+    pos_y: 60.24,
+    start_time: Convertable.to_erlang_datetime(DateTime.now),
+    end_time: Convertable.to_erlang_datetime(DateTime.now),
+    time: 1232133
+  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

@@ -1,6 +1,6 @@
 defmodule EmotionsWheelBackend.ParticipantTest do
   use EmotionsWheelBackend.ModelCase
-  # use Timex
+  use Timex
 
   alias EmotionsWheelBackend.Participant
 
@@ -9,7 +9,8 @@ defmodule EmotionsWheelBackend.ParticipantTest do
     first_name: "John",
     last_name: "Doe",
     age: 20,
-    gender: "male"
+    gender: "male",
+    birthdate: Convertable.to_erlang_datetime(DateTime.now)
   }
   @invalid_attrs %{}
 
@@ -20,6 +21,18 @@ defmodule EmotionsWheelBackend.ParticipantTest do
 
   test "changeset with invalid attributes" do
     changeset = Participant.changeset(%Participant{}, @invalid_attrs)
+    refute changeset.valid?
+  end
+
+  test "should throw error when invalid gender" do
+    changeset = Participant.changeset(%Participant{}, %{
+      email: "jon@doe.com",
+      first_name: "John",
+      last_name: "Doe",
+      age: 20,
+      gender: "none",
+      birthdate: Convertable.to_erlang_datetime(DateTime.now)
+    })
     refute changeset.valid?
   end
 end

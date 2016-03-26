@@ -6,8 +6,8 @@ defmodule EmotionsWheelBackend.Repo.Migrations.CreateRate do
       add :name, :string
       add :pos_x, :decimal
       add :pos_y, :decimal
-      add :start_date, :datetime
-      add :end_date, :datetime
+      add :start_time, :datetime
+      add :end_time, :datetime
       add :time, :integer
       timestamps
     end

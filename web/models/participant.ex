@@ -32,5 +32,15 @@ defmodule EmotionsWheelBackend.Participant do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:email, ~r/@/)
+    |> validate_gender
+  end
+
+  defp validate_gender(changeset) do
+    value = get_field(changeset, :gender)
+    if (value == "male" or value == "female") do
+      changeset
+    else
+      changeset |> add_error(:gender, "should be male or female")
+    end
   end
 end

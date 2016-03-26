@@ -5,8 +5,8 @@ defmodule EmotionsWheelBackend.Rate do
     field :name, :string
     field :pos_x, :decimal
     field :pos_y, :decimal
-    field :start_date, Ecto.DateTime
-    field :end_date, Ecto.DateTime
+    field :start_time, Ecto.DateTime
+    field :end_time, Ecto.DateTime
     field :time, :integer
     timestamps
 
@@ -15,7 +15,7 @@ defmodule EmotionsWheelBackend.Rate do
     has_one :photo, Photo
   end
 
-  @required_fields ~w(name pos_x pos_y start_date end_date)
+  @required_fields ~w(name pos_x pos_y start_time end_time)
   @optional_fields ~w(time)
 
   @doc """
