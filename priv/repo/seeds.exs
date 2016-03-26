@@ -10,17 +10,38 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias EmotionsWheelBackend.{Researcher, Repo}
+alias EmotionsWheelBackend.{Researcher, Participant, Repo}
 
 # Researchers
-Repo.insert!(
-  Researcher.changeset(
-    %Researcher{}, %{
+Researcher.changeset(
+  %Researcher{}, %{
     email: "test@mail.com",
     password: "password",
     password_confirmation: "password",
     first_name: "John",
     last_name: "Doe",
     phone: "123123123"
-  })
-)
+}) |> Repo.insert!
+
+# Participants
+Participant.changeset(
+  %Participant{}, %{
+    email: "participant@test.com",
+    first_name: "Will",
+    last_name: "Smith",
+    birthdate: {{1941, 11, 30}, {0,0,0}},
+    age: 75,
+    gender: "male"
+  }
+) |> Repo.insert!
+
+Participant.changeset(
+  %Participant{}, %{
+    email: "participant2@test.com",
+    first_name: "Jane",
+    last_name: "Fonda",
+    birthdate: {{1945, 01, 03}, {0,0,0}},
+    age: 71,
+    gender: "female"
+  }
+) |> Repo.insert!
