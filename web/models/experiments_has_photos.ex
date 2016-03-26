@@ -4,8 +4,8 @@ defmodule EmotionsWheelBackend.ExperimentsHasPhotos do
   schema "experiments_has_photos" do
     timestamps
 
-    belongs_to :experiments, Experiment
-    belongs_to :photos, Photo
+    belongs_to :experiment, Experiment
+    belongs_to :photo, Photo
   end
 
   @required_fields ~w()

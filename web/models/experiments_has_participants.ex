@@ -5,8 +5,8 @@ defmodule EmotionsWheelBackend.ExperimentsHasParticipants do
     field :uuid, Ecto.UUID
     timestamps
 
-    belongs_to :experiments, Experiment
-    belongs_to :participants, Participant
+    belongs_to :experiment, Experiment
+    belongs_to :participant, Participant
   end
 
   @required_fields ~w(uuid)

@@ -5,7 +5,7 @@ defmodule EmotionsWheelBackend.City do
     field :name, :string
     timestamps
 
-    belongs_to :countries, Country
+    belongs_to :country, Country
 
     has_many :participants, Participant
   end

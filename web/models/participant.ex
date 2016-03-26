@@ -10,9 +10,9 @@ defmodule EmotionsWheelBackend.Participant do
     field :gender, :string
     timestamps
 
-    belongs_to :countries, Country
-    belongs_to :cities, City
-    belongs_to :languages, Language
+    belongs_to :country, Country
+    belongs_to :city, City
+    belongs_to :language, Language
 
     has_many :rates, Rate
     has_many :experiments_has_participants, ExperimentsHasParticipants

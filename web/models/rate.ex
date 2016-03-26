@@ -10,7 +10,7 @@ defmodule EmotionsWheelBackend.Rate do
     field :time, :integer
     timestamps
 
-    belongs_to :participants, Participant
+    belongs_to :participant, Participant
 
     has_one :photo, Photo
   end
