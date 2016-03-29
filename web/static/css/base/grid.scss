@@ -1,0 +1,19 @@
+@include make-columns-grid($grid-columns);
+
+@include generate-columns(12, 'xs');
+
+.container {
+  @extend %container;
+}
+
+@media #{$screen-sm} {
+  @include generate-columns(12, 'sm');
+}
+
+@media #{$screen-md} {
+  @include generate-columns(12, 'md');
+}
+
+@media #{$screen-lg} {
+  @include generate-columns(12, 'lg');
+}
