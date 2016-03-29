@@ -32,6 +32,7 @@ defmodule EmotionsWheelBackend.Participant do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:email, ~r/@/)
+    |> unique_constraint(:email, message: "E-mail already taken!")
     |> validate_gender
   end
 

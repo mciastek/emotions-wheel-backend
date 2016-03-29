@@ -10,7 +10,14 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias EmotionsWheelBackend.{Researcher, Participant, Repo}
+alias EmotionsWheelBackend.{Researcher, Participant, Country, Repo}
+
+# Countries
+Country.changeset(
+  %Country{}, %{
+    name: "Poland"
+  }
+) |> Repo.insert!
 
 # Researchers
 Researcher.changeset(

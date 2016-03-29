@@ -27,11 +27,11 @@ defmodule EmotionsWheelBackend.Researcher do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 6)
     |> validate_length(:password_confirmation, min: 6)
-    |> validate_confirmation(:password, message: "password did not match")
+    |> validate_confirmation(:password, message: "Password did not match!")
+    |> unique_constraint(:email, message: "E-mail already taken!")
     |> hash_password
   end
 
