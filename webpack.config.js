@@ -35,6 +35,7 @@ var config = {
       sources: srcPath + '/sources/',
       store: srcPath + '/store/',
       reducers: srcPath + '/reducers/',
+      views: srcPath + '/views/',
       css: srcPath + '/../css/',
       images: srcPath + '/../assets/images/',
       utils: srcPath + '/utils/',
