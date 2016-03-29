@@ -27,3 +27,9 @@ import_config "#{Mix.env}.exs"
 config :phoenix, :generators,
   migration: true,
   binary_id: false
+
+# Guardian config
+config :guardian, Guardian,
+  issuer: "EmotionsWheelBackend",
+  verify_issuer: true,
+  serializer: EmotionsWheelBackend.GuardianSerializer

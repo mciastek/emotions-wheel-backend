@@ -43,3 +43,8 @@ config :emotions_wheel_backend, EmotionsWheelBackend.Repo,
   database: "emotions_wheel_backend_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Guardian config
+config :guardian, Guardian,
+  ttl: { 30, :days },
+  secret_key: "005f0eea-4eaf-4228-b67c-80d7fc6a5d7a"

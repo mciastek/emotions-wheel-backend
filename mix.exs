@@ -19,7 +19,7 @@ defmodule EmotionsWheelBackend.Mixfile do
   def application do
     [mod: {EmotionsWheelBackend, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :timex, :comeonin]
+                    :phoenix_ecto, :postgrex, :timex, :comeonin, :guardian]
     ]
   end
 
@@ -40,7 +40,8 @@ defmodule EmotionsWheelBackend.Mixfile do
      {:cowboy, "~> 1.0"},
      {:timex, "~> 2.0.0"},
      {:timex_ecto, "~> 1.0.0"},
-     {:comeonin, "~> 2.2.0"}]
+     {:comeonin, "~> 2.2.0"},
+     {:guardian, "~> 0.10.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
