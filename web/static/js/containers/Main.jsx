@@ -3,13 +3,14 @@ import 'css/app.scss';
 
 import React from 'react';
 
-class App extends React.Component {
+class Main extends React.Component {
   render() {
     return (
       <main className="main">
+        {this.props.children}
       </main>
     );
   }
 }
 
-export default App;
+export default Main;
