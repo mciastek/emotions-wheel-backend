@@ -11,6 +11,9 @@ defmodule EmotionsWheelBackend.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/api", EmotionsWheelBackend do
@@ -18,6 +21,9 @@ defmodule EmotionsWheelBackend.Router do
 
     scope "/v1" do
       resources "researchers", ResearcherController, only: [:index]
+
+      post "/sessions", SessionController, :create
+      delete "/sessions", SessionController, :delete
     end
   end
 
