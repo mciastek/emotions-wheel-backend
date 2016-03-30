@@ -7,6 +7,6 @@ defmodule EmotionsWheelBackend.ResearcherController do
 
     researchers = Researcher |> Repo.all
 
-    json conn, %{researchers: researchers}
+    render(conn, "index.json", researchers: researchers)
   end
 end
