@@ -32,19 +32,23 @@ var config = {
       actions: srcPath + '/actions/',
       components: srcPath + '/components/',
       containers: srcPath + '/containers/',
+      constants: srcPath + '/constants/',
       sources: srcPath + '/sources/',
       store: srcPath + '/store/',
       reducers: srcPath + '/reducers/',
       views: srcPath + '/views/',
       css: srcPath + '/../css/',
       images: srcPath + '/../assets/images/',
-      utils: srcPath + '/utils/',
-      config: srcPath + '/config/' + process.env.REACT_WEBPACK_ENV
+      utils: srcPath + '/utils/'
     }
   },
 
   plugins: [
-    new ExtractTextPlugin('css/app.css')
+    new ExtractTextPlugin('css/app.css'),
+    new webpack.ProvidePlugin({
+      'Promise': 'es6-promise',
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    })
   ],
 
   module: {
