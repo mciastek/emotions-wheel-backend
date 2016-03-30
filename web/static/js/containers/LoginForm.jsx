@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Connection from 'utils/Connection';
+
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 

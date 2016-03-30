@@ -11,9 +11,9 @@ const checkStatus = (response) => {
 };
 
 class Connection {
-  consturctor(url) {
+  constructor(url) {
     this.url = url;
-  },
+  }
 
   get(endpoint) {
     return fetch(`${this.url}/${endpoint}`, {
@@ -21,14 +21,14 @@ class Connection {
     })
     .then(checkStatus)
     .then((res) => JSON.parse(res));
-  },
+  }
 
   post(endpoint) {
     return fetch(`${this.url}/${endpoint}`, {
       method: 'POST'
     })
     .then(checkStatus);
-  },
+  }
 
   delete(endpoint) {
     return fetch(`${this.url}/${endpoint}`, {
@@ -38,4 +38,4 @@ class Connection {
   }
 }
 
-export new Connection(`${config.api.url}${config.api.namespace}`);
+export default new Connection(`${config.api.url}${config.api.namespace}`);
