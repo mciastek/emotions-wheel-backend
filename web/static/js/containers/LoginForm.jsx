@@ -14,8 +14,10 @@ const inputStyles = {
 
 class LoginForm extends React.Component {
 
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault();
 
+    const {email, password} = this.refs;
   }
 
   render() {
@@ -29,15 +31,15 @@ class LoginForm extends React.Component {
         <Paper className="login-form__content">
           <form onSubmit={this.handleSubmit.bind(this)}>
             <div className="form-row">
-              <TextField hintText="Login" fullWidth={true} inputStyle={inputStyles} />
+              <TextField ref="email" hintText="E-mail" fullWidth={true} inputStyle={inputStyles} />
             </div>
 
             <div className="form-row">
-              <TextField hintText="Password" type="password" fullWidth={true} inputStyle={inputStyles} />
+              <TextField ref="password" hintText="Password" type="password" fullWidth={true} inputStyle={inputStyles} />
             </div>
 
             <div className="form-row">
-              <RaisedButton label="Submit" secondary={true} fullWidth={true} />
+              <RaisedButton type="submit" label="Submit" secondary={true} fullWidth={true} />
             </div>
           </form>
         </Paper>
