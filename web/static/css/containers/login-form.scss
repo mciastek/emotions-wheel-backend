@@ -1,0 +1,24 @@
+@import 'node_modules/sass-material-colors/sass/sass-material-colors';
+
+/**
+ * Login form
+ */
+
+.login-form {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.login-form__header {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.login-form__subtitle {
+  color: material-color('cyan', '700');
+}
+
+.login-form__content {
+  padding: 30px;
+}

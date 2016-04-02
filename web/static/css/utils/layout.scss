@@ -1,0 +1,23 @@
+/**
+ * Fixed viewport height
+ */
+
+@mixin get-fixed-vh($prop, $size) {
+  #{$prop}: $size * 1vh;
+
+  @media screen and (max-device-aspect-ratio: 3 / 4) {
+    #{$prop}: $size * 1vw * 1.333;
+  }
+
+  @media screen and (max-device-aspect-ratio: 2 / 3) {
+    #{$prop}: $size * 1vw * 1.5;
+  }
+
+  @media screen and (max-device-aspect-ratio: 10 / 16) {
+    #{$prop}: $size * 1vw * 1.6;
+  }
+
+  @media screen and (max-device-aspect-ratio: 9 / 16) {
+    #{$prop}: $size * 1vw * 1.778;
+  }
+}

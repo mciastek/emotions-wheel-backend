@@ -62,8 +62,9 @@
     "postcss-loader": "^0.8.0",
     "react-hot-loader": "^1.2.9",
     "rimraf": "^2.4.3",
-    "style-loader": "^0.13.0",
     "sass-loader": "^3.1.2",
+    "sass-material-colors": "0.0.5",
+    "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.6",
     "webpack-dev-server": "^1.12.14"

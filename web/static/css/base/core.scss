@@ -7,9 +7,10 @@ body {
 }
 
 body {
-  background-color: #fff;
-  font: 16px/26px 'Roboto', sans-serif;
+  background-color: material-color('grey', '50');
+  font: 14px/22px 'Roboto', sans-serif;
   font-weight: 400;
+  color: material-color('grey', '800');
 }
 
 *,

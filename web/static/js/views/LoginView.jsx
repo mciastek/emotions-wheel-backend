@@ -5,7 +5,9 @@ import LoginForm from 'containers/LoginForm';
 class LoginView extends React.Component {
   render() {
     return (
-      <LoginForm />
+      <div className="container--content-centered">
+        <LoginForm />
+      </div>
     );
   }
 }
