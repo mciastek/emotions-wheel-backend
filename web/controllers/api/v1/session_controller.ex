@@ -22,6 +22,9 @@ defmodule EmotionsWheelBackend.SessionController do
   def delete() do
   end
 
-  def unauthenticated() do
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(:forbidden)
+    |> render("forbidden.json", error: "Not Authenticated")
   end
 end

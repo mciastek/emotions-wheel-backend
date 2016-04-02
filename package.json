@@ -28,9 +28,11 @@
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-redux": "^4.0.2",
-    "react-router": "^1.0.2",
+    "react-router": "^2.0.1",
+    "react-router-redux": "^4.0.1",
     "react-tap-event-plugin": "^0.2.2",
     "redux": "^3.0.5",
+    "redux-logger": "^2.6.1",
     "redux-thunk": "^1.0.2",
     "whatwg-fetch": "^0.11.0"
   },
