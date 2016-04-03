@@ -1,0 +1,31 @@
+@import 'node_modules/sass-material-colors/sass/sass-material-colors';
+
+/**
+ * Flash message
+ */
+
+$types: (
+  success: 'green',
+  error: 'red',
+  warning: 'orange'
+);
+
+.flash-message {
+  margin: 10px 0;
+  padding: 15px 20px;
+}
+
+@each $type, $color in $types {
+  .flash-message--#{$type} {
+    @extend .flash-message;
+    background-color: material-color($color, '600');
+
+    .flash-message__content {
+      color: material-color($color, '50');
+    }
+  }
+}
+
+.flash-message__content {
+  margin: 0;
+}
