@@ -10,7 +10,7 @@ defmodule EmotionsWheelBackend.SessionController do
 
         conn
         |> put_status(:created)
-        |> render("show.json", token: token, user: user)
+        |> render("show.json", token: token, user_id: user.id)
 
       :error ->
         conn
@@ -25,8 +25,6 @@ defmodule EmotionsWheelBackend.SessionController do
     conn
     |> Guardian.Plug.current_token
     |> Guardian.revoke!(claims)
-
-    # conn |> Guardian.Plug.sign_out
 
     conn
     |> render("delete.json")
