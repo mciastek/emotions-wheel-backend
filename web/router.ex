@@ -22,8 +22,8 @@ defmodule EmotionsWheelBackend.Router do
     scope "/v1" do
       resources "researchers", ResearcherController, only: [:index]
 
-      post "/sessions", SessionController, :create
-      delete "/sessions", SessionController, :delete
+      post "/session", SessionController, :create
+      delete "/session", SessionController, :delete
     end
   end
 
