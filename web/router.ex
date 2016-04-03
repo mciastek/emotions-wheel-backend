@@ -20,7 +20,7 @@ defmodule EmotionsWheelBackend.Router do
     pipe_through :api
 
     scope "/v1" do
-      resources "researchers", ResearcherController, only: [:index]
+      resources "researchers", ResearcherController, only: [:index, :show]
 
       post "/session", SessionController, :create
       delete "/session", SessionController, :delete

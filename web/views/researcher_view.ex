@@ -5,6 +5,14 @@ defmodule EmotionsWheelBackend.ResearcherView do
     %{researchers: researchers}
   end
 
+  def render("show.json", %{researcher: researcher}) do
+    %{researcher: researcher}
+  end
+
+  def render("error.json", %{message: message}) do
+    %{message: message}
+  end
+
   def render("error.json", %{changeset: changeset}) do
 
   end
