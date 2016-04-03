@@ -14,13 +14,21 @@ import DashboardView from 'views/DashboardView';
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
 
+const checkIfAuthenticated = (nextState, replace, callback) => {
+  if (!localStorage.getItem('auth_token')) {
+    replace('/login');
+  }
+
+  callback();
+};
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route components={Main}>
         <Redirect from="/" to="login" />
         <Route path="login" components={LoginView}/>
-        <Route path="dashboard" components={DashboardView}/>
+        <Route path="dashboard" components={DashboardView} onEnter={checkIfAuthenticated} />
       </Route>
     </Router>
   </Provider>

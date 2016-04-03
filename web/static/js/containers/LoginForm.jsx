@@ -1,12 +1,13 @@
 import 'css/containers/login-form.scss';
 
 import React from 'react';
-
-import Connection from 'utils/Connection';
+import { connect } from 'react-redux';
 
 import Paper from 'material-ui/lib/paper';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
+
+import { signIn } from 'actions/session';
 
 const inputStyles = {
   marginTop: 0
@@ -17,7 +18,10 @@ class LoginForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const {email, password} = this.refs;
+    const email = this.refs.email.getValue();
+    const password = this.refs.password.getValue();
+
+    this.props.dispatch(signIn(email, password));
   }
 
   render() {
@@ -48,4 +52,10 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm;
+function mapStateToProps(state) {
+  return {
+    session: state.session
+  };
+}
+
+export default connect(mapStateToProps)(LoginForm);

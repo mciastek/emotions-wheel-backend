@@ -10,31 +10,44 @@ const checkStatus = (response) => {
   }
 };
 
+const requestHeaders = (() => {
+  return {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: localStorage.getItem('auth_token')
+  }
+})();
+
 class Connection {
   constructor(url) {
     this.url = url;
   }
 
   get(endpoint) {
-    return fetch(`${this.url}/${endpoint}`, {
-      method: 'GET'
-    })
-    .then(checkStatus)
-    .then((res) => JSON.parse(res));
+    return fetch(`${this.url}${endpoint}`, {
+        method: 'GET',
+        headers: requestHeaders
+      })
+      .then(checkStatus)
+      .then((res) => res.json());
   }
 
-  post(endpoint) {
-    return fetch(`${this.url}/${endpoint}`, {
-      method: 'POST'
-    })
-    .then(checkStatus);
+  post(endpoint, params) {
+    return fetch(`${this.url}${endpoint}`, {
+        method: 'POST',
+        headers: requestHeaders,
+        body: JSON.stringify(params)
+      })
+      .then(checkStatus)
+      .then((res) => res.json());
   }
 
   delete(endpoint) {
-    return fetch(`${this.url}/${endpoint}`, {
-      method: 'DELETE'
-    })
-    .then(checkStatus);
+    return fetch(`${this.url}${endpoint}`, {
+        method: 'DELETE',
+        headers: requestHeaders
+      })
+      .then(checkStatus);
   }
 }
 
