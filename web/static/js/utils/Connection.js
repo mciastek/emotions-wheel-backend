@@ -1,4 +1,5 @@
 import config from '../config';
+import Storage from 'utils/Storage';
 
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
@@ -11,10 +12,12 @@ const checkStatus = (response) => {
 };
 
 const requestHeaders = (() => {
+  const {token} = Storage.getItem('authenticated') || {};
+
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: localStorage.getItem('auth_token')
+    Authorization: token
   }
 })();
 

@@ -9,6 +9,8 @@ import RaisedButton from 'material-ui/lib/raised-button';
 
 import { signIn } from 'actions/session';
 
+import FlashMessage from 'components/FlashMessage';
+
 const inputStyles = {
   marginTop: 0
 };
@@ -21,16 +23,41 @@ class LoginForm extends React.Component {
     const email = this.refs.email.getValue();
     const password = this.refs.password.getValue();
 
-    this.props.dispatch(signIn(email, password));
+    if (!email) {
+      this.refs.email.setState({
+        errorText: 'That field can\'t be blank!'
+      });
+    }
+
+    if (!password) {
+      this.refs.password.setState({
+        errorText: 'That field can\'t be blank!'
+      });
+    }
+
+    if (email && password) {
+      this.props.dispatch(signIn(email, password));
+    }
   }
 
   render() {
+
+    const errorMessage = (() => {
+      if (this.props.session.error.message) {
+        return (
+          <FlashMessage type="error" message={this.props.session.error.message} />
+        );
+      }
+    })();
+
     return (
       <section className="login-form">
         <header className="login-form__header">
           <h1 className="login-form__title">Welcome back</h1>
           <h3 className="login-form__subtitle">Please log in</h3>
         </header>
+
+        {errorMessage}
 
         <Paper className="login-form__content">
           <form onSubmit={this.handleSubmit.bind(this)}>

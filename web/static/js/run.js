@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, Redirect, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
+import Storage from 'utils/Storage';
 import configureStore from 'store';
 
 import Main from 'containers/Main';
@@ -15,7 +16,9 @@ const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
 
 const checkIfAuthenticated = (nextState, replace, callback) => {
-  if (!localStorage.getItem('auth_token')) {
+  const {token} = Storage.getItem('authenticated') || {};
+
+  if (!token) {
     replace('/login');
   }
 
