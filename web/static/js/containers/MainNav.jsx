@@ -19,6 +19,10 @@ const navTitleStyles = {
   marginBottom: 30
 };
 
+const dividerStyles = {
+  marginTop: 30
+};
+
 class MainNav extends React.Component {
   handleRequestChange() {
     this.props.dispatch(toggleNav());
@@ -36,7 +40,7 @@ class MainNav extends React.Component {
         <MenuItem leftIcon={<SocialPeople/>}>Participants</MenuItem>
         <MenuItem leftIcon={<ImagePhotoLibrary/>}>Photos</MenuItem>
         <MenuItem leftIcon={<ActionSettings/>}>Settings</MenuItem>
-        <Divider />
+        <Divider style={dividerStyles} />
         <MenuItem leftIcon={<ActionPowerSettingsNew/>}>Logout</MenuItem>
       </LeftNav>
     );
