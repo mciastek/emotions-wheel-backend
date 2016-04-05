@@ -11,7 +11,7 @@ const checkStatus = (response) => {
   }
 };
 
-const requestHeaders = (() => {
+const buildHeaders = () => {
   const {token} = Storage.getItem('authenticated') || {};
 
   return {
@@ -19,7 +19,7 @@ const requestHeaders = (() => {
     'Content-Type': 'application/json',
     Authorization: token
   }
-})();
+};
 
 class Connection {
   constructor(url) {
@@ -29,7 +29,7 @@ class Connection {
   get(endpoint) {
     return fetch(`${this.url}${endpoint}`, {
         method: 'GET',
-        headers: requestHeaders
+        headers: buildHeaders()
       })
       .then(checkStatus)
       .then((res) => res.json());
@@ -38,7 +38,7 @@ class Connection {
   post(endpoint, params) {
     return fetch(`${this.url}${endpoint}`, {
         method: 'POST',
-        headers: requestHeaders,
+        headers: buildHeaders(),
         body: JSON.stringify(params)
       })
       .then(checkStatus)
@@ -48,7 +48,7 @@ class Connection {
   delete(endpoint) {
     return fetch(`${this.url}${endpoint}`, {
         method: 'DELETE',
-        headers: requestHeaders
+        headers: buildHeaders()
       })
       .then(checkStatus);
   }
