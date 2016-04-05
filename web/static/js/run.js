@@ -1,3 +1,6 @@
+import 'core-js/fn/object/assign';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -24,6 +27,8 @@ const checkIfAuthenticated = (nextState, replace, callback) => {
 
   callback();
 };
+
+injectTapEventPlugin();
 
 ReactDOM.render(
   <Provider store={store}>
