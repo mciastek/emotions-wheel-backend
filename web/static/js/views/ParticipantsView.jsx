@@ -3,6 +3,7 @@ import React from 'react';
 import Table from 'material-ui/lib/table/table';
 import TableHeader from 'material-ui/lib/table/table-header';
 import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
+import TableBody from 'material-ui/lib/table/table-body';
 import TableRow from 'material-ui/lib/table/table-row';
 
 class ParticipantsView extends React.Component {
@@ -23,8 +24,13 @@ class ParticipantsView extends React.Component {
                 <TableHeaderColumn>Birthdate</TableHeaderColumn>
                 <TableHeaderColumn>Age</TableHeaderColumn>
                 <TableHeaderColumn>Email</TableHeaderColumn>
+                <TableHeaderColumn>Options</TableHeaderColumn>
               </TableRow>
             </TableHeader>
+            <TableBody>
+              <TableRow>
+              </TableRow>
+            </TableBody>
           </Table>
         </section>
       </section>
