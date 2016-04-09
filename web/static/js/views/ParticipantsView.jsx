@@ -1,10 +1,6 @@
 import React from 'react';
 
-import Table from 'material-ui/lib/table/table';
-import TableHeader from 'material-ui/lib/table/table-header';
-import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
-import TableBody from 'material-ui/lib/table/table-body';
-import TableRow from 'material-ui/lib/table/table-row';
+import ParticipantsContainer from 'containers/ParticipantsContainer';
 
 class ParticipantsView extends React.Component {
   render() {
@@ -15,23 +11,7 @@ class ParticipantsView extends React.Component {
           <h3 className="page__subtitle">List of participants</h3>
         </header>
         <section className="page__content">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHeaderColumn>ID</TableHeaderColumn>
-                <TableHeaderColumn>Gender</TableHeaderColumn>
-                <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Birthdate</TableHeaderColumn>
-                <TableHeaderColumn>Age</TableHeaderColumn>
-                <TableHeaderColumn>Email</TableHeaderColumn>
-                <TableHeaderColumn>Options</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <ParticipantsContainer />
         </section>
       </section>
     );
