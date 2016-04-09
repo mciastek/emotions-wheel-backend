@@ -1,0 +1,17 @@
+/**
+ * Page styles
+ */
+
+.page {
+  &__header {
+    padding: 25px 0;
+  }
+
+  &__subtitle {
+    color: material-color('cyan', '700');
+  }
+
+  &__header + &__content {
+    margin-top: 30px;
+  }
+}

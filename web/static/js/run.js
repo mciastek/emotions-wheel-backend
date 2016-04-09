@@ -4,7 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, Redirect, browserHistory } from 'react-router';
+import { Router, Route, Redirect, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import Storage from 'utils/Storage';
@@ -14,6 +14,9 @@ import Main from 'containers/Main';
 
 import LoginView from 'views/LoginView';
 import DashboardView from 'views/DashboardView';
+import ParticipantsView from 'views/ParticipantsView';
+
+import DashboardContainer from 'containers/DashboardContainer';
 
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -36,7 +39,10 @@ ReactDOM.render(
       <Route components={Main}>
         <Redirect from="/" to="login" />
         <Route path="login" components={LoginView}/>
-        <Route path="dashboard" components={DashboardView} onEnter={checkIfAuthenticated} />
+        <Route path="dashboard" components={DashboardView} onEnter={checkIfAuthenticated}>
+          <IndexRoute component={DashboardContainer}/>
+          <Route path="participants" components={ParticipantsView} />
+        </Route>
       </Route>
     </Router>
   </Provider>
