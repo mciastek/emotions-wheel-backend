@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/lib/app-bar';
@@ -13,7 +14,7 @@ import SocialPeople from 'material-ui/lib/svg-icons/social/people';
 import ActionSettings from 'material-ui/lib/svg-icons/action/settings';
 import ActionPowerSettingsNew from 'material-ui/lib/svg-icons/action/power-settings-new';
 
-import { toggleNav } from 'actions/ui';
+import { closeNav } from 'actions/ui';
 
 const navTitleStyles = {
   marginBottom: 30
@@ -23,23 +24,53 @@ const dividerStyles = {
   marginTop: 30
 };
 
+const navigationItems = [{
+  label: 'Dashboard',
+  icon: ActionHome,
+  route: '/dashboard'
+}, {
+  label: 'Experiments',
+  icon: ActionQuestionAnswer,
+  route: '/dashboard/experiments'
+}, {
+  label: 'Participants',
+  icon: SocialPeople,
+  route: '/dashboard/participants'
+}, {
+  label: 'Photos',
+  icon: ImagePhotoLibrary,
+  route: '/dashboard/photos'
+}, {
+  label: 'Settings',
+  icon: ActionSettings,
+  route: '/dashboard/settings'
+}];
+
 class MainNav extends React.Component {
   handleRequestChange() {
-    this.props.dispatch(toggleNav());
+    this.props.dispatch(closeNav());
+  }
+
+  closeNav(e) {
+    e.preventDefault();
+    this.props.dispatch(closeNav());
   }
 
   render() {
+
+    const links = navigationItems.map((item, index) => {
+      return (
+        <MenuItem key={index} leftIcon={<item.icon />} primaryText={item.label} containerElement={<Link to={item.route} />} onTouchTap={this.closeNav.bind(this)} />
+      );
+    });
+
     return (
       <LeftNav
         open={this.props.ui.navOpen}
         docked={false}
         onRequestChange={this.handleRequestChange.bind(this)}>
         <AppBar title="Main menu" showMenuIconButton={false} style={navTitleStyles} />
-        <MenuItem leftIcon={<ActionHome/>}>Dashboard</MenuItem>
-        <MenuItem leftIcon={<ActionQuestionAnswer/>}>Experiments</MenuItem>
-        <MenuItem leftIcon={<SocialPeople/>}>Participants</MenuItem>
-        <MenuItem leftIcon={<ImagePhotoLibrary/>}>Photos</MenuItem>
-        <MenuItem leftIcon={<ActionSettings/>}>Settings</MenuItem>
+        {links}
         <Divider style={dividerStyles} />
         <MenuItem leftIcon={<ActionPowerSettingsNew/>}>Logout</MenuItem>
       </LeftNav>
