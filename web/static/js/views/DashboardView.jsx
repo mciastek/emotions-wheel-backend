@@ -2,7 +2,6 @@ import React from 'react';
 
 import TopBar from 'containers/TopBar';
 import MainNav from 'containers/MainNav';
-import DashboardContainer from 'containers/DashboardContainer';
 
 class DashboardView extends React.Component {
   render() {
@@ -10,7 +9,9 @@ class DashboardView extends React.Component {
       <div>
         <TopBar />
         <MainNav />
-        <DashboardContainer />
+        <div className="container">
+          {this.props.children}
+        </div>
       </div>
     );
   }

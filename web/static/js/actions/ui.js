@@ -5,3 +5,9 @@ export function toggleNav() {
     type: actionTypes.UI_TOGGLE_NAV
   };
 }
+
+export function closeNav() {
+  return {
+    type: actionTypes.UI_CLOSE_NAV
+  };
+}

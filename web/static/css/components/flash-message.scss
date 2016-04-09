@@ -13,6 +13,10 @@ $types: (
 .flash-message {
   margin: 10px 0;
   padding: 15px 20px;
+
+  &__content {
+    margin: 0
+  }
 }
 
 @each $type, $color in $types {
@@ -24,8 +28,4 @@ $types: (
       color: material-color($color, '50');
     }
   }
-}
-
-.flash-message__content {
-  margin: 0;
 }

@@ -11,6 +11,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         navOpen: !state.navOpen
       };
+
+    case actionTypes.UI_CLOSE_NAV:
+      return {
+        ...state,
+        navOpen: false
+      };
     default:
       return state;
   }

@@ -27,7 +27,7 @@ export function populateCurrentUser(currentUser) {
   return {
     type: actionTypes.SESSION_GET_CURRENT_USER,
     currentUser
-  }
+  };
 }
 
 export function signIn(email, password) {
