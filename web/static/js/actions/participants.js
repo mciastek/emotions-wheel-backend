@@ -28,10 +28,11 @@ export function fetchParticipants() {
 
     Connection.get('/participants')
       .then((data) => {
-        dispatch(fetchParticipantsSuccess(data));
+        const { participants } = data;
+        dispatch(fetchParticipantsSuccess(participants));
       })
       .catch(() => {
 
-      })
+      });
   };
 }
