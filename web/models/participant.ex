@@ -1,6 +1,8 @@
 defmodule EmotionsWheelBackend.Participant do
   use EmotionsWheelBackend.Web, :model
 
+  @derive {Poison.Encoder, only: [:id, :email, :first_name, :last_name, :birthdate, :age, :gender]}
+
   schema "participants" do
     field :email, :string
     field :first_name, :string
