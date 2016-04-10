@@ -17,9 +17,13 @@ class Input extends React.Component {
   }
 
   handleChange(e) {
-    this.setState({
-      value: e.target.value
-    });
+    const { value } = e.target;
+
+    this.setState({ value });
+
+    if (this.props.onChange) {
+      this.props.onChange(e);
+    }
   }
 
   render() {
