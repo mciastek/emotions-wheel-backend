@@ -4,7 +4,11 @@
 
 .page {
   &__header {
-    padding: 25px 0;
+    padding: 60px 0 0;
+  }
+
+  &__title {
+    margin-top: 0;
   }
 
   &__subtitle {
@@ -15,3 +19,12 @@
     margin-top: 30px;
   }
 }
+
+/**
+ * Page form
+ */
+
+.page-form {
+  padding: 30px;
+}
+

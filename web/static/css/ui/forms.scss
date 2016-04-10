@@ -2,6 +2,12 @@
  * Forms
  */
 
+.form {
+  .form-row:first-child {
+    padding-top: 0;
+  }
+}
+
 .form-row {
   padding-top: 20px;
 }
@@ -9,4 +15,31 @@
 .form-row--no-margin {
   @extend .form-row;
   padding-top: 0;
+}
+
+.form-row--splitted {
+  @extend .form-row;
+  @extend %row;
+  padding-top: 0;
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+@for $i from 0 through 12 {
+  .form-row__column--#{$i} {
+    @extend .form-row__column;
+    @include column(12);
+    padding: 20px 10px 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  @media #{$screen-md} {
+    .form-row__column--#{$i} {
+      @include column($i);
+      padding: 20px 10px 0;
+    }
+  }
 }

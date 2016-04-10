@@ -60,7 +60,7 @@ class LoginForm extends React.Component {
         {errorMessage}
 
         <Paper className="login-form__content">
-          <form onSubmit={this.handleSubmit.bind(this)}>
+          <form onSubmit={this.handleSubmit.bind(this)} noValidate>
             <div className="form-row">
               <TextField ref="email" hintText="E-mail" fullWidth={true} inputStyle={inputStyles} />
             </div>

@@ -1,0 +1,32 @@
+import React from 'react';
+import TextField from 'material-ui/lib/text-field';
+
+class Input extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: props.value
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value: nextProps.value
+    });
+  }
+
+  handleChange(e) {
+    this.setState({
+      value: e.target.value
+    });
+  }
+
+  render() {
+    return (
+      <TextField {...this.props} value={this.state.value} onChange={this.handleChange.bind(this)} />
+    );
+  }
+}
+
+export default Input;
