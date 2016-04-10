@@ -15,6 +15,7 @@ import ActionSettings from 'material-ui/lib/svg-icons/action/settings';
 import ActionPowerSettingsNew from 'material-ui/lib/svg-icons/action/power-settings-new';
 
 import { closeNav } from 'actions/ui';
+import { signOut } from 'actions/session';
 
 const navTitleStyles = {
   marginBottom: 30
@@ -47,6 +48,10 @@ const navigationItems = [{
 }];
 
 class MainNav extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(closeNav());
+  }
+
   handleRequestChange() {
     this.props.dispatch(closeNav());
   }
@@ -56,8 +61,12 @@ class MainNav extends React.Component {
     this.props.dispatch(closeNav());
   }
 
-  render() {
+  singOut(e) {
+    e.preventDefault();
+    this.props.dispatch(signOut());
+  }
 
+  render() {
     const links = navigationItems.map((item, index) => {
       return (
         <MenuItem key={index} leftIcon={<item.icon />} primaryText={item.label} containerElement={<Link to={item.route} />} onTouchTap={this.closeNav.bind(this)} />
@@ -72,7 +81,7 @@ class MainNav extends React.Component {
         <AppBar title="Main menu" showMenuIconButton={false} style={navTitleStyles} />
         {links}
         <Divider style={dividerStyles} />
-        <MenuItem leftIcon={<ActionPowerSettingsNew/>}>Logout</MenuItem>
+        <MenuItem leftIcon={<ActionPowerSettingsNew/>} onTouchTap={this.singOut.bind(this)}>Logout</MenuItem>
       </LeftNav>
     );
   }
