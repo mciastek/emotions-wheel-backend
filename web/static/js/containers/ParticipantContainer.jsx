@@ -11,13 +11,13 @@ class ParticipantContainer extends React.Component {
   }
 
   render() {
-    const {first_name, last_name} = this.props.participant.single;
+    const {first_name, last_name, age} = this.props.participant.single;
 
     return (
       <section className="page">
         <header className="page__header">
           <h1 className="page__title">Participant's details</h1>
-          <h3 className="page__subtitle">{first_name} {last_name}</h3>
+          <h3 className="page__subtitle">{first_name} {last_name} ({age} years old)</h3>
         </header>
         <section className="page__content">
           <ParticipantForm participant={this.props.participant.single} />
