@@ -1,7 +1,9 @@
+import config from '../config';
+
 import React from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import moment from 'moment';
 
 import Colors from 'material-ui/lib/styles/colors';
 
@@ -12,13 +14,10 @@ import TableBody from 'material-ui/lib/table/table-body';
 import TableRow from 'material-ui/lib/table/table-row';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 
-import IconButton from 'material-ui/lib/icon-button';
-import ImageEdit from 'material-ui/lib/svg-icons/image/edit';
-import ActionDelete from 'material-ui/lib/svg-icons/action/delete';
-
 import { fetchParticipants } from 'actions/participants';
 
 import EditButton from 'components/EditButton';
+import DeleteButton from 'components/DeleteButton';
 
 const shortColumnStyle = {
   width: 70
@@ -41,20 +40,19 @@ class ParticipantsContainer extends React.Component {
         this.props.dispatch(push(`/dashboard/participants/${participant.id}`));
       };
 
+      const formattedBirthdate = moment(participant.birthdate).format(config.date.format);
+
       return (
         <TableRow key={participant.id}>
           <TableRowColumn style={shortColumnStyle}>{participant.id}</TableRowColumn>
           <TableRowColumn>{participant.first_name} {participant.last_name}</TableRowColumn>
           <TableRowColumn>{participant.gender}</TableRowColumn>
-          <TableRowColumn>{participant.birthdate}</TableRowColumn>
+          <TableRowColumn>{formattedBirthdate}</TableRowColumn>
           <TableRowColumn style={shortColumnStyle}>{participant.age}</TableRowColumn>
           <TableRowColumn>{participant.email}</TableRowColumn>
           <TableRowColumn>
             <EditButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={editButtonClick} />
-
-            <IconButton iconStyle={optionIconStyle}>
-              <ActionDelete color={Colors.cyan500} />
-            </IconButton>
+            <DeleteButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} />
           </TableRowColumn>
         </TableRow>
       );
