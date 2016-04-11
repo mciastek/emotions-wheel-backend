@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Paper from 'material-ui/lib/paper';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 import Input from 'components/Input';
 import Select from 'components/Select';
@@ -15,13 +16,18 @@ const genderSelectOptions = [{
 }];
 
 class ParticipantForm extends React.Component {
+
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+
   render() {
 
     const { first_name, last_name, email, gender, birthdate, age } = this.props.participant;
 
     return (
       <Paper className="page-form">
-        <form className="form">
+        <form className="form" onSubmit={this.handleSubmit.bind(this)} noValidate>
           <div className="form-row--splitted">
             <div className="form-row__column--4">
               <Input ref="first_name" floatingLabelText="First Name" fullWidth={true} value={first_name} />
@@ -46,6 +52,13 @@ class ParticipantForm extends React.Component {
             </div>
           </div>
 
+          <div className="form-row--splitted">
+            <div className="form-row__column--4"></div>
+            <div className="form-row__column--4"></div>
+            <div className="form-row__column--4">
+              <RaisedButton type="submit" label="Save" secondary={true} fullWidth={true} />
+            </div>
+          </div>
         </form>
       </Paper>
     );

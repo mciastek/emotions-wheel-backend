@@ -45,6 +45,16 @@ class Connection {
       .then((res) => res.json());
   }
 
+  put(endpoint, params) {
+    return fetch(`${this.url}${endpoint}`, {
+        method: 'PUT',
+        headers: buildHeaders(),
+        body: JSON.stringify(params)
+      })
+      .then(checkStatus)
+      .then((res) => res.json());
+  }
+
   delete(endpoint) {
     return fetch(`${this.url}${endpoint}`, {
         method: 'DELETE',
