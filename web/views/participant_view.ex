@@ -9,6 +9,10 @@ defmodule EmotionsWheelBackend.ParticipantView do
     %{participant: participant}
   end
 
+  def render("success.json", %{participant: participant}) do
+    %{participant: participant}
+  end
+
   def render("error.json", %{message: message}) do
     %{message: message}
   end
