@@ -1,6 +1,8 @@
 defmodule EmotionsWheelBackend.ExperimentsHasPhotos do
   use EmotionsWheelBackend.Web, :model
 
+  alias EmotionsWheelBackend.{Photo, Experiment}
+
   schema "experiments_has_photos" do
     timestamps
 

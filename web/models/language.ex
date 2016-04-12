@@ -1,6 +1,8 @@
 defmodule EmotionsWheelBackend.Language do
   use EmotionsWheelBackend.Web, :model
 
+  alias EmotionsWheelBackend.{Participant}
+
   schema "languages" do
     field :name, :string
     field :code, :string

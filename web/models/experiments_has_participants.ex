@@ -1,6 +1,8 @@
 defmodule EmotionsWheelBackend.ExperimentsHasParticipants do
   use EmotionsWheelBackend.Web, :model
 
+  alias EmotionsWheelBackend.{Participant, Experiment}
+
   schema "experiments_has_participants" do
     field :uuid, Ecto.UUID
     timestamps

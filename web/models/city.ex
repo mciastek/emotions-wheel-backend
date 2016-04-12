@@ -1,6 +1,8 @@
 defmodule EmotionsWheelBackend.City do
   use EmotionsWheelBackend.Web, :model
 
+  alias EmotionsWheelBackend.{Participant}
+
   schema "cities" do
     field :name, :string
     timestamps

@@ -1,6 +1,8 @@
 defmodule EmotionsWheelBackend.Photo do
   use EmotionsWheelBackend.Web, :model
 
+  alias EmotionsWheelBackend.{ExperimentsHasPhotos}
+
   schema "photos" do
     field :name, :string
     field :url, :string

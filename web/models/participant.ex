@@ -1,6 +1,8 @@
 defmodule EmotionsWheelBackend.Participant do
   use EmotionsWheelBackend.Web, :model
 
+  alias EmotionsWheelBackend.{Country, City, Language, Rate, ExperimentsHasParticipants}
+
   @derive {Poison.Encoder, only: [:id, :email, :first_name, :last_name, :birthdate, :age, :gender]}
 
   schema "participants" do

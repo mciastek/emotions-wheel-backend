@@ -2,6 +2,8 @@ defmodule EmotionsWheelBackend.Researcher do
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]
   use EmotionsWheelBackend.Web, :model
 
+  alias EmotionsWheelBackend.{Experiment}
+
   @derive {Poison.Encoder, only: [:id, :email, :first_name, :last_name, :phone]}
 
   schema "researchers" do

@@ -1,6 +1,8 @@
 defmodule EmotionsWheelBackend.Rate do
   use EmotionsWheelBackend.Web, :model
 
+  alias EmotionsWheelBackend.{Participant, Photo}
+
   schema "rates" do
     field :name, :string
     field :pos_x, :decimal

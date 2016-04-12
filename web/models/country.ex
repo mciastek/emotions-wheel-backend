@@ -1,6 +1,8 @@
 defmodule EmotionsWheelBackend.Country do
   use EmotionsWheelBackend.Web, :model
 
+  alias EmotionsWheelBackend.{Participant}
+
   schema "countries" do
     field :name, :string
     timestamps
