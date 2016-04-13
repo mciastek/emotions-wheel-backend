@@ -1,7 +1,7 @@
 defmodule EmotionsWheelBackend.City do
   use EmotionsWheelBackend.Web, :model
 
-  alias EmotionsWheelBackend.{Participant}
+  alias EmotionsWheelBackend.{Participant, Country}
 
   schema "cities" do
     field :name, :string

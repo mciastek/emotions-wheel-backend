@@ -23,8 +23,8 @@ defmodule EmotionsWheelBackend.Participant do
     has_many :experiments, through: [:experiments_has_participants, :experiments]
   end
 
-  @required_fields ~w(first_name last_name age gender)
-  @optional_fields ~w(email birthdate)
+  @required_fields ~w(first_name last_name birthdate gender)
+  @optional_fields ~w(email age)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -38,14 +38,25 @@ defmodule EmotionsWheelBackend.Participant do
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email, message: "E-mail already taken!")
     |> validate_gender
+    |> set_age
   end
 
   defp validate_gender(changeset) do
     value = get_field(changeset, :gender)
+
     if (value == "male" or value == "female") do
       changeset
     else
       changeset |> add_error(:gender, "should be male or female")
+    end
+  end
+
+  defp set_age(changeset) do
+    if !get_field(changeset, :age) do
+      birthdate = get_field(changeset, :birthdate)
+
+    else
+      changeset
     end
   end
 end
