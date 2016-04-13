@@ -20,3 +20,7 @@ config :emotions_wheel_backend, EmotionsWheelBackend.Repo,
   database: "emotions_wheel_backend_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Guardian config
+config :guardian, Guardian,
+  secret_key: "iIh4v6MkAw3CbCnfGP7KbD9DUgDE75cgGomM8bm0EUkOkSU8U9pb4hDwpjw7tSNx"

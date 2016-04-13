@@ -47,4 +47,4 @@ config :emotions_wheel_backend, EmotionsWheelBackend.Repo,
 # Guardian config
 config :guardian, Guardian,
   ttl: { 30, :days },
-  secret_key: "005f0eea-4eaf-4228-b67c-80d7fc6a5d7a"
+  secret_key: "m3Lrx2Rop76O8Z8FNHw4dUrSC2UmPN+WUNhTEixEHnxbr4ZfkKgY/6GYTxI5s09S"
