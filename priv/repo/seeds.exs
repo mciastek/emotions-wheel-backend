@@ -14,7 +14,7 @@ alias EmotionsWheelBackend.{Researcher, Participant, Country, City, Language, Re
 
 # Researchers
 researchers = [
-  %Researcher{
+  %{
     email: "test@mail.com",
     password: "password",
     password_confirmation: "password",
@@ -29,7 +29,7 @@ researchers = [
 {:ok, birthdate_participant_2} = Ecto.DateTime.load({{1945, 10, 05}, {0,0,0}})
 
 participants = [
-  %Participant{
+  %{
     email: "participant@test.com",
     first_name: "Jerzy",
     last_name: "Stuhr",
@@ -37,7 +37,7 @@ participants = [
     age: 75,
     gender: "male"
   },
-  %Participant{
+  %{
     email: "participant2@test.com",
     first_name: "Jane",
     last_name: "Fonda",
@@ -49,21 +49,21 @@ participants = [
 
 # Countries
 countries = [
-  %Country{
+  %{
     name: "Poland"
   },
-  %Country{
+  %{
     name: "England"
   }
 ]
 
 # Languages
 languages = [
-  %Language{
+  %{
     name: "Polish",
     code: "pl"
   },
-  %Language{
+  %{
     name: "English",
     code: "en"
   }
@@ -71,20 +71,35 @@ languages = [
 
 # Cities
 cities = [
-  %City{
+  %{
     name: "Warsaw"
   },
-  %City{
+  %{
     name: "London"
   }
 ]
 
 # Insert all repos
-researchers |> Enum.each(&Repo.insert!(&1))
-participants |> Enum.each(&Repo.insert!(&1))
-languages |> Enum.each(&Repo.insert!(&1))
-countries |> Enum.each(&Repo.insert!(&1))
-cities |> Enum.each(&Repo.insert!(&1))
+researchers |> Enum.each(fn(map) ->
+  Researcher.changeset(%Researcher{}, map) |> Repo.insert!
+end)
+
+participants |> Enum.each(fn(map) ->
+  Participant.changeset(%Participant{}, map) |> Repo.insert!
+end)
+
+languages |> Enum.each(fn(map) ->
+  Language.changeset(%Language{}, map) |> Repo.insert!
+end)
+
+countries |> Enum.each(fn(map) ->
+  Country.changeset(%Country{}, map) |> Repo.insert!
+end)
+
+cities |> Enum.each(fn(map) ->
+  City.changeset(%City{}, map) |> Repo.insert!
+end)
+
 
 # Get certain records
 participant_1 = Repo.get_by(Participant, email: "participant@test.com")
