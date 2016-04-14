@@ -14,10 +14,9 @@ import Main from 'containers/Main';
 
 import LoginView from 'views/LoginView';
 import DashboardView from 'views/DashboardView';
+import DashboardIndexView from 'views/DashboardIndexView';
 import ParticipantsView from 'views/ParticipantsView';
 import ParticipantView from 'views/ParticipantView';
-
-import DashboardContainer from 'containers/DashboardContainer';
 
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -41,7 +40,7 @@ ReactDOM.render(
         <Redirect from="/" to="login" />
         <Route path="login" components={LoginView}/>
         <Route path="dashboard" components={DashboardView} onEnter={checkIfAuthenticated}>
-          <IndexRoute component={DashboardContainer}/>
+          <IndexRoute component={DashboardIndexView}/>
           <Route path="participants" components={ParticipantsView} />
           <Route path="participants/:id" components={ParticipantView} />
         </Route>
