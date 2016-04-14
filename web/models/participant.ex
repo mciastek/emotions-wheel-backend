@@ -3,7 +3,7 @@ defmodule EmotionsWheelBackend.Participant do
 
   alias EmotionsWheelBackend.{Country, City, Language, Rate, ExperimentsHasParticipants}
 
-  @derive {Poison.Encoder, only: [:id, :email, :first_name, :last_name, :birthdate, :age, :gender]}
+  @derive {Poison.Encoder, only: [:id, :email, :first_name, :last_name, :birthdate, :age, :gender, :language_id]}
 
   schema "participants" do
     field :email, :string
