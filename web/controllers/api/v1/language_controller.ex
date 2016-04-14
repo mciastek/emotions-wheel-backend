@@ -5,7 +5,6 @@ defmodule EmotionsWheelBackend.LanguageController do
 
   def index(conn, _params) do
     languages = Language |> Repo.all
-    IO.inspect languages
     render(conn, "index.json", languages: languages)
   end
 
