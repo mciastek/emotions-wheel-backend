@@ -3,6 +3,8 @@ defmodule EmotionsWheelBackend.City do
 
   alias EmotionsWheelBackend.{Participant, Country}
 
+  @derive {Poison.Encoder, only: [:id, :name, :country_id]}
+
   schema "cities" do
     field :name, :string
     timestamps
