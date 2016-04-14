@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
@@ -22,8 +23,14 @@ class ParticipantForm extends React.Component {
   }
 
   render() {
+    const { first_name, last_name, email, gender, birthdate, age, language_id } = this.props.participant;
 
-    const { first_name, last_name, email, gender, birthdate, age } = this.props.participant;
+    const languageSelectOptions = this.props.languages.collection.map((language) => {
+      return {
+        value: language.id,
+        label: language.name
+      };
+    });
 
     return (
       <Paper className="page-form">
@@ -53,10 +60,18 @@ class ParticipantForm extends React.Component {
           </div>
 
           <div className="form-row--splitted">
-            <div className="form-row__column--4"></div>
+            <div className="form-row__column--3">
+              <Select ref="language_id" options={languageSelectOptions} value={language_id} floatingLabelText="Language" />
+            </div>
+          </div>
+
+          <div className="form-row--splitted">
             <div className="form-row__column--4"></div>
             <div className="form-row__column--4">
               <RaisedButton type="submit" label="Save" secondary={true} fullWidth={true} />
+            </div>
+            <div className="form-row__column--4">
+              <RaisedButton label="Cancel" parimary={true} fullWidth={true} />
             </div>
           </div>
         </form>
@@ -65,4 +80,10 @@ class ParticipantForm extends React.Component {
   }
 }
 
-export default ParticipantForm;
+function mapStateToProps(state) {
+  return {
+    languages: state.languages
+  };
+}
+
+export default connect(mapStateToProps)(ParticipantForm);
