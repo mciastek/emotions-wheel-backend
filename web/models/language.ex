@@ -3,6 +3,8 @@ defmodule EmotionsWheelBackend.Language do
 
   alias EmotionsWheelBackend.{Participant}
 
+  @derive {Poison.Encoder, only: [:id, :name, :code]}
+
   schema "languages" do
     field :name, :string
     field :code, :string
