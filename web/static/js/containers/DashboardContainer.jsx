@@ -3,11 +3,15 @@ import { connect } from 'react-redux';
 
 import { fetchCurrentUser } from 'actions/session';
 import { fetchLanguages } from 'actions/languages';
+import { fetchCountries } from 'actions/countries';
+import { fetchCities } from 'actions/cities';
 
 class DashboardContainer extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchCurrentUser());
     this.props.dispatch(fetchLanguages());
+    this.props.dispatch(fetchCountries());
+    this.props.dispatch(fetchCities());
   }
 
   render() {

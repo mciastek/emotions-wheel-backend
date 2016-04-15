@@ -6,6 +6,8 @@ import ui from './ui';
 import participants from './participants';
 import participant from './participant';
 import languages from './languages';
+import countries from './countries';
+import cities from './cities';
 
 export default combineReducers({
   routing: routerReducer,
@@ -13,5 +15,7 @@ export default combineReducers({
   session,
   participants,
   participant,
-  languages
+  languages,
+  countries,
+  cities
 });
