@@ -24,6 +24,7 @@ defmodule EmotionsWheelBackend.Router do
       resources "participants", ParticipantController, only: [:index, :show, :update]
       resources "languages", LanguageController, only: [:index, :show]
       resources "countries", CountryController, only: [:index, :show]
+      resources "cities", CityController, only: [:index, :show]
 
       post "/session", SessionController, :create
       delete "/session", SessionController, :delete
