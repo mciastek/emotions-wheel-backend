@@ -21,6 +21,12 @@ class Input extends React.Component {
 
     this.setState({ value });
 
+    if (value) {
+      this.setState({
+        errorText: null
+      });
+    }
+
     if (this.props.onChange) {
       this.props.onChange(e);
     }
@@ -28,7 +34,7 @@ class Input extends React.Component {
 
   render() {
     return (
-      <TextField {...this.props} value={this.state.value} onChange={this.handleChange.bind(this)} />
+      <TextField {...this.props} errorText={this.state.errorText} value={this.state.value} onChange={this.handleChange.bind(this)} />
     );
   }
 }
