@@ -8,7 +8,10 @@ import { fetchCities } from 'actions/cities';
 
 class DashboardContainer extends React.Component {
   componentDidMount() {
-    this.props.dispatch(fetchCurrentUser());
+    if (!this.props.session.currentUser) {
+      this.props.dispatch(fetchCurrentUser());
+    }
+
     this.props.dispatch(fetchLanguages());
     this.props.dispatch(fetchCountries());
     this.props.dispatch(fetchCities());

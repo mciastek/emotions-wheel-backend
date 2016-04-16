@@ -2,13 +2,16 @@ import 'css/containers/login-form.scss';
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import Paper from 'material-ui/lib/paper';
-import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 
-import { signIn } from 'actions/session';
+import Storage from 'utils/Storage';
 
+import { signIn, fetchCurrentUser } from 'actions/session';
+
+import Input from 'components/Input';
 import FlashMessage from 'components/FlashMessage';
 
 const inputStyles = {
@@ -16,12 +19,29 @@ const inputStyles = {
 };
 
 class LoginForm extends React.Component {
+  componentDidMount() {
+    const {token} = Storage.getItem('authenticated') || {};
+
+    if (token) {
+      this.props.dispatch(fetchCurrentUser());
+    }
+  }
 
   handleSubmit(e) {
     e.preventDefault();
 
-    const email = this.refs.email.getValue();
-    const password = this.refs.password.getValue();
+    const hasCurrentUser = this.props.session.currentUser !== null;
+
+    if (hasCurrentUser) {
+      this._redirectToDashboard();
+    } else {
+      this._submitSignIn();
+    }
+  }
+
+  _submitSignIn() {
+    const email = this.refs.email.state.value;
+    const password = this.refs.password.state.value;
 
     if (!email) {
       this.refs.email.setState({
@@ -40,15 +60,33 @@ class LoginForm extends React.Component {
     }
   }
 
-  render() {
+  _redirectToDashboard() {
+    this.props.dispatch(push('/dashboard'));
+  }
 
+  render() {
     const errorMessage = (() => {
-      if (this.props.session.error.message) {
+      if (this.props.session.error) {
         return (
           <FlashMessage type="error" message={this.props.session.error.message} />
         );
       }
     })();
+
+    const hasCurrentUser = this.props.session.currentUser !== null;
+    const { email, password } = this.props.session.currentUser || {};
+
+    const passwordField = (() => {
+      if (!hasCurrentUser) {
+        return (
+          <div className="form-row">
+            <Input type="password" ref="password" hintText="Password" value={password} fullWidth={true} inputStyle={inputStyles} />
+          </div>
+        );
+      }
+    })();
+
+    const buttonLabel = (hasCurrentUser) ? 'Go to dashboard' : 'Submit';
 
     return (
       <section className="login-form">
@@ -62,15 +100,13 @@ class LoginForm extends React.Component {
         <Paper className="login-form__content">
           <form onSubmit={this.handleSubmit.bind(this)} noValidate>
             <div className="form-row">
-              <TextField ref="email" hintText="E-mail" fullWidth={true} inputStyle={inputStyles} />
+              <Input ref="email" hintText="E-mail" fullWidth={true} value={email} inputStyle={inputStyles} disabled={hasCurrentUser} />
             </div>
 
-            <div className="form-row">
-              <TextField ref="password" hintText="Password" type="password" fullWidth={true} inputStyle={inputStyles} />
-            </div>
+            {passwordField}
 
             <div className="form-row">
-              <RaisedButton type="submit" label="Submit" secondary={true} fullWidth={true} />
+              <RaisedButton type="submit" label={buttonLabel} secondary={true} fullWidth={true} />
             </div>
           </form>
         </Paper>
