@@ -77,7 +77,7 @@ class ParticipantForm extends React.Component {
               <Select ref="gender" options={genderSelectOptions} value={gender} floatingLabelText="Gender" />
             </div>
             <div className="form-row__column--6">
-              <BirthdateField value={birthdate} />
+              <BirthdateField ref="birthdate" value={birthdate} />
             </div>
             <div className="form-row__column--3">
               <Input floatingLabelText="Age" fullWidth={true} value={age} disabled={true} />

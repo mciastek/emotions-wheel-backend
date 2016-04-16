@@ -44,32 +44,41 @@ class BirthdateField extends React.Component {
     this.setState({ day, month, year });
   }
 
-  componentWillUpdate(_, nextState) {
-    this._updateValue(nextState);
-  }
-
   updateDay(e, i, value) {
     this.setState({
       day: value
     });
+
+    this._updateValue({day: value})
   }
 
   updateMonth(e, i, value) {
     this.setState({
       month: value
     });
+
+    this._updateValue({month: value})
   }
 
   updateYear(e, i, value) {
     this.setState({
       year: value
     });
+
+    this._updateValue({year: value})
   }
 
-  _updateValue(state) {
-    const { day:d, month:M, year:y } = state;
-    const { day:oldD, month:oldM, year:oldY } = this.state;
-    const utcDate = moment({ d, M, y });
+  _updateValue(value) {
+    const { day:d, month:M, year:y } = {
+      ...this.state,
+      ...value
+    };
+
+    const utcDate = moment({ d, M, y }).format();
+
+    this.setState({
+      value: utcDate
+    });
   }
 
   _getSplittedDate(value) {
@@ -94,6 +103,7 @@ class BirthdateField extends React.Component {
         <div className="birthdate-field__col">
           <Select options={years} floatingLabelText="Year" maxHeight={300} value={this.state.year} onChange={this.updateYear.bind(this)} />
         </div>
+        {this.state.value}
       </div>
     );
   }
