@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
-import AutoComplete from 'material-ui/lib/auto-complete';
 
 import Input from 'components/Input';
+import InputSearch from 'components/InputSearch';
 import Select from 'components/Select';
 import BirthdateField from 'components/BirthdateField';
 
@@ -18,9 +19,20 @@ const genderSelectOptions = [{
 }];
 
 class ParticipantForm extends React.Component {
-
   handleSubmit(e) {
     e.preventDefault();
+  }
+
+  handleCancel() {
+    this.props.dispatch(push('/dashboard/participants'))
+  }
+
+  getCityByName(name) {
+    return this.props.cities.collection.find(city => city.name === name);
+  }
+
+  getCityById(id) {
+    return this.props.cities.collection.find(city => city.id === id);
   }
 
   render() {
@@ -51,11 +63,10 @@ class ParticipantForm extends React.Component {
     });
 
     const cityOptions = this.props.cities.collection.map((city) => {
-      return {
-        value: city.id,
-        label: city.name
-      };
+      return city.name;
     });
+
+    const {name: citySearchText} = this.getCityById(city_id) || {};
 
     return (
       <Paper className="page-form">
@@ -92,7 +103,7 @@ class ParticipantForm extends React.Component {
               <Select ref="country_id" options={countrySelectOptions} value={country_id} floatingLabelText="Country" />
             </div>
             <div className="form-row__column--3">
-              <AutoComplete ref="city_id" dataSource={cityOptions} value={city_id} floatingLabelText="City" />
+              <InputSearch ref="city_id" dataSource={cityOptions} value={citySearchText} floatingLabelText="City" />
             </div>
           </div>
 
@@ -102,7 +113,7 @@ class ParticipantForm extends React.Component {
               <RaisedButton type="submit" label="Save" secondary={true} fullWidth={true} />
             </div>
             <div className="form-row__column--4">
-              <RaisedButton label="Cancel" parimary={true} fullWidth={true} />
+              <RaisedButton label="Cancel" parimary={true} fullWidth={true} onTouchTap={this.handleCancel.bind(this)} />
             </div>
           </div>
         </form>
