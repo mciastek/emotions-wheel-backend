@@ -1,7 +1,7 @@
 defmodule EmotionsWheelBackend.Experiment do
   use EmotionsWheelBackend.Web, :model
 
-  alias EmotionsWheelBackend.{ExperimentsHasPhotos, ExperimentsHasParticipants, Researcher}
+  alias EmotionsWheelBackend.{ExperimentsHasPhotos, ExperimentsHasParticipants, Researcher, Rate}
 
   schema "experiments" do
     field :name, :string
