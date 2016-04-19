@@ -5,6 +5,8 @@ import { push } from 'react-router-redux';
 import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
 
+import { updateParticipant } from 'actions/participant';
+
 import Input from 'components/Input';
 import InputSearch from 'components/InputSearch';
 import Select from 'components/Select';
@@ -21,6 +23,34 @@ const genderSelectOptions = [{
 class ParticipantForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
+
+    const { id: pariticpantId } = this.props.participant;
+
+    const {
+      first_name,
+      last_name,
+      email,
+      gender,
+      birthdate,
+      language_id,
+      country_id,
+      cityName
+    } = this.refs;
+
+    const { id: city_id } = this.getCityByName(cityName.state.value);
+
+    const requestData = {
+      first_name: first_name.state.value,
+      last_name: last_name.state.value,
+      email: email.state.value,
+      gender: gender.state.value,
+      // birthdate: birthdate.state.value,
+      language_id: language_id.state.value,
+      country_id: country_id.state.value,
+      city_id: city_id
+    };
+
+    this.props.dispatch(updateParticipant(pariticpantId, requestData));
   }
 
   handleCancel() {
@@ -103,7 +133,7 @@ class ParticipantForm extends React.Component {
               <Select ref="country_id" options={countrySelectOptions} value={country_id} floatingLabelText="Country" />
             </div>
             <div className="form-row__column--3">
-              <InputSearch ref="city_id" dataSource={cityOptions} value={citySearchText} floatingLabelText="City" />
+              <InputSearch ref="cityName" dataSource={cityOptions} value={citySearchText} filterType="caseInsensitiveFilter" floatingLabelText="City" />
             </div>
           </div>
 

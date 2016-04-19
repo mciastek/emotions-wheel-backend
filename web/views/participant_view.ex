@@ -16,4 +16,8 @@ defmodule EmotionsWheelBackend.ParticipantView do
   def render("error.json", %{message: message}) do
     %{message: message}
   end
+
+  def render("error.json", %{changeset: changeset}) do
+    %{changeset: changeset}
+  end
 end
