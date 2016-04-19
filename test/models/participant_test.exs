@@ -35,4 +35,18 @@ defmodule EmotionsWheelBackend.ParticipantTest do
     })
     refute changeset.valid?
   end
+
+  test "should set age from birthdate" do
+    changeset = Participant.changeset(%Participant{}, %{
+      email: "jon@doe.com",
+      first_name: "John",
+      last_name: "Doe",
+      gender: "none",
+      birthdate: Convertable.to_erlang_datetime(%Date{year: 1945, month: 01, day: 05})
+    })
+
+    age = get_field(changeset, :age)
+
+    assert age
+  end
 end

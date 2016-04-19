@@ -1,5 +1,6 @@
 defmodule EmotionsWheelBackend.Participant do
   use EmotionsWheelBackend.Web, :model
+  use Timex
 
   alias EmotionsWheelBackend.{Country, City, Language, Rate, ExperimentsHasParticipants}
 
@@ -54,10 +55,26 @@ defmodule EmotionsWheelBackend.Participant do
   end
 
   defp set_age(changeset) do
-    if !get_field(changeset, :age) do
-      birthdate = get_field(changeset, :birthdate)
-    else
-      changeset
+    age = get_change(changeset, :age)
+    birthdate = get_change(changeset, :birthdate)
+
+    cond do
+      !age and birthdate ->
+        birthdate_date = birthdate |> converted_birthdate
+        date_diff = Date.diff(Date.now, birthdate_date, :years)
+
+        changeset
+        |> put_change(:age, date_diff)
+      !age and !birthdate ->
+        changeset
+      true ->
+        changeset
     end
+  end
+
+  defp converted_birthdate(birthdate) do
+    birthdate
+    |> Ecto.DateTime.to_erl
+    |> Date.from
   end
 end
