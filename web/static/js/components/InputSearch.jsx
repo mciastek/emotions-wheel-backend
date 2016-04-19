@@ -31,12 +31,15 @@ class InputSearch extends React.Component {
   }
 
   render() {
+    const filterType = (this.props.filterType) ? AutoComplete[this.props.filterType] : null;
+
     return (
       <AutoComplete
         {...this.props}
         errorText={this.state.errorText}
         searchText={this.state.value}
         autoComplete="off"
+        filter={filterType}
         onNewRequest={this.handleChange.bind(this)}
         onUpdateInput={this.handleChange.bind(this)} />
     );

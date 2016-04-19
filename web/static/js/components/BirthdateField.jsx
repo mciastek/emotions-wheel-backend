@@ -41,7 +41,14 @@ class BirthdateField extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { day, month, year } = this._getSplittedDate(nextProps.value);
-    this.setState({ day, month, year });
+    const UTCDate = this._convertToUTC({ d: day, M: month, y: year });
+
+    this.setState({
+      day,
+      month,
+      year,
+      value: UTCDate
+   });
   }
 
   updateDay(e, i, value) {
@@ -74,11 +81,13 @@ class BirthdateField extends React.Component {
       ...value
     };
 
-    const utcDate = moment({ d, M, y }).format();
-
     this.setState({
-      value: utcDate
+      value: this._convertToUTC({ d, M, y })
     });
+  }
+
+  _convertToUTC({ d, M, y }) {
+    return moment({ d, M, y }).format();
   }
 
   _getSplittedDate(value) {
@@ -103,7 +112,6 @@ class BirthdateField extends React.Component {
         <div className="birthdate-field__col">
           <Select options={years} floatingLabelText="Year" maxHeight={300} value={this.state.year} onChange={this.updateYear.bind(this)} />
         </div>
-        {this.state.value}
       </div>
     );
   }
