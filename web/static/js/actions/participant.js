@@ -1,22 +1,22 @@
 import actionTypes from 'constants/action-types';
 import Connection from 'utils/Connection';
 
-export function fetchParticipantRequest() {
+export function participantRequest() {
   return {
-    type: actionTypes.PARTICIPANT_FETCH_REQUEST
+    type: actionTypes.PARTICIPANT_REQUEST
   };
 }
 
-export function fetchParticipantSuccess(single) {
+export function participantRequestSuccess(single) {
   return {
-    type: actionTypes.PARTICIPANT_FETCH_SUCCESS,
+    type: actionTypes.PARTICIPANT_REQUEST_SUCCESS,
     single
   };
 }
 
-export function fetchParticipantError(error) {
+export function participantRequestError(error) {
   return {
-    type: actionTypes.PARTICIPANT_FETCH_ERROR,
+    type: actionTypes.PARTICIPANT_REQUEST_ERROR,
     error
   };
 }
@@ -24,12 +24,12 @@ export function fetchParticipantError(error) {
 export function fetchParticipant(id) {
   return (dispatch) => {
 
-    dispatch(fetchParticipantRequest());
+    dispatch(participantRequest());
 
     Connection.get(`/participants/${id}`)
       .then((data) => {
         const { participant } = data;
-        dispatch(fetchParticipantSuccess(participant));
+        dispatch(participantRequestSuccess(participant));
       })
       .catch(() => {});
   };
@@ -37,12 +37,12 @@ export function fetchParticipant(id) {
 
 export function updateParticipant(id, participant) {
   return (dispatch) => {
-    dispatch(fetchParticipantRequest());
+    dispatch(participantRequest());
 
     Connection.put(`/participants/${id}`, { participant })
       .then((data) => {
         const { participant } = data;
-        dispatch(fetchParticipantSuccess(participant));
+        dispatch(participantRequestSuccess(participant));
       })
       .catch(() => {});
   };
