@@ -16,7 +16,8 @@ import LoginView from 'views/LoginView';
 import DashboardView from 'views/DashboardView';
 import DashboardIndexView from 'views/DashboardIndexView';
 import ParticipantsView from 'views/ParticipantsView';
-import ParticipantView from 'views/ParticipantView';
+import ParticipantEditView from 'views/ParticipantEditView';
+import ParticipantNewView from 'views/ParticipantNewView';
 
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -42,7 +43,8 @@ ReactDOM.render(
         <Route path="dashboard" components={DashboardView} onEnter={checkIfAuthenticated}>
           <IndexRoute component={DashboardIndexView}/>
           <Route path="participants" components={ParticipantsView} />
-          <Route path="participants/:id" components={ParticipantView} />
+          <Route path="participants/new" components={ParticipantNewView} />
+          <Route path="participants/:id" components={ParticipantEditView} />
         </Route>
       </Route>
     </Router>

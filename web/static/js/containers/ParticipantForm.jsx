@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
 
-import { updateParticipant } from 'actions/participant';
+import { createParticipant, updateParticipant } from 'actions/participant';
 
 import Input from 'components/Input';
 import InputSearch from 'components/InputSearch';
@@ -50,7 +50,11 @@ class ParticipantForm extends React.Component {
       city_id: city_id
     };
 
-    this.props.dispatch(updateParticipant(pariticpantId, requestData));
+    if (this.props.actionType === 'create') {
+      this.props.dispatch(createParticipant(requestData));
+    } else {
+      this.props.dispatch(updateParticipant(pariticpantId, requestData));
+    }
   }
 
   handleCancel() {

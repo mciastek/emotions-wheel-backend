@@ -15,12 +15,14 @@ class ParticipantContainer extends React.Component {
 
     return (
       <section className="page">
-        <header className="page__header">
-          <h1 className="page__title">Participant's details</h1>
-          <h3 className="page__subtitle">{first_name} {last_name} ({age} years old)</h3>
+        <header className="page-header">
+          <div className="page-header__left">
+            <h1 className="page__title">Participant's details</h1>
+            <h3 className="page__subtitle">{first_name} {last_name} ({age} years old)</h3>
+          </div>
         </header>
         <section className="page__content">
-          <ParticipantForm participant={this.props.participant.single} />
+          <ParticipantForm participant={this.props.participant.single} actionType="update" />
         </section>
       </section>
     );

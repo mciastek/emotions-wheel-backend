@@ -40,6 +40,8 @@ class BirthdateField extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (!nextProps) return;
+
     const { day, month, year } = this._getSplittedDate(nextProps.value);
     const convertedDate = this._convertDate({ d: day, M: month, y: year });
 
