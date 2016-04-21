@@ -3,7 +3,9 @@
  */
 
 .page {
-  &__header {
+  &-header {
+    display: flex;
+    flex-direction: column;
     padding: 60px 0 0;
   }
 
@@ -15,8 +17,24 @@
     color: material-color('cyan', '700');
   }
 
-  &__header + &__content {
+  &-header + &__content {
     margin-top: 30px;
+  }
+
+  &-header__right {
+    margin-top: 15px;
+  }
+}
+
+@media #{$screen-sm} {
+  .page-header {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .page-header__right {
+    margin-top: 0;
+    margin-left: auto;
   }
 }
 
