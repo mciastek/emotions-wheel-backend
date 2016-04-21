@@ -35,6 +35,20 @@ export function fetchParticipant(id) {
   };
 }
 
+export function createParticipant(participant) {
+  return (dispatch) => {
+
+    dispatch(participantRequest());
+
+    Connection.post(`/participants`, { participant })
+      .then((data) => {
+        const { participant } = data;
+        dispatch(participantRequestSuccess(participant));
+      })
+      .catch(() => {});
+  };
+}
+
 export function updateParticipant(id, participant) {
   return (dispatch) => {
     dispatch(participantRequest());
