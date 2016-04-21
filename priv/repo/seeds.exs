@@ -25,15 +25,12 @@ researchers = [
 ]
 
 # Participants
-{:ok, birthdate_participant_1} = Ecto.DateTime.load({{1941, 11, 30}, {0,0,0}})
-{:ok, birthdate_participant_2} = Ecto.DateTime.load({{1945, 10, 05}, {0,0,0}})
-
 participants = [
   %{
     email: "participant@test.com",
     first_name: "Jerzy",
     last_name: "Stuhr",
-    birthdate: birthdate_participant_1,
+    birthdate: {1941, 11, 30},
     age: 75,
     gender: "male"
   },
@@ -41,7 +38,7 @@ participants = [
     email: "participant2@test.com",
     first_name: "Jane",
     last_name: "Fonda",
-    birthdate: birthdate_participant_2,
+    birthdate: {1945, 10, 05},
     age: 71,
     gender: "female"
   }

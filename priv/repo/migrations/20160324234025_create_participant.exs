@@ -6,7 +6,7 @@ defmodule EmotionsWheelBackend.Repo.Migrations.CreateParticipant do
       add :email, :string
       add :first_name, :string
       add :last_name, :string
-      add :birthdate, :datetime
+      add :birthdate, :date
       add :age, :integer
       add :gender, :string
       timestamps
