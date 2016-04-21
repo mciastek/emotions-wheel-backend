@@ -44,7 +44,7 @@ class ParticipantForm extends React.Component {
       last_name: last_name.state.value,
       email: email.state.value,
       gender: gender.state.value,
-      // birthdate: birthdate.state.value,
+      birthdate: birthdate.state.value,
       language_id: language_id.state.value,
       country_id: country_id.state.value,
       city_id: city_id

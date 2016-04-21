@@ -41,13 +41,13 @@ class BirthdateField extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { day, month, year } = this._getSplittedDate(nextProps.value);
-    const UTCDate = this._convertToUTC({ d: day, M: month, y: year });
+    const convertedDate = this._convertDate({ d: day, M: month, y: year });
 
     this.setState({
       day,
       month,
       year,
-      value: UTCDate
+      value: convertedDate
    });
   }
 
@@ -82,12 +82,12 @@ class BirthdateField extends React.Component {
     };
 
     this.setState({
-      value: this._convertToUTC({ d, M, y })
+      value: this._convertDate({ d, M, y })
     });
   }
 
-  _convertToUTC({ d, M, y }) {
-    return moment({ d, M, y }).format();
+  _convertDate({ d, M, y }) {
+    return moment({ d, M, y }).format('YYYY-MM-DD');
   }
 
   _getSplittedDate(value) {
