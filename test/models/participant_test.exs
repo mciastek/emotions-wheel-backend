@@ -10,7 +10,7 @@ defmodule EmotionsWheelBackend.ParticipantTest do
     last_name: "Doe",
     age: 20,
     gender: "male",
-    birthdate: Convertable.to_erlang_datetime(DateTime.now)
+    birthdate: "1960-10-04"
   }
   @invalid_attrs %{}
 
@@ -42,11 +42,11 @@ defmodule EmotionsWheelBackend.ParticipantTest do
       first_name: "John",
       last_name: "Doe",
       gender: "none",
-      birthdate: Convertable.to_erlang_datetime(%Date{year: 1945, month: 01, day: 05})
+      birthdate: "1960-10-04"
     })
 
     age = get_field(changeset, :age)
 
-    assert age
+    assert is_integer(age)
   end
 end

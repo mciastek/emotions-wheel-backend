@@ -21,7 +21,7 @@ defmodule EmotionsWheelBackend.Participant do
     field :email, :string
     field :first_name, :string
     field :last_name, :string
-    field :birthdate, Ecto.DateTime
+    field :birthdate, Ecto.Date
     field :age, :integer
     field :gender, :string
     timestamps
@@ -36,7 +36,7 @@ defmodule EmotionsWheelBackend.Participant do
   end
 
   @required_fields ~w(first_name last_name birthdate gender)
-  @optional_fields ~w(email age)
+  @optional_fields ~w(email age language_id country_id city_id)
   @gender_valid ~w(male female)
 
   @doc """
@@ -55,26 +55,14 @@ defmodule EmotionsWheelBackend.Participant do
   end
 
   defp set_age(changeset) do
-    age = get_change(changeset, :age)
-    birthdate = get_change(changeset, :birthdate)
+    if birthdate = get_change(changeset, :birthdate) do
+      timex_birthdate = birthdate |> Ecto.Date.to_erl |> Date.from_erl
+      date_diff = Date.diff(Date.now, timex_birthdate, :years)
 
-    cond do
-      !age and birthdate ->
-        birthdate_date = birthdate |> converted_birthdate
-        date_diff = Date.diff(Date.now, birthdate_date, :years)
-
-        changeset
-        |> put_change(:age, date_diff)
-      !age and !birthdate ->
-        changeset
-      true ->
-        changeset
+      changeset
+      |> put_change(:age, date_diff)
+    else
+      changeset
     end
-  end
-
-  defp converted_birthdate(birthdate) do
-    birthdate
-    |> Ecto.DateTime.to_erl
-    |> Date.from
   end
 end
