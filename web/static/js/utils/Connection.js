@@ -60,7 +60,8 @@ class Connection {
         method: 'DELETE',
         headers: buildHeaders()
       })
-      .then(checkStatus);
+      .then(checkStatus)
+      .then((res) => res.json());
   }
 }
 

@@ -14,7 +14,7 @@ import TableBody from 'material-ui/lib/table/table-body';
 import TableRow from 'material-ui/lib/table/table-row';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 
-import { fetchParticipants } from 'actions/participants';
+import { fetchParticipants, deleteSingleParticipant } from 'actions/participants';
 
 import EditButton from 'components/EditButton';
 import DeleteButton from 'components/DeleteButton';
@@ -33,12 +33,16 @@ class ParticipantsContainer extends React.Component {
     this.props.dispatch(fetchParticipants());
   }
 
+  handleEditClick(participantId) {
+    this.props.dispatch(push(`/dashboard/participants/${participantId}`));
+  }
+
+  handleDeleteClick(participantId) {
+    this.props.dispatch(deleteSingleParticipant(participantId));
+  }
+
   render() {
     const rows = this.props.participants.collection.map((participant) => {
-
-      const editButtonClick = () => {
-        this.props.dispatch(push(`/dashboard/participants/${participant.id}`));
-      };
 
       const formattedBirthdate = moment(participant.birthdate).format(config.date.format);
 
@@ -51,8 +55,8 @@ class ParticipantsContainer extends React.Component {
           <TableRowColumn style={shortColumnStyle}>{participant.age}</TableRowColumn>
           <TableRowColumn>{participant.email}</TableRowColumn>
           <TableRowColumn>
-            <EditButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={editButtonClick} />
-            <DeleteButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} />
+            <EditButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleEditClick.bind(this, participant.id)} />
+            <DeleteButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleDeleteClick.bind(this, participant.id)} />
           </TableRowColumn>
         </TableRow>
       );

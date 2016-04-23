@@ -36,3 +36,19 @@ export function fetchParticipants() {
       });
   };
 }
+
+export function deleteSingleParticipant(id) {
+  return (dispatch) => {
+
+    dispatch(fetchParticipantsRequest());
+
+    Connection.delete(`/participants/${id}`)
+      .then((data) => {
+        const { participants } = data;
+        dispatch(fetchParticipantsSuccess(participants));
+      })
+      .catch(() => {
+
+      });
+  };
+}
