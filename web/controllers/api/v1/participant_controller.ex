@@ -49,4 +49,18 @@ defmodule EmotionsWheelBackend.ParticipantController do
           |> render("error.json", changeset: changeset)
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    participant = Repo.get!(Participant, id)
+
+    case Repo.delete(participant) do
+      {:ok, _} ->
+        participants = Participant |> Repo.all
+        render(conn, "index.json", participants: participants)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render("error.json", changeset: changeset)
+    end
+  end
 end

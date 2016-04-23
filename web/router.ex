@@ -22,7 +22,7 @@ defmodule EmotionsWheelBackend.Router do
     scope "/v1" do
       resources "researchers", ResearcherController, only: [:index, :show]
       resources "experiments", ExperimentController, only: [:index]
-      resources "participants", ParticipantController, only: [:index, :show, :create, :update]
+      resources "participants", ParticipantController, only: [:index, :show, :create, :update, :delete]
       resources "languages", LanguageController, only: [:index, :show]
       resources "countries", CountryController, only: [:index, :show]
       resources "cities", CityController, only: [:index, :show]
