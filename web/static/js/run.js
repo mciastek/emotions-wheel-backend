@@ -19,6 +19,9 @@ import ParticipantsView from 'views/ParticipantsView';
 import ParticipantEditView from 'views/ParticipantEditView';
 import ParticipantNewView from 'views/ParticipantNewView';
 
+import ExperimentsView from 'views/ExperimentsView';
+import ExperimentNewView from 'views/ExperimentNewView';
+
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -37,14 +40,22 @@ injectTapEventPlugin();
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <Route components={Main}>
+      <Route component={Main}>
         <Redirect from="/" to="login" />
-        <Route path="login" components={LoginView}/>
-        <Route path="dashboard" components={DashboardView} onEnter={checkIfAuthenticated}>
+        <Route path="login" component={LoginView}/>
+        <Route path="dashboard" component={DashboardView} onEnter={checkIfAuthenticated}>
           <IndexRoute component={DashboardIndexView}/>
-          <Route path="participants" components={ParticipantsView} />
-          <Route path="participants/new" components={ParticipantNewView} />
-          <Route path="participants/:id" components={ParticipantEditView} />
+
+          <Route path="experiments">
+            <IndexRoute component={ExperimentsView} />
+            <Route path="new" component={ExperimentNewView} />
+          </Route>
+
+          <Route path="participants">
+            <IndexRoute component={ParticipantsView} />
+            <Route path="new" component={ParticipantNewView} />
+            <Route path=":id" component={ParticipantEditView} />
+          </Route>
         </Route>
       </Route>
     </Router>
