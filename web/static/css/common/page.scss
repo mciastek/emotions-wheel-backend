@@ -3,6 +3,8 @@
  */
 
 .page {
+  padding-bottom: 40px;
+
   &-header {
     display: flex;
     flex-direction: column;
@@ -44,5 +46,9 @@
 
 .page-form {
   padding: 30px;
+
+  & + .page-form {
+    margin-top: 30px;
+  }
 }
 

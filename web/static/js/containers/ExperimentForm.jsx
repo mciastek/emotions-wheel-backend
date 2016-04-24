@@ -5,10 +5,16 @@ import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
 import RadioButtonGroup from 'material-ui/lib/radio-button-group';
 import RadioButton from 'material-ui/lib/radio-button';
+import List from 'material-ui/lib/lists/list';
+import ListItem from 'material-ui/lib/lists/list-item';
+
+import ContentForward from 'material-ui/lib/svg-icons/content/forward';
+import ContenUndo from 'material-ui/lib/svg-icons/content/undo';
 
 import Input from 'components/Input';
 import InputDate from 'components/InputDate';
 import InputTime from 'components/InputTime';
+
 
 import LinkButton from 'containers/LinkButton';
 
@@ -77,6 +83,30 @@ class ExperimentForm extends React.Component {
               </div>
             </div>
         </Paper>
+
+        <div className="form-row--splitted">
+          <div className="form-row__column--6">
+            <div className="form-row__label">
+              All participants
+            </div>
+            <Paper>
+              <List>
+                <ListItem primaryText="Inbox" rightIcon={<ContentForward />} />
+              </List>
+            </Paper>
+          </div>
+          <div className="form-row__column--6">
+            <div className="form-row__label">
+              Participants in that experiment
+            </div>
+            <Paper>
+              <List>
+                <ListItem primaryText="Inbox" rightIcon={<ContenUndo />} />
+              </List>
+            </Paper>
+          </div>
+        </div>
+
         <div className="form-row--splitted form-row--submit">
           <div className="form-row__column--4"></div>
           <div className="form-row__column--4">
