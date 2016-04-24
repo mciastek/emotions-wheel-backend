@@ -20,7 +20,8 @@ defmodule EmotionsWheelBackend.Experiment do
   end
 
   @required_fields ~w(name kind)
-  @optional_fields ~w(start_date end_date)
+  @optional_fields ~w(start_date end_date researcher_id)
+  @kind_valid ~w(free_mode experiment)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -31,5 +32,6 @@ defmodule EmotionsWheelBackend.Experiment do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_inclusion(:kind, @kind_valid, message: "Should be free_mode or experiment")
   end
 end
