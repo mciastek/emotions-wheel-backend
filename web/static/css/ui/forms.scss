@@ -10,6 +10,10 @@
 
 .form-row {
   padding-top: 20px;
+
+  &.space-after {
+    margin-bottom: 30px;
+  }
 }
 
 .form-row--no-margin {
@@ -23,6 +27,15 @@
   padding-top: 0;
   margin-left: -10px;
   margin-right: -10px;
+}
+
+.form-row--submit {
+  margin-top: 40px;
+}
+
+.form-row__label {
+  display: block;
+  padding: 10px 0;
 }
 
 @for $i from 0 through 12 {
