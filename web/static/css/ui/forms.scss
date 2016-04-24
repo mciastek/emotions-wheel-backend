@@ -38,9 +38,8 @@
   padding: 10px 0;
 }
 
-@for $i from 0 through 12 {
+@for $i from 1 through 12 {
   .form-row__column--#{$i} {
-    @extend .form-row__column;
     @include column(12);
     padding: 20px 10px 0;
 
