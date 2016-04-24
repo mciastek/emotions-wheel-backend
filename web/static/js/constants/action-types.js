@@ -1,29 +1,43 @@
-export default {
+const fetchActions = ['request', 'success', 'error'];
+
+const models = [
+  'participants',
+  'participant',
+  'languages',
+  'countries',
+  'cities',
+  'experiments',
+  'experiment'
+];
+
+const actions = {
   SESSION_CREATE: 'SESSION_CREATE',
   SESSION_DELETE: 'SESSION_DELETE',
   SESSION_ERROR: 'SESSION_ERROR',
   SESSION_GET_CURRENT_USER: 'SESSION_GET_CURRENT_USER',
 
   UI_TOGGLE_NAV: 'UI_TOGGLE_NAV',
-  UI_CLOSE_NAV: 'UI_CLOSE_NAV',
+  UI_CLOSE_NAV: 'UI_CLOSE_NAV'
+};
 
-  PARTICIPANTS_FETCH_REQUEST: 'PARTICIPANTS_FETCH_REQUEST',
-  PARTICIPANTS_FETCH_SUCCESS: 'PARTICIPANTS_FETCH_SUCCESS',
-  PARTICIPANTS_FETCH_ERROR: 'PARTICIPANTS_FETCH_ERROR',
+const generatedActions = (() => {
+  return models.reduce((obj, type) => {
+    const output = {};
 
-  PARTICIPANT_REQUEST: 'PARTICIPANT_REQUEST',
-  PARTICIPANT_REQUEST_SUCCESS: 'PARTICIPANT_REQUEST_SUCCESS',
-  PARTICIPANT_REQUEST_ERROR: 'PARTICIPANT_REQUEST_ERROR',
+    for (const action of fetchActions) {
+      const actionName = `${type.toUpperCase()}_FETCH_${action.toUpperCase()}`
+      output[actionName] = actionName;
+    }
 
-  LANGUAGES_FETCH_REQUEST: 'LANGUAGES_FETCH_REQUEST',
-  LANGUAGES_FETCH_SUCCESS: 'LANGUAGES_FETCH_SUCCESS',
-  LANGUAGES_FETCH_ERROR: 'LANGUAGES_FETCH_ERROR',
+    return {
+      ...obj,
+      ...output
+    };
 
-  COUNTRIES_FETCH_REQUEST: 'COUNTRIES_FETCH_REQUEST',
-  COUNTRIES_FETCH_SUCCESS: 'COUNTRIES_FETCH_SUCCESS',
-  COUNTRIES_FETCH_ERROR: 'COUNTRIES_FETCH_ERROR',
+  }, {});
+})();
 
-  CITIES_FETCH_REQUEST: 'CITIES_FETCH_REQUEST',
-  CITIES_FETCH_SUCCESS: 'CITIES_FETCH_SUCCESS',
-  CITIES_FETCH_ERROR: 'CITIES_FETCH_ERROR'
+export default {
+  ...actions,
+  ...generatedActions
 };
