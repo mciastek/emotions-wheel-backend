@@ -14,7 +14,7 @@ export function participantsFetchSuccess(collection) {
   };
 }
 
-export function fetchParticipantsError(error) {
+export function participantsFetchError(error) {
   return {
     type: actionTypes.PARTICIPANTS_FETCH_ERROR,
     error

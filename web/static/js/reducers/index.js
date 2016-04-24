@@ -8,6 +8,7 @@ import participant from './participant';
 import languages from './languages';
 import countries from './countries';
 import cities from './cities';
+import experiments from './experiments';
 
 export default combineReducers({
   routing: routerReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
   participant,
   languages,
   countries,
-  cities
+  cities,
+  experiments
 });
