@@ -1,22 +1,22 @@
 import actionTypes from 'constants/action-types';
 import Connection from 'utils/Connection';
 
-export function participantRequest() {
+export function participantFetchRequest() {
   return {
-    type: actionTypes.PARTICIPANT_REQUEST
+    type: actionTypes.PARTICIPANT_FETCH_REQUEST
   };
 }
 
-export function participantRequestSuccess(single) {
+export function participantFetchSuccess(single) {
   return {
-    type: actionTypes.PARTICIPANT_REQUEST_SUCCESS,
+    type: actionTypes.PARTICIPANT_FETCH_SUCCESS,
     single
   };
 }
 
-export function participantRequestError(error) {
+export function participantFetchError(error) {
   return {
-    type: actionTypes.PARTICIPANT_REQUEST_ERROR,
+    type: actionTypes.PARTICIPANT_FETCH_ERROR,
     error
   };
 }
@@ -24,12 +24,12 @@ export function participantRequestError(error) {
 export function fetchParticipant(id) {
   return (dispatch) => {
 
-    dispatch(participantRequest());
+    dispatch(participantFetchRequest());
 
     Connection.get(`/participants/${id}`)
       .then((data) => {
         const { participant } = data;
-        dispatch(participantRequestSuccess(participant));
+        dispatch(participantFetchSuccess(participant));
       })
       .catch(() => {});
   };
@@ -38,12 +38,12 @@ export function fetchParticipant(id) {
 export function createParticipant(participant) {
   return (dispatch) => {
 
-    dispatch(participantRequest());
+    dispatch(participantFetchRequest());
 
     Connection.post(`/participants`, { participant })
       .then((data) => {
         const { participant } = data;
-        dispatch(participantRequestSuccess(participant));
+        dispatch(participantFetchSuccess(participant));
       })
       .catch(() => {});
   };
@@ -51,12 +51,12 @@ export function createParticipant(participant) {
 
 export function updateParticipant(id, participant) {
   return (dispatch) => {
-    dispatch(participantRequest());
+    dispatch(participantFetchRequest());
 
     Connection.put(`/participants/${id}`, { participant })
       .then((data) => {
         const { participant } = data;
-        dispatch(participantRequestSuccess(participant));
+        dispatch(participantFetchSuccess(participant));
       })
       .catch(() => {});
   };

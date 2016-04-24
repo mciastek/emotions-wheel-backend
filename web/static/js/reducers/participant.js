@@ -8,20 +8,20 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.PARTICIPANT_REQUEST:
+    case actionTypes.PARTICIPANT_FETCH_REQUEST:
       return {
         ...state,
         loading: true
       };
 
-    case actionTypes.PARTICIPANT_REQUEST_SUCCESS:
+    case actionTypes.PARTICIPANT_FETCH_SUCCESS:
       return {
         ...state,
         loading: false,
         single: action.single
       };
 
-    case actionTypes.PARTICIPANT_REQUEST_ERROR:
+    case actionTypes.PARTICIPANT_FETCH_ERROR:
       return {
         ...state,
         loading: false,

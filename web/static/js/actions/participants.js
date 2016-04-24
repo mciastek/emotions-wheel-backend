@@ -1,13 +1,13 @@
 import actionTypes from 'constants/action-types';
 import Connection from 'utils/Connection';
 
-export function fetchParticipantsRequest() {
+export function participantsFetchRequest() {
   return {
     type: actionTypes.PARTICIPANTS_FETCH_REQUEST
   };
 }
 
-export function fetchParticipantsSuccess(collection) {
+export function participantsFetchSuccess(collection) {
   return {
     type: actionTypes.PARTICIPANTS_FETCH_SUCCESS,
     collection
@@ -24,12 +24,12 @@ export function fetchParticipantsError(error) {
 export function fetchParticipants() {
   return (dispatch) => {
 
-    dispatch(fetchParticipantsRequest());
+    dispatch(participantsFetchRequest());
 
     Connection.get('/participants')
       .then((data) => {
         const { participants } = data;
-        dispatch(fetchParticipantsSuccess(participants));
+        dispatch(participantsFetchSuccess(participants));
       })
       .catch(() => {
 
@@ -40,12 +40,12 @@ export function fetchParticipants() {
 export function deleteSingleParticipant(id) {
   return (dispatch) => {
 
-    dispatch(fetchParticipantsRequest());
+    dispatch(participantsFetchRequest());
 
     Connection.delete(`/participants/${id}`)
       .then((data) => {
         const { participants } = data;
-        dispatch(fetchParticipantsSuccess(participants));
+        dispatch(participantsFetchSuccess(participants));
       })
       .catch(() => {
 
