@@ -12,6 +12,8 @@ import InputSearch from 'components/InputSearch';
 import Select from 'components/Select';
 import BirthdateField from 'components/BirthdateField';
 
+import LinkButton from 'containers/LinkButton';
+
 const genderSelectOptions = [{
   value: 'male',
   label: 'Male'
@@ -55,10 +57,6 @@ class ParticipantForm extends React.Component {
     } else {
       this.props.dispatch(updateParticipant(pariticpantId, requestData));
     }
-  }
-
-  handleCancel() {
-    this.props.dispatch(push('/dashboard/participants'))
   }
 
   getCityByName(name) {
@@ -147,7 +145,7 @@ class ParticipantForm extends React.Component {
               <RaisedButton type="submit" label="Save" secondary={true} fullWidth={true} />
             </div>
             <div className="form-row__column--4">
-              <RaisedButton label="Cancel" parimary={true} fullWidth={true} onTouchTap={this.handleCancel.bind(this)} />
+              <LinkButton label="Cancel" parimary={true} fullWidth={true} route="/dashboard/participants" />
             </div>
           </div>
         </form>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ParticipantsContainer from 'containers/ParticipantsContainer';
-import AddNewButton from 'containers/AddNewButton';
+import LinkButton from 'containers/LinkButton';
 
 class ParticipantsView extends React.Component {
   render() {
@@ -13,7 +13,7 @@ class ParticipantsView extends React.Component {
             <h3 className="page__subtitle">List of participants</h3>
           </div>
           <div className="page-header__right">
-            <AddNewButton label="Add New Participant" route="/dashboard/participants/new" />
+            <LinkButton label="Add New Participant" primary={true} route="/dashboard/participants/new" />
           </div>
         </header>
         <section className="page__content">
