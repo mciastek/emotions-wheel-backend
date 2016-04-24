@@ -138,7 +138,7 @@ class ParticipantForm extends React.Component {
             </div>
           </div>
 
-          <div className="form-row--splitted">
+          <div className="form-row--splitted form-row--submit">
             <div className="form-row__column--4"></div>
             <div className="form-row__column--4">
               <RaisedButton type="submit" label="Save" secondary={true} fullWidth={true} />
