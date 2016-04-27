@@ -5,6 +5,7 @@ export default {
   },
 
   date: {
-    format: 'DD/MM/YYYY'
+    format: 'DD/MM/YYYY',
+    formatDateTime: 'DD/MM/YYYY H:mm'
   }
 };

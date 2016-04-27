@@ -41,6 +41,10 @@ class ExperimentsContainer extends React.Component {
     this.props.dispatch(deleteSingleExperiment(experimentId));
   }
 
+  formattedDate(date) {
+    return moment(date).format(config.date.formatDateTime);
+  }
+
   render() {
     const rows = this.props.experiments.collection.map((experiment) => {
       return (
@@ -48,8 +52,8 @@ class ExperimentsContainer extends React.Component {
           <TableRowColumn style={shortColumnStyle}>{experiment.id}</TableRowColumn>
           <TableRowColumn>{experiment.name}</TableRowColumn>
           <TableRowColumn>{experiment.kind}</TableRowColumn>
-          <TableRowColumn>{experiment.start_date}</TableRowColumn>
-          <TableRowColumn>{experiment.end_date}</TableRowColumn>
+          <TableRowColumn>{this.formattedDate(experiment.start_date)}</TableRowColumn>
+          <TableRowColumn>{this.formattedDate(experiment.end_date)}</TableRowColumn>
           <TableRowColumn>
             <EditButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleEditClick.bind(this, experiment.id)} />
             <DeleteButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleDeleteClick.bind(this, experiment.id)} />

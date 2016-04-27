@@ -11,9 +11,10 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import ContentForward from 'material-ui/lib/svg-icons/content/forward';
 import ContenUndo from 'material-ui/lib/svg-icons/content/undo';
 
+import { createExperiment } from 'actions/experiment';
+
 import Input from 'components/Input';
 import DateTimeField from 'components/DateTimeField';
-
 
 import LinkButton from 'containers/LinkButton';
 
@@ -25,6 +26,22 @@ const radioStyle = {
 class ExperimentForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
+
+    const {
+      name,
+      kind,
+      start_date,
+      end_date
+    } = this.refs;
+
+    const requestData = {
+      name: name.state.value,
+      kind: kind.state.selected,
+      start_date: start_date.state.value,
+      end_date: end_date.state.value
+    };
+
+    this.props.dispatch(createExperiment(requestData));
   }
 
   render() {
@@ -40,7 +57,7 @@ class ExperimentForm extends React.Component {
         <Paper className="page-form">
             <div className="form-row--splitted space-after">
               <div className="form-row__column--12">
-                <Input ref="first_name" floatingLabelText="Experiment's Name" fullWidth={true} value={name} />
+                <Input ref="name" floatingLabelText="Experiment's Name" fullWidth={true} value={name} />
               </div>
             </div>
 
@@ -48,7 +65,7 @@ class ExperimentForm extends React.Component {
               <div className="form-row__column--4">
                 <label>Choose experiment's mode:</label>
               </div>
-              <RadioButtonGroup className="form-row__column--8" name="kind" defaultSelected={kind || 'experiment'}>
+              <RadioButtonGroup className="form-row__column--8" ref="kind" name="kind" defaultSelected={kind || 'experiment'}>
                 <RadioButton value="experiment" label="Experiment mode" style={radioStyle} />
                 <RadioButton value="free_mode" label="Free mode" style={radioStyle} />
               </RadioButtonGroup>
@@ -60,7 +77,7 @@ class ExperimentForm extends React.Component {
               </div>
 
               <div className="form-row__column--8">
-                <DateTimeField timeLabel="Start time" dateLabel="Start date" />
+                <DateTimeField ref="start_date" timeLabel="Start time" dateLabel="Start date" value={start_date} />
               </div>
             </div>
 
@@ -70,7 +87,7 @@ class ExperimentForm extends React.Component {
               </div>
 
               <div className="form-row__column--8">
-                <DateTimeField timeLabel="End time" dateLabel="End date" />
+                <DateTimeField ref="end_date" timeLabel="End time" dateLabel="End date" value={end_date} />
               </div>
             </div>
         </Paper>
