@@ -12,8 +12,7 @@ import ContentForward from 'material-ui/lib/svg-icons/content/forward';
 import ContenUndo from 'material-ui/lib/svg-icons/content/undo';
 
 import Input from 'components/Input';
-import InputDate from 'components/InputDate';
-import InputTime from 'components/InputTime';
+import DateTimeField from 'components/DateTimeField';
 
 
 import LinkButton from 'containers/LinkButton';
@@ -60,12 +59,8 @@ class ExperimentForm extends React.Component {
                 <label className="form-row__label">Experiment's start:</label>
               </div>
 
-              <div className="form-row__column--4">
-                <InputTime ref="start_date_time" hintText="Start time" />
-              </div>
-
-              <div className="form-row__column--4">
-                <InputDate ref="start_date_date" hintText="Start date" />
+              <div className="form-row__column--8">
+                <DateTimeField timeLabel="Start time" dateLabel="Start date" />
               </div>
             </div>
 
@@ -74,12 +69,8 @@ class ExperimentForm extends React.Component {
                 <label className="form-row__label">Experiment's end:</label>
               </div>
 
-              <div className="form-row__column--4">
-                <InputTime ref="end_date_time" hintText="End time" />
-              </div>
-
-              <div className="form-row__column--4">
-                <InputDate ref="end_date_date" hintText="End date" />
+              <div className="form-row__column--8">
+                <DateTimeField timeLabel="End time" dateLabel="End date" />
               </div>
             </div>
         </Paper>

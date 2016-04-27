@@ -1,0 +1,20 @@
+@import '../base/settings';
+@import '../utils/grid';
+
+/**
+ * Datetime field
+ */
+
+.datetime-field {
+  @extend %row;
+
+  &__col {
+    @include column(12);
+  }
+}
+
+@media #{$screen-md} {
+  .datetime-field__col {
+    @include column(6);
+  }
+}
