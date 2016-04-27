@@ -33,11 +33,15 @@ class DateTimeField extends React.Component {
   updateTime(_, value) {
     const time = moment(value).format('H:mm:ss');
 
+    this.setState({ time });
+
     this._updateValue({ time });
   }
 
   updateDate(_, value) {
     const date = moment(value).format('YYYY-MM-DD');
+
+    this.setState({ date });
 
     this._updateValue({ date });
   }

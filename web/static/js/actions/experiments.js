@@ -3,20 +3,20 @@ import Connection from 'utils/Connection';
 
 export function experimentsFetchRequest() {
   return {
-    type: actionTypes.PARTICIPANTS_FETCH_REQUEST
+    type: actionTypes.EXPERIMENTS_FETCH_REQUEST
   };
 }
 
 export function experimentsFetchSuccess(collection) {
   return {
-    type: actionTypes.PARTICIPANTS_FETCH_SUCCESS,
+    type: actionTypes.EXPERIMENTS_FETCH_SUCCESS,
     collection
   };
 }
 
 export function experimentsFetchError(error) {
   return {
-    type: actionTypes.PARTICIPANTS_FETCH_ERROR,
+    type: actionTypes.EXPERIMENTS_FETCH_ERROR,
     error
   };
 }
