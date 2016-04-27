@@ -9,6 +9,7 @@ import languages from './languages';
 import countries from './countries';
 import cities from './cities';
 import experiments from './experiments';
+import experiment from './experiment';
 
 export default combineReducers({
   routing: routerReducer,
@@ -19,5 +20,6 @@ export default combineReducers({
   languages,
   countries,
   cities,
-  experiments
+  experiments,
+  experiment
 });
