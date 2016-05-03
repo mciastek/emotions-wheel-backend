@@ -5,16 +5,16 @@ import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
 import RadioButtonGroup from 'material-ui/lib/radio-button-group';
 import RadioButton from 'material-ui/lib/radio-button';
-import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
-
 import ContentForward from 'material-ui/lib/svg-icons/content/forward';
 import ContenUndo from 'material-ui/lib/svg-icons/content/undo';
 
 import { createExperiment } from 'actions/experiment';
+import { fetchParticipants } from 'actions/participants';
 
 import Input from 'components/Input';
 import DateTimeField from 'components/DateTimeField';
+import DualListbox from 'components/DualListbox';
 
 import LinkButton from 'containers/LinkButton';
 
@@ -24,6 +24,10 @@ const radioStyle = {
 };
 
 class ExperimentForm extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(fetchParticipants());
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 
@@ -44,6 +48,30 @@ class ExperimentForm extends React.Component {
     this.props.dispatch(createExperiment(requestData));
   }
 
+  leftListItem(participant, index) {
+    return (
+      <ListItem
+        key={index}
+        primaryText={`${participant.first_name} ${participant.last_name} (${participant.age})`}
+        rightIcon={<ContentForward />}
+      />
+    );
+  }
+
+  rightListItem(participant, index) {
+    return (
+      <ListItem
+        key={index}
+        primaryText={`${participant.first_name} ${participant.last_name} (${participant.age})`}
+        rightIcon={<ContenUndo />}
+      />
+    );
+  }
+
+  listItemLabel(participant) {
+    return `${participant.first_name} ${participant.last_name} (${participant.age})`;
+  }
+
   render() {
     const {
       name,
@@ -55,65 +83,50 @@ class ExperimentForm extends React.Component {
     return (
       <form className="form" onSubmit={this.handleSubmit.bind(this)} noValidate>
         <Paper className="page-form">
-            <div className="form-row--splitted space-after">
-              <div className="form-row__column--12">
-                <Input ref="name" floatingLabelText="Experiment's Name" fullWidth={true} value={name} />
-              </div>
+          <div className="form-row--splitted space-after">
+            <div className="form-row__column--12">
+              <Input ref="name" floatingLabelText="Experiment's Name" fullWidth={true} value={name} />
+            </div>
+          </div>
+
+          <div className="form-row--splitted space-after">
+            <div className="form-row__column--4">
+              <label>Choose experiment's mode:</label>
+            </div>
+            <RadioButtonGroup className="form-row__column--8" ref="kind" name="kind" defaultSelected={kind || 'experiment'}>
+              <RadioButton value="experiment" label="Experiment mode" style={radioStyle} />
+              <RadioButton value="free_mode" label="Free mode" style={radioStyle} />
+            </RadioButtonGroup>
+          </div>
+
+          <div className="form-row--splitted">
+            <div className="form-row__column--4">
+              <label className="form-row__label">Experiment's start:</label>
             </div>
 
-            <div className="form-row--splitted space-after">
-              <div className="form-row__column--4">
-                <label>Choose experiment's mode:</label>
-              </div>
-              <RadioButtonGroup className="form-row__column--8" ref="kind" name="kind" defaultSelected={kind || 'experiment'}>
-                <RadioButton value="experiment" label="Experiment mode" style={radioStyle} />
-                <RadioButton value="free_mode" label="Free mode" style={radioStyle} />
-              </RadioButtonGroup>
+            <div className="form-row__column--8">
+              <DateTimeField ref="start_date" timeLabel="Start time" dateLabel="Start date" value={start_date} />
+            </div>
+          </div>
+
+          <div className="form-row--splitted">
+            <div className="form-row__column--4">
+              <label className="form-row__label">Experiment's end:</label>
             </div>
 
-            <div className="form-row--splitted">
-              <div className="form-row__column--4">
-                <label className="form-row__label">Experiment's start:</label>
-              </div>
-
-              <div className="form-row__column--8">
-                <DateTimeField ref="start_date" timeLabel="Start time" dateLabel="Start date" value={start_date} />
-              </div>
+            <div className="form-row__column--8">
+              <DateTimeField ref="end_date" timeLabel="End time" dateLabel="End date" value={end_date} />
             </div>
-
-            <div className="form-row--splitted">
-              <div className="form-row__column--4">
-                <label className="form-row__label">Experiment's end:</label>
-              </div>
-
-              <div className="form-row__column--8">
-                <DateTimeField ref="end_date" timeLabel="End time" dateLabel="End date" value={end_date} />
-              </div>
-            </div>
+          </div>
         </Paper>
 
-        <div className="form-row--splitted">
-          <div className="form-row__column--6">
-            <div className="form-row__label">
-              All participants
-            </div>
-            <Paper>
-              <List>
-                <ListItem primaryText="Inbox" rightIcon={<ContentForward />} />
-              </List>
-            </Paper>
-          </div>
-          <div className="form-row__column--6">
-            <div className="form-row__label">
-              Participants in that experiment
-            </div>
-            <Paper>
-              <List>
-                <ListItem primaryText="Inbox" rightIcon={<ContenUndo />} />
-              </List>
-            </Paper>
-          </div>
-        </div>
+        <DualListbox
+          ref="added_participants"
+          leftLabel="All participants"
+          rightLabel="Participants in that experiment"
+          collection={this.props.participants.collection}
+          selectBy="id"
+          listItemLabel={this.listItemLabel} />
 
         <div className="form-row--splitted form-row--submit">
           <div className="form-row__column--4"></div>
@@ -129,4 +142,10 @@ class ExperimentForm extends React.Component {
   }
 }
 
-export default connect()(ExperimentForm);
+function mapStateToProps(state) {
+  return {
+    participants: state.participants
+  };
+}
+
+export default connect(mapStateToProps)(ExperimentForm);

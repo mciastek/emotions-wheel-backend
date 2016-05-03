@@ -25,4 +25,8 @@ FlashMessage.propTypes = {
   message: PropTypes.string
 };
 
+FlashMessage.defaultProps = {
+  type: 'success'
+};
+
 export default FlashMessage;
