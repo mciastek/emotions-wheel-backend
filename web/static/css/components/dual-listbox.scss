@@ -6,7 +6,7 @@
  */
 
 .dual-listbox {
-  @extend %row;
+  @include row;
   padding: 30px 0;
 
   &__col {

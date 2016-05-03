@@ -70,6 +70,15 @@
   }
 }
 
+@mixin row-flex() {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: -($grid-gutter / 2);
+  margin-right: -($grid-gutter / 2);
+}
+
 @mixin column($size) {
   float: left;
   width: ($size * 100% / $grid-columns);
@@ -80,6 +89,14 @@
 
 @mixin column-no-float($size) {
   width: ($size * 100% / $grid-columns);
+  padding-left: $grid-gutter / 2;
+  padding-right: $grid-gutter / 2;
+}
+
+@mixin column-flex($size) {
+  flex: 0 0 auto;
+  flex-basis: ($size * 100% / $grid-columns);
+  max-width: ($size * 100% / $grid-columns);
   padding-left: $grid-gutter / 2;
   padding-right: $grid-gutter / 2;
 }
