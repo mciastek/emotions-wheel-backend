@@ -1,0 +1,26 @@
+@import '../base/settings';
+@import '../utils/grid';
+
+/**
+ * Dual Listbox
+ */
+
+.dual-listbox {
+  @extend %row;
+  padding: 30px 0;
+
+  &__col {
+    @include column(12);
+  }
+
+  &__label {
+    display: block;
+    padding: 10px 0;
+  }
+}
+
+@media #{$screen-md} {
+  .dual-listbox__col {
+    @include column(6);
+  }
+}
