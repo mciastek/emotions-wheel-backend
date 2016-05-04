@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import moment from 'moment';
 
-import Colors from 'material-ui/lib/styles/colors';
+import * as Colors from 'material-ui/lib/styles/colors';
 
 import Table from 'material-ui/lib/table/table';
 import TableHeader from 'material-ui/lib/table/table-header';
