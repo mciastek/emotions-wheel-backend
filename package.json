@@ -26,6 +26,7 @@
     "phoenix": "file:deps/phoenix",
     "phoenix_html": "file:deps/phoenix_html",
     "phoenix_js": "0.0.2",
+    "qrcode.react": "^0.6.1",
     "react": "^0.14.8",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",

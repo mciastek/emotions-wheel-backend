@@ -11,3 +11,22 @@ export function closeNav() {
     type: actionTypes.UI_CLOSE_NAV
   };
 }
+
+export function openQrDialog() {
+  return {
+    type: actionTypes.UI_OPEN_QR_DIALOG
+  };
+}
+
+export function closeQrDialog() {
+  return {
+    type: actionTypes.UI_CLOSE_QR_DIALOG
+  };
+}
+
+export function setQrDialogValue(value) {
+  return {
+    type: actionTypes.UI_QR_DIALOG_SET_VALUE,
+    value
+  };
+}
