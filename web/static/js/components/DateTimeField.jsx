@@ -58,7 +58,7 @@ class DateTimeField extends React.Component {
   }
 
   render() {
-    const convertedDate = moment(this.state.value).toDate();
+    const convertedDate = (this.state.value) ? moment(this.state.value).toDate() : null;
 
     return (
       <div className="datetime-field">
