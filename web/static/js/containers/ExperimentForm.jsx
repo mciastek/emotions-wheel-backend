@@ -96,7 +96,7 @@ class ExperimentForm extends React.Component {
             <div className="form-row__column--4">
               <label>Choose experiment's mode:</label>
             </div>
-            <RadioButtonGroup className="form-row__column--8" ref="kind" name="kind" defaultSelected={kind || 'experiment'}>
+            <RadioButtonGroup className="form-row__column--8" ref="kind" name="kind" valueSelected={kind || 'experiment'}>
               <RadioButton value="experiment" label="Experiment mode" style={radioStyle} />
               <RadioButton value="free_mode" label="Free mode" style={radioStyle} />
             </RadioButtonGroup>

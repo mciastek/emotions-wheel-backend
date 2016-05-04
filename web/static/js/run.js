@@ -21,6 +21,7 @@ import ParticipantNewView from 'views/ParticipantNewView';
 
 import ExperimentsView from 'views/ExperimentsView';
 import ExperimentNewView from 'views/ExperimentNewView';
+import ExperimentEditView from 'views/ExperimentEditView';
 
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -49,6 +50,7 @@ ReactDOM.render(
           <Route path="experiments">
             <IndexRoute component={ExperimentsView} />
             <Route path="new" component={ExperimentNewView} />
+            <Route path=":id" component={ExperimentEditView} />
           </Route>
 
           <Route path="participants">
