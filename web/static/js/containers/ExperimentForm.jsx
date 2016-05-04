@@ -5,9 +5,15 @@ import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
 import RadioButtonGroup from 'material-ui/lib/radio-button-group';
 import RadioButton from 'material-ui/lib/radio-button';
+import IconButton from 'material-ui/lib/icon-button';
+
+import * as Colors from 'material-ui/lib/styles/colors';
+
+import ActionOpenInNew from 'material-ui/lib/svg-icons/action/open-in-new';
 
 import { createExperiment } from 'actions/experiment';
 import { fetchParticipants } from 'actions/participants';
+import { openQrDialog, setQrDialogValue } from 'actions/ui';
 
 import Input from 'components/Input';
 import DateTimeField from 'components/DateTimeField';
@@ -48,8 +54,25 @@ class ExperimentForm extends React.Component {
     this.props.dispatch(createExperiment(requestData));
   }
 
+  openDialog(dialogValue) {
+    this.props.dispatch(setQrDialogValue(dialogValue));
+    this.props.dispatch(openQrDialog());
+  }
+
   listItemLabel(participant) {
     return `${participant.first_name} ${participant.last_name} (${participant.age})`;
+  }
+
+  dialogButton(item) {
+    const { experiment_uuid } = item;
+
+    if (experiment_uuid) {
+      return (
+        <IconButton onTouchTap={this.openDialog.bind(this, experiment_uuid)}>
+          <ActionOpenInNew color={Colors.grey500} />
+        </IconButton>
+      );
+    }
   }
 
   render() {
@@ -107,6 +130,7 @@ class ExperimentForm extends React.Component {
           collection={this.props.participants.collection}
           selected={this.props.experiment.attached_participants}
           selectBy="id"
+          rightListItemAction={this.dialogButton.bind(this)}
           listItemLabel={this.listItemLabel} />
 
         <div className="form-row--splitted form-row--submit">

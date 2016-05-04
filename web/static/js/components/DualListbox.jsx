@@ -122,9 +122,12 @@ class DualListbox extends React.Component {
         const label = (this.props.listItemLabel) ? this.props.listItemLabel(item) : item;
 
         const button = (
-          <IconButton onTouchTap={this.handleRemove.bind(this, item)}>
-            <ContenUndo color={Colors.pink500} />
-          </IconButton>
+          <div>
+            {(this.props.rightListItemAction) ? this.props.rightListItemAction(item) : null}
+            <IconButton onTouchTap={this.handleRemove.bind(this, item)}>
+              <ContenUndo color={Colors.pink500} />
+            </IconButton>
+          </div>
         );
 
         return (
