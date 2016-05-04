@@ -12,6 +12,7 @@ defmodule EmotionsWheelBackend.Participant do
     :birthdate,
     :age,
     :gender,
+    :experiment_uuid,
     :language_id,
     :country_id,
     :city_id
@@ -24,6 +25,7 @@ defmodule EmotionsWheelBackend.Participant do
     field :birthdate, Ecto.Date
     field :age, :integer
     field :gender, :string
+    field :experiment_uuid, :string, virtual: true
     timestamps
 
     belongs_to :country, Country

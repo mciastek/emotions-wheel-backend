@@ -8,7 +8,9 @@ defmodule EmotionsWheelBackend.Experiment do
     :name,
     :kind,
     :start_date,
-    :end_date
+    :end_date,
+    :researcher_id,
+    :attached_participants
   ]}
 
   schema "experiments" do
@@ -16,6 +18,7 @@ defmodule EmotionsWheelBackend.Experiment do
     field :kind, :string
     field :start_date, Ecto.DateTime
     field :end_date, Ecto.DateTime
+    field :attached_participants, {:array, :map}, virtual: true
     field :participants_ids, {:array, :integer}, virtual: true
     timestamps
 
