@@ -27,7 +27,11 @@ defmodule EmotionsWheelBackend.ExperimentsHasParticipants do
   end
 
   defp generate_uuid(changeset) do
-    changeset
-    |> put_change(:uuid, Ecto.UUID.generate)
+    if !get_field(changeset, :uuid) do
+      changeset
+      |> put_change(:uuid, Ecto.UUID.generate)
+    else
+      changeset
+    end
   end
 end

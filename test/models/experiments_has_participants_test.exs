@@ -24,4 +24,15 @@ defmodule EmotionsWheelBackend.ExperimentsHasParticipantsTest do
     uuid = changeset |> get_field(:uuid)
     assert !is_nil(uuid)
   end
+
+  test "it should not generate UUID when it's present" do
+    uuid = "082eb4f7-1020-40a9-a33a-76b6b0bbe52d"
+    changeset = ExperimentsHasParticipants.changeset(%ExperimentsHasParticipants{}, %{
+      experiment_id: 1,
+      participant_id: 2,
+      uuid: uuid
+    })
+
+    assert changeset |> get_field(:uuid) == uuid
+  end
 end
