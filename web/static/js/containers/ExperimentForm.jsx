@@ -5,9 +5,6 @@ import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
 import RadioButtonGroup from 'material-ui/lib/radio-button-group';
 import RadioButton from 'material-ui/lib/radio-button';
-import ListItem from 'material-ui/lib/lists/list-item';
-import ContentForward from 'material-ui/lib/svg-icons/content/forward';
-import ContenUndo from 'material-ui/lib/svg-icons/content/undo';
 
 import { createExperiment } from 'actions/experiment';
 import { fetchParticipants } from 'actions/participants';
@@ -49,26 +46,6 @@ class ExperimentForm extends React.Component {
     };
 
     this.props.dispatch(createExperiment(requestData));
-  }
-
-  leftListItem(participant, index) {
-    return (
-      <ListItem
-        key={index}
-        primaryText={`${participant.first_name} ${participant.last_name} (${participant.age})`}
-        rightIcon={<ContentForward />}
-      />
-    );
-  }
-
-  rightListItem(participant, index) {
-    return (
-      <ListItem
-        key={index}
-        primaryText={`${participant.first_name} ${participant.last_name} (${participant.age})`}
-        rightIcon={<ContenUndo />}
-      />
-    );
   }
 
   listItemLabel(participant) {
@@ -128,6 +105,7 @@ class ExperimentForm extends React.Component {
           leftLabel="All participants"
           rightLabel="Participants in that experiment"
           collection={this.props.participants.collection}
+          selected={this.props.experiment.attached_participants}
           selectBy="id"
           listItemLabel={this.listItemLabel} />
 

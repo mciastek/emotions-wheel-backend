@@ -5,6 +5,9 @@ import React from 'react';
 import Paper from 'material-ui/lib/paper';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
+import IconButton from 'material-ui/lib/icon-button';
+
+import * as Colors from 'material-ui/lib/styles/colors';
 import ContentForward from 'material-ui/lib/svg-icons/content/forward';
 import ContenUndo from 'material-ui/lib/svg-icons/content/undo';
 
@@ -22,9 +25,19 @@ class DualListbox extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!nextProps) return;
 
-    this.setState({
-      leftList: [...nextProps.collection]
-    });
+    const { selected = [], collection } = nextProps;
+
+    if (selected.length) {
+      this.setState({
+        leftList: [...this.xor(collection, selected)],
+        rightList: [...selected],
+        selection: this.mappedToIds(selected)
+      });
+    } else {
+      this.setState({
+        leftList: [...collection]
+      });
+    }
   }
 
   handleAdd(item) {
@@ -55,7 +68,7 @@ class DualListbox extends React.Component {
 
   filterList(listName, prop, callback) {
     this.setState({
-      [listName]: this.state[listName].filter((item) => item[this.props.selectBy] !== prop)
+      [listName]: this.filtered(this.state[listName], prop)
     }, function() {
       if (callback) {
         callback();
@@ -63,9 +76,27 @@ class DualListbox extends React.Component {
     });
   }
 
+  xor(collection, selected) {
+    const { selectBy } = this.props;
+
+    return collection.filter((item) => {
+      return selected.every((selectedItem) => {
+        return selectedItem[selectBy] !== item[selectBy];
+      });
+    });
+  }
+
+  filtered(collection, prop) {
+    return collection.filter((item) => item[this.props.selectBy] !== prop);
+  }
+
+  mappedToIds(collection) {
+    return collection.map((item) => item[this.props.selectBy]);
+  }
+
   updateSelection() {
     this.setState({
-      selection: this.state.rightList.map((item) => item[this.props.selectBy])
+      selection: this.mappedToIds(this.state.rightList)
     });
   }
 
@@ -74,8 +105,14 @@ class DualListbox extends React.Component {
       return this.state.leftList.map((item, index) => {
         const label = (this.props.listItemLabel) ? this.props.listItemLabel(item) : item;
 
+        const button = (
+          <IconButton onTouchTap={this.handleAdd.bind(this, item)}>
+            <ContentForward color={Colors.cyan500} />
+          </IconButton>
+        );
+
         return (
-          <ListItem key={index} primaryText={label} onTouchTap={this.handleAdd.bind(this, item)} rightIcon={<ContentForward />} />
+          <ListItem key={index} primaryText={label} rightIconButton={button} />
         );
       });
     })();
@@ -84,8 +121,14 @@ class DualListbox extends React.Component {
       return this.state.rightList.map((item, index) => {
         const label = (this.props.listItemLabel) ? this.props.listItemLabel(item) : item;
 
+        const button = (
+          <IconButton onTouchTap={this.handleRemove.bind(this, item)}>
+            <ContenUndo color={Colors.pink500} />
+          </IconButton>
+        );
+
         return (
-          <ListItem key={index} primaryText={label} onTouchTap={this.handleRemove.bind(this, item)} rightIcon={<ContenUndo />} />
+          <ListItem key={index} primaryText={label} rightIconButton={button} />
         );
       });
     })();
