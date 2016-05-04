@@ -35,14 +35,17 @@ class ExperimentForm extends React.Component {
       name,
       kind,
       start_date,
-      end_date
+      end_date,
+      participants_ids
     } = this.refs;
 
     const requestData = {
       name: name.state.value,
       kind: kind.state.selected,
       start_date: start_date.state.value,
-      end_date: end_date.state.value
+      end_date: end_date.state.value,
+      researcher_id: this.props.session.currentUser.id,
+      participants_ids: participants_ids.state.selection
     };
 
     this.props.dispatch(createExperiment(requestData));
@@ -121,7 +124,7 @@ class ExperimentForm extends React.Component {
         </Paper>
 
         <DualListbox
-          ref="added_participants"
+          ref="participants_ids"
           leftLabel="All participants"
           rightLabel="Participants in that experiment"
           collection={this.props.participants.collection}
@@ -144,7 +147,8 @@ class ExperimentForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    participants: state.participants
+    participants: state.participants,
+    session: state.session
   };
 }
 

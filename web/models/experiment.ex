@@ -16,6 +16,7 @@ defmodule EmotionsWheelBackend.Experiment do
     field :kind, :string
     field :start_date, Ecto.DateTime
     field :end_date, Ecto.DateTime
+    field :participants_ids, {:array, :integer}, virtual: true
     timestamps
 
     belongs_to :researcher, Researcher
@@ -28,7 +29,7 @@ defmodule EmotionsWheelBackend.Experiment do
   end
 
   @required_fields ~w(name kind)
-  @optional_fields ~w(start_date end_date researcher_id)
+  @optional_fields ~w(start_date end_date researcher_id participants_ids)
   @kind_valid ~w(free_mode experiment)
 
   @doc """
