@@ -3,7 +3,10 @@ defmodule EmotionsWheelBackend.ExperimentsHasParticipantsTest do
 
   alias EmotionsWheelBackend.ExperimentsHasParticipants
 
-  @valid_attrs %{uuid: "5976423a-ee35-11e3-8569-14109ff1a304"}
+  @valid_attrs %{
+    experiment_id: 1,
+    participant_id: 2
+  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
@@ -14,5 +17,11 @@ defmodule EmotionsWheelBackend.ExperimentsHasParticipantsTest do
   test "changeset with invalid attributes" do
     changeset = ExperimentsHasParticipants.changeset(%ExperimentsHasParticipants{}, @invalid_attrs)
     refute changeset.valid?
+  end
+
+  test "it generates UUID after changeset" do
+    changeset = ExperimentsHasParticipants.changeset(%ExperimentsHasParticipants{}, @valid_attrs)
+    uuid = changeset |> get_field(:uuid)
+    assert !is_nil(uuid)
   end
 end

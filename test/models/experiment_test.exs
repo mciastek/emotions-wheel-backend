@@ -6,7 +6,7 @@ defmodule EmotionsWheelBackend.ExperimentTest do
 
   @valid_attrs %{
     name: "Experiment 2",
-    kind: "free play",
+    kind: "free_mode",
     start_date: Convertable.to_erlang_datetime(DateTime.now),
     end_date: Convertable.to_erlang_datetime(DateTime.now)
   }

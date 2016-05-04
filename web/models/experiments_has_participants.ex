@@ -11,8 +11,8 @@ defmodule EmotionsWheelBackend.ExperimentsHasParticipants do
     belongs_to :participant, Participant
   end
 
-  @required_fields ~w(uuid)
-  @optional_fields ~w()
+  @required_fields ~w(experiment_id participant_id)
+  @optional_fields ~w(uuid)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -23,5 +23,11 @@ defmodule EmotionsWheelBackend.ExperimentsHasParticipants do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> generate_uuid
+  end
+
+  defp generate_uuid(changeset) do
+    changeset
+    |> put_change(:uuid, Ecto.UUID.generate)
   end
 end
