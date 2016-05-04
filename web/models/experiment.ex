@@ -45,5 +45,25 @@ defmodule EmotionsWheelBackend.Experiment do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_inclusion(:kind, @kind_valid, message: "Should be free_mode or experiment")
+    |> validate_date_ranges
+  end
+
+  defp validate_date_ranges(changeset) do
+    start_date = get_field(changeset, :start_date)
+    end_date = get_field(changeset, :end_date)
+
+    if start_date && end_date do
+      comparision = Ecto.DateTime.compare(start_date, end_date)
+
+      if comparision == :gt do
+        changeset
+        |> add_error(:end_date, "End date shouldn't be earlier than start date")
+      else
+        changeset
+      end
+    else
+      changeset
+    end
+
   end
 end
