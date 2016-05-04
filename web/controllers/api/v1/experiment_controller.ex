@@ -1,7 +1,9 @@
 defmodule EmotionsWheelBackend.ExperimentController do
   use EmotionsWheelBackend.Web, :controller
 
-  alias EmotionsWheelBackend.{Repo, Experiment, ExperimentsHasParticipants}
+  import Ecto.Query, only: [from: 2]
+
+  alias EmotionsWheelBackend.{Repo, Experiment, Participant, ExperimentsHasParticipants}
 
   def index(conn, _params) do
     experiments = Experiment |> Repo.all
@@ -16,7 +18,11 @@ defmodule EmotionsWheelBackend.ExperimentController do
         conn
         |> put_status(:not_found)
         |> render("error.json", message: "Couldn't find matching experiment")
-      _ -> render(conn, "show.json", experiment: experiment)
+      _ ->
+        attached_participants = fetch_participants(experiment)
+
+        conn
+        |> render("show.json", experiment: Map.put(experiment, :attached_participants, attached_participants))
     end
   end
 
@@ -46,5 +52,29 @@ defmodule EmotionsWheelBackend.ExperimentController do
       experiments_has_participants_changeset = ExperimentsHasParticipants.changeset(%ExperimentsHasParticipants{}, %{ "participant_id" =>participant_id, "experiment_id" => experiment.id })
       Repo.insert!(experiments_has_participants_changeset)
     end
+  end
+
+  defp fetch_participants(experiment) do
+    ehp_query = from ehp in ExperimentsHasParticipants,
+      where: ehp.experiment_id == ^experiment.id,
+      select: ehp
+
+    ehp_model = Repo.all(ehp_query)
+
+    participants_uuids = ehp_model |> Enum.map(fn(record) -> %{id: record.participant_id, uuid: record.uuid} end)
+    participants_ids = ehp_model |> Enum.map(fn(record) -> record.participant_id end)
+
+    p_query = from p in Participant,
+      where: p.id in ^participants_ids,
+      select: p
+
+    p_model = Repo.all(p_query)
+
+    built_participant_model = p_model |> Enum.map(fn(participant) ->
+      participant_uuid = Enum.find(participants_uuids, fn(item) -> participant.id == item.id end)
+      participant |> Map.put(:experiment_uuid, participant_uuid.uuid)
+    end)
+
+    built_participant_model
   end
 end
