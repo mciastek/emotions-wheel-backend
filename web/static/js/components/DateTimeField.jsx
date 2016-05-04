@@ -58,13 +58,15 @@ class DateTimeField extends React.Component {
   }
 
   render() {
+    const convertedDate = moment(this.state.value).toDate();
+
     return (
       <div className="datetime-field">
         <div className="datetime-field__col">
-          <InputTime hintText={this.props.timeLabel} onChange={this.updateTime.bind(this)} />
+          <InputTime value={convertedDate} hintText={this.props.timeLabel} onChange={this.updateTime.bind(this)} />
         </div>
         <div className="datetime-field__col">
-          <InputDate hintText={this.props.dateLabel} onChange={this.updateDate.bind(this)} />
+          <InputDate value={convertedDate} hintText={this.props.dateLabel} onChange={this.updateDate.bind(this)} />
         </div>
       </div>
     );
