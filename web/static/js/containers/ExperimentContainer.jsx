@@ -5,7 +5,7 @@ import { fetchExperiment } from 'actions/experiment';
 
 import ExperimentForm from 'containers/ExperimentForm';
 
-class ParticipantContainer extends React.Component {
+class ExperimentContainer extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchExperiment(this.props.id));
   }
@@ -32,4 +32,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ParticipantContainer);
+export default connect(mapStateToProps)(ExperimentContainer);

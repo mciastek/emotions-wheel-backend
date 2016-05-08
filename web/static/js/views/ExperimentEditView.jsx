@@ -2,7 +2,7 @@ import React from 'react';
 
 import ExperimentContainer from 'containers/ExperimentContainer';
 
-class ParticipantView extends React.Component {
+class ExperimentEditView extends React.Component {
   render() {
     return (
       <ExperimentContainer id={this.props.params.id} />
@@ -10,4 +10,4 @@ class ParticipantView extends React.Component {
   }
 }
 
-export default ParticipantView;
+export default ExperimentEditView;

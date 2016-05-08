@@ -17,6 +17,7 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import { fetchExperiments, deleteSingleExperiment } from 'actions/experiments';
 
 import EditButton from 'components/EditButton';
+import PreviewButton from 'components/PreviewButton';
 import DeleteButton from 'components/DeleteButton';
 
 const shortColumnStyle = {
@@ -33,8 +34,12 @@ class ExperimentsContainer extends React.Component {
     this.props.dispatch(fetchExperiments());
   }
 
-  handleEditClick(experimentId) {
+  handlePreviewClick(experimentId) {
     this.props.dispatch(push(`/dashboard/experiments/${experimentId}`));
+  }
+
+  handleEditClick(experimentId) {
+    this.props.dispatch(push(`/dashboard/experiments/edit/${experimentId}`));
   }
 
   handleDeleteClick(experimentId) {
@@ -55,6 +60,7 @@ class ExperimentsContainer extends React.Component {
           <TableRowColumn>{this.formattedDate(experiment.start_date)}</TableRowColumn>
           <TableRowColumn>{this.formattedDate(experiment.end_date)}</TableRowColumn>
           <TableRowColumn>
+            <PreviewButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handlePreviewClick.bind(this, experiment.id)} />
             <EditButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleEditClick.bind(this, experiment.id)} />
             <DeleteButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleDeleteClick.bind(this, experiment.id)} />
           </TableRowColumn>
