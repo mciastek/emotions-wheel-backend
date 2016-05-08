@@ -29,6 +29,8 @@ defmodule EmotionsWheelBackend.Router do
 
       post "/session", SessionController, :create
       delete "/session", SessionController, :delete
+
+      get "/participants_free", ParticipantController, :get_free_participants
     end
   end
 

@@ -21,12 +21,14 @@ export function participantsFetchError(error) {
   };
 }
 
-export function fetchParticipants() {
+export function fetchParticipants(getAllFree = false) {
   return (dispatch) => {
+
+    const endpoint = (getAllFree) ? '/participants_free' : '/participants';
 
     dispatch(participantsFetchRequest());
 
-    Connection.get('/participants')
+    Connection.get(endpoint)
       .then((data) => {
         const { participants } = data;
         dispatch(participantsFetchSuccess(participants));

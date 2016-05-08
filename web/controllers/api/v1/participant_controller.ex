@@ -1,7 +1,7 @@
 defmodule EmotionsWheelBackend.ParticipantController do
   use EmotionsWheelBackend.Web, :controller
 
-  alias EmotionsWheelBackend.{Repo, Participant}
+  alias EmotionsWheelBackend.{Repo, Participant, ExperimentsHasParticipants}
 
   def index(conn, _params) do
     participants = Participant |> Repo.all
@@ -62,5 +62,16 @@ defmodule EmotionsWheelBackend.ParticipantController do
         |> put_status(:unprocessable_entity)
         |> render("error.json", changeset: changeset)
     end
+  end
+
+  def get_free_participants(conn, _params) do
+    query = from p in Participant,
+      left_join: ehp in assoc(p, :experiments_has_participants),
+      where: is_nil(ehp.participant_id),
+      select: p
+
+    participants = query |> Repo.all
+
+    render(conn, "index.json", participants: participants)
   end
 end

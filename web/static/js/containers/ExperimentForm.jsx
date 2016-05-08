@@ -28,7 +28,9 @@ const radioStyle = {
 
 class ExperimentForm extends React.Component {
   componentDidMount() {
-    this.props.dispatch(fetchParticipants());
+
+    // Fetch all free participants
+    this.props.dispatch(fetchParticipants(true));
   }
 
   handleSubmit(e) {
