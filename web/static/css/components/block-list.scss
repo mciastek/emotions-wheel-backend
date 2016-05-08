@@ -1,0 +1,22 @@
+@import 'node_modules/sass-material-colors/sass/sass-material-colors';
+
+@import '../base/settings';
+@import '../utils/typography';
+
+/**
+ * Block list
+ */
+
+.block-list {
+  @extend %list-reset;
+  padding: 20px 0;
+
+  &__item {
+    padding: 15px 0;
+    border-top: 1px solid material-color('grey', '300');
+  }
+
+  &__item:first-child {
+    border-top: 0;
+  }
+}
