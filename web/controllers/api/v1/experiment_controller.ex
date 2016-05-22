@@ -47,11 +47,49 @@ defmodule EmotionsWheelBackend.ExperimentController do
     end
   end
 
+  def update(conn, %{"id" => id, "experiment" => experiment_params}) do
+    experiment = Experiment |> Repo.get_by(id: id)
+
+    experiment_changeset = Experiment.changeset(experiment, experiment_params)
+
+    if experiment_changeset.valid? do
+      experiment = Repo.update!(experiment_changeset)
+
+      case Map.fetch(experiment_params, "participants_ids") do
+        {:ok, participants_ids} ->
+          attach_participants_to_experiment(participants_ids, experiment)
+      end
+
+      conn
+      |> put_status(:created)
+      |> render("success.json", experiment: experiment)
+    else
+      conn
+      |> put_status(:unprocessable_entity)
+      |> render("error.json", changeset: experiment_changeset)
+    end
+  end
+
   defp attach_participants_to_experiment(participants_ids, experiment) do
     for participant_id <- participants_ids do
-      experiments_has_participants_changeset = ExperimentsHasParticipants.changeset(%ExperimentsHasParticipants{}, %{ "participant_id" =>participant_id, "experiment_id" => experiment.id })
-      Repo.insert!(experiments_has_participants_changeset)
+      has_participant = ExperimentsHasParticipants |> Repo.get_by(%{
+        participant_id: participant_id,
+        experiment_id: experiment.id
+      })
+
+      if is_nil(has_participant) do
+        insert_participant_experiment(participant_id, experiment.id)
+      end
     end
+  end
+
+  defp insert_participant_experiment(participant_id, experiment_id) do
+    experiments_has_participants_changeset = ExperimentsHasParticipants.changeset(
+      %ExperimentsHasParticipants{},
+      %{"participant_id" => participant_id, "experiment_id" => experiment_id}
+    )
+
+    Repo.insert!(experiments_has_participants_changeset)
   end
 
   defp fetch_participants(experiment) do
