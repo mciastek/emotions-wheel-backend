@@ -53,7 +53,7 @@ class DateTimeField extends React.Component {
     };
 
     this.setState({
-      value: `${date} ${time}`
+      value: moment(`${date} ${time}`).toISOString()
     });
   }
 
