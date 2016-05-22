@@ -51,6 +51,20 @@ export function createExperiment(experiment) {
 
 export function updateExperiment(id, experiment) {
   return (dispatch) => {
+
+    dispatch(experimentFetchRequest());
+
+    Connection.post(`/experiments/${id}`, { experiment })
+      .then((data) => {
+        const { experiment } = data;
+        dispatch(experimentFetchSuccess(experiment));
+      })
+      .catch(() => {});
+  };
+}
+
+export function updateExperiment(id, experiment) {
+  return (dispatch) => {
     dispatch(experimentFetchRequest());
 
     Connection.put(`/experiments/${id}`, { experiment })

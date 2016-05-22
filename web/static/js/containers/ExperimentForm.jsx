@@ -11,7 +11,7 @@ import * as Colors from 'material-ui/lib/styles/colors';
 
 import ActionOpenInNew from 'material-ui/lib/svg-icons/action/open-in-new';
 
-import { createExperiment } from 'actions/experiment';
+import { createExperiment, updateExperiment } from 'actions/experiment';
 import { fetchParticipants } from 'actions/participants';
 import { openQrDialog, setQrDialogValue } from 'actions/ui';
 
@@ -36,6 +36,8 @@ class ExperimentForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
+    const { id: experimentId } = this.props.experiment;
+
     const {
       name,
       kind,
@@ -53,7 +55,12 @@ class ExperimentForm extends React.Component {
       participants_ids: participants_ids.state.selection
     };
 
-    this.props.dispatch(createExperiment(requestData));
+    if (this.props.actionType === 'create') {
+      this.props.dispatch(createExperiment(requestData));
+    } else {
+      this.props.dispatch(updateExperiment(experimentId, requestData));
+    }
+
   }
 
   openDialog(dialogValue) {

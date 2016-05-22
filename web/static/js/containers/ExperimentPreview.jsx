@@ -5,7 +5,6 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import Paper from 'material-ui/lib/paper';
-import Divider from 'material-ui/lib/divider';
 
 import { fetchExperiment } from 'actions/experiment';
 
