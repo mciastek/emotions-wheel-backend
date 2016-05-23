@@ -11,7 +11,7 @@ defmodule EmotionsWheelBackend.ExperimentController do
   end
 
   def show(conn, %{"id" => id}) do
-    experiment = Experiment |> Repo.get_by(id: id)
+    experiment = Experiment |> Repo.get(id)
 
     case experiment do
       nil ->
@@ -34,7 +34,7 @@ defmodule EmotionsWheelBackend.ExperimentController do
 
       case Map.fetch(experiment_params, "participants_ids") do
         {:ok, participants_ids} ->
-          attach_participants_to_experiment(participants_ids, experiment)
+          add_participants_to_experiment(participants_ids, experiment)
       end
 
       conn
@@ -48,21 +48,23 @@ defmodule EmotionsWheelBackend.ExperimentController do
   end
 
   def update(conn, %{"id" => id, "experiment" => experiment_params}) do
-    experiment = Experiment |> Repo.get_by(id: id)
+    experiment = Experiment |> Repo.get!(id)
 
     experiment_changeset = Experiment.changeset(experiment, experiment_params)
 
     if experiment_changeset.valid? do
+      participants_ids = experiment_params |> Map.fetch!("participants_ids")
+
       experiment = Repo.update!(experiment_changeset)
 
-      case Map.fetch(experiment_params, "participants_ids") do
-        {:ok, participants_ids} ->
-          attach_participants_to_experiment(participants_ids, experiment)
-      end
+      case update_participants_in_experiment(participants_ids, experiment.id) do
+        {:ok, _} ->
+          attached_participants = fetch_participants(experiment)
 
-      conn
-      |> put_status(:created)
-      |> render("success.json", experiment: experiment)
+          conn
+          |> put_status(:created)
+          |> render("success.json", experiment: Map.put(experiment, :attached_participants, attached_participants))
+      end
     else
       conn
       |> put_status(:unprocessable_entity)
@@ -70,26 +72,50 @@ defmodule EmotionsWheelBackend.ExperimentController do
     end
   end
 
-  defp attach_participants_to_experiment(participants_ids, experiment) do
+  defp add_participants_to_experiment(participants_ids, experiment) do
     for participant_id <- participants_ids do
-      has_participant = ExperimentsHasParticipants |> Repo.get_by(%{
-        participant_id: participant_id,
-        experiment_id: experiment.id
-      })
-
-      if is_nil(has_participant) do
-        insert_participant_experiment(participant_id, experiment.id)
-      end
+      insert_participant(participant_id, experiment.id)
     end
   end
 
-  defp insert_participant_experiment(participant_id, experiment_id) do
-    experiments_has_participants_changeset = ExperimentsHasParticipants.changeset(
+  defp update_participants_in_experiment(new_participants, experiment_id) do
+    all_ehp = ExperimentsHasParticipants |> Repo.all(experiment_id: experiment_id)
+
+    saved_participants = all_ehp |> Enum.map(fn(ehp) ->
+      ehp.participant_id
+    end)
+
+    diff = (new_participants -- saved_participants) ++ (saved_participants -- new_participants)
+
+    Repo.transaction(fn ->
+
+      for participant_id <- diff do
+        if Enum.member?(saved_participants, participant_id) do
+          remove_participant(participant_id, experiment_id)
+        else
+          insert_participant(participant_id, experiment_id)
+        end
+      end
+
+    end)
+  end
+
+  defp insert_participant(participant_id, experiment_id) do
+    changeset = ExperimentsHasParticipants.changeset(
       %ExperimentsHasParticipants{},
       %{"participant_id" => participant_id, "experiment_id" => experiment_id}
     )
 
-    Repo.insert!(experiments_has_participants_changeset)
+    changeset |> Repo.insert!
+  end
+
+  defp remove_participant(participant_id, experiment_id) do
+    ExperimentsHasParticipants
+    |> Repo.get_by!(
+      participant_id: participant_id,
+      experiment_id: experiment_id
+    )
+    |> Repo.delete!
   end
 
   defp fetch_participants(experiment) do
