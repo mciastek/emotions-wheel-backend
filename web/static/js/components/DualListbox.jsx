@@ -29,13 +29,13 @@ class DualListbox extends React.Component {
 
     if (selected.length) {
       this.setState({
-        leftList: [...this.xor(collection, selected)],
-        rightList: [...selected],
+        leftList: this.xor(collection, selected),
+        rightList: selected,
         selection: this.mappedToIds(selected)
       });
     } else {
       this.setState({
-        leftList: [...collection]
+        leftList: collection
       });
     }
   }
