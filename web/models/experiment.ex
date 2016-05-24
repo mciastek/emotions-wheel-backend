@@ -57,13 +57,24 @@ defmodule EmotionsWheelBackend.Experiment do
 
       if comparision == :gt do
         changeset
-        |> add_error(:end_date, "End date shouldn't be earlier than start date")
+        |> add_error(:end_date, "End date shouldn't be earlier than start date!")
       else
-        changeset
+        check_if_experiment_continues(changeset, end_date)
       end
     else
       changeset
     end
+  end
 
+  defp check_if_experiment_continues(changeset, end_date) do
+    now = Ecto.DateTime.utc
+    comparision = Ecto.DateTime.compare(now, end_date)
+
+    if comparision == :gt do
+      changeset
+      |> add_error(:ended, "Experiment has ended!")
+    else
+      changeset
+    end
   end
 end
