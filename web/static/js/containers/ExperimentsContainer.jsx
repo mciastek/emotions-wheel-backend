@@ -50,8 +50,21 @@ class ExperimentsContainer extends React.Component {
     return moment(date).format(config.date.formatDateTime);
   }
 
+  isEnded(endDate) {
+    return moment().isAfter(moment(endDate));
+  }
+
   render() {
     const rows = this.props.experiments.collection.map((experiment) => {
+
+      const editButton = (() => {
+        if (!this.isEnded(experiment.end_date)) {
+          return (
+            <EditButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleEditClick.bind(this, experiment.id)} />
+          );
+        }
+      })();
+
       return (
         <TableRow key={experiment.id}>
           <TableRowColumn style={shortColumnStyle}>{experiment.id}</TableRowColumn>
@@ -61,7 +74,7 @@ class ExperimentsContainer extends React.Component {
           <TableRowColumn>{this.formattedDate(experiment.end_date)}</TableRowColumn>
           <TableRowColumn>
             <PreviewButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handlePreviewClick.bind(this, experiment.id)} />
-            <EditButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleEditClick.bind(this, experiment.id)} />
+            {editButton}
             <DeleteButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleDeleteClick.bind(this, experiment.id)} />
           </TableRowColumn>
         </TableRow>
