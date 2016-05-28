@@ -13,8 +13,10 @@ import configureStore from 'store';
 import Main from 'containers/Main';
 
 import LoginView from 'views/LoginView';
+
 import DashboardView from 'views/DashboardView';
 import DashboardIndexView from 'views/DashboardIndexView';
+
 import ParticipantsView from 'views/ParticipantsView';
 import ParticipantEditView from 'views/ParticipantEditView';
 import ParticipantNewView from 'views/ParticipantNewView';
@@ -23,6 +25,9 @@ import ExperimentsView from 'views/ExperimentsView';
 import ExperimentNewView from 'views/ExperimentNewView';
 import ExperimentEditView from 'views/ExperimentEditView';
 import ExperimentPreviewView from 'views/ExperimentPreviewView';
+
+import PhotosView from 'views/PhotosView';
+import PhotoCreate from 'containers/PhotoCreate';
 
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -59,6 +64,11 @@ ReactDOM.render(
             <IndexRoute component={ParticipantsView} />
             <Route path="new" component={ParticipantNewView} />
             <Route path=":id" component={ParticipantEditView} />
+          </Route>
+
+          <Route path="photos">
+            <IndexRoute component={PhotosView} />
+            <Route path="new" component={PhotoCreate} />
           </Route>
         </Route>
       </Route>
