@@ -20,7 +20,9 @@ class PhotoCreate extends React.Component {
 
     const requestData = {
       name: name.state.value,
-      file: file.files[0]
+      file: file.files[0],
+      author_type: 'researcher',
+      author_id: this.props.session.currentUser.id
     };
 
     const formData = this.buildFormData(requestData);
