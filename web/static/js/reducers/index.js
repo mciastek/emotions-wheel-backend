@@ -10,6 +10,7 @@ import countries from './countries';
 import cities from './cities';
 import experiments from './experiments';
 import experiment from './experiment';
+import photos from './photos';
 
 export default combineReducers({
   routing: routerReducer,
@@ -21,5 +22,6 @@ export default combineReducers({
   countries,
   cities,
   experiments,
-  experiment
+  experiment,
+  photos
 });
