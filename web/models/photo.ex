@@ -4,9 +4,18 @@ defmodule EmotionsWheelBackend.Photo do
 
   alias EmotionsWheelBackend.{ExperimentsHasPhotos, PhotoFileDefinition}
 
+  @derive {Poison.Encoder, only: [
+    :id,
+    :name,
+    :url,
+    :author_type,
+    :author_id
+  ]}
+
   schema "photos" do
     field :name, :string
-    field :url, PhotoFileDefinition.Type
+    field :url, :string, virtual: true
+    field :file, PhotoFileDefinition.Type
     field :author_type, :string
     field :author_id, :integer
     timestamps
@@ -20,7 +29,7 @@ defmodule EmotionsWheelBackend.Photo do
   @required_fields ~w(name)
   @optional_fields ~w(author_type author_id)
 
-  @required_file_fields ~w(url)
+  @required_file_fields ~w(file)
   @optional_file_fields ~w()
 
   @doc """

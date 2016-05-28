@@ -13,7 +13,7 @@ defmodule EmotionsWheelBackend.PhotoView do
     %{photo: photo}
   end
 
-  def render("error.json", %{message: message}) do
-    %{message: message}
+  def render("error.json", %{changeset: changeset}) do
+    %{changeset: changeset}
   end
 end

@@ -7,8 +7,8 @@ defmodule EmotionsWheelBackend.PhotoTest do
 
   @valid_attrs %{
     name: "photo_1",
+    file: "/path/to/my/file.png",
     author_type: "participant",
-    url: "/path/to/my/file.png",
     author_id: 1
   }
   @invalid_attrs %{}
