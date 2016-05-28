@@ -104,13 +104,13 @@ class ParticipantForm extends React.Component {
         <form className="form" onSubmit={this.handleSubmit.bind(this)} noValidate>
           <div className="form-row--splitted">
             <div className="form-row__column--4">
-              <Input ref="first_name" floatingLabelText="First Name" fullWidth={true} value={first_name} />
+              <Input ref="first_name" floatingLabelText="First Name" value={first_name} />
             </div>
             <div className="form-row__column--4">
-              <Input ref="last_name" floatingLabelText="Last Name" fullWidth={true} value={last_name} />
+              <Input ref="last_name" floatingLabelText="Last Name" value={last_name} />
             </div>
             <div className="form-row__column--4">
-              <Input ref="email" floatingLabelText="Email" fullWidth={true} value={email} />
+              <Input ref="email" floatingLabelText="Email" value={email} />
             </div>
           </div>
 
@@ -122,7 +122,7 @@ class ParticipantForm extends React.Component {
               <BirthdateField ref="birthdate" value={birthdate} />
             </div>
             <div className="form-row__column--3">
-              <Input floatingLabelText="Age" fullWidth={true} value={age} disabled={true} />
+              <Input floatingLabelText="Age" value={age} disabled={true} />
             </div>
           </div>
 

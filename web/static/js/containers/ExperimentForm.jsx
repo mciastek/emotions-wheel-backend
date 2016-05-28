@@ -97,7 +97,7 @@ class ExperimentForm extends React.Component {
         <Paper className="page-form">
           <div className="form-row--splitted space-after">
             <div className="form-row__column--12">
-              <Input ref="name" floatingLabelText="Experiment's Name" fullWidth={true} value={name} />
+              <Input ref="name" floatingLabelText="Experiment's Name" value={name} />
             </div>
           </div>
 

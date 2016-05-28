@@ -80,7 +80,7 @@ class LoginForm extends React.Component {
       if (!hasCurrentUser) {
         return (
           <div className="form-row">
-            <Input type="password" ref="password" hintText="Password" value={password} fullWidth={true} inputStyle={inputStyles} />
+            <Input type="password" ref="password" hintText="Password" value={password} inputStyle={inputStyles} />
           </div>
         );
       }
@@ -100,7 +100,7 @@ class LoginForm extends React.Component {
         <Paper className="login-form__content">
           <form onSubmit={this.handleSubmit.bind(this)} noValidate>
             <div className="form-row">
-              <Input ref="email" hintText="E-mail" fullWidth={true} value={email} inputStyle={inputStyles} disabled={hasCurrentUser} />
+              <Input ref="email" hintText="E-mail" value={email} inputStyle={inputStyles} disabled={hasCurrentUser} />
             </div>
 
             {passwordField}

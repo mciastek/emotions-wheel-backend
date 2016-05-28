@@ -38,6 +38,7 @@ class Input extends React.Component {
         {...this.props}
         errorText={this.state.errorText}
         value={this.state.value}
+        fullWidth={true}
         onChange={this.handleChange.bind(this)} />
     );
   }
