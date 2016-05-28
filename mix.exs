@@ -42,7 +42,10 @@ defmodule EmotionsWheelBackend.Mixfile do
      {:timex_ecto, "~> 1.0.0"},
      {:comeonin, "~> 2.2.0"},
      {:guardian, "~> 0.10.0"},
-     {:mix_test_watch, "~> 0.2", only: :dev}]
+     {:arc, "~> 0.5.2"},
+     {:arc_ecto, "~> 0.3.2"},
+     {:mix_test_watch, "~> 0.2", only: :dev},
+     {:mock, "~> 0.1.1", only: :test}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
