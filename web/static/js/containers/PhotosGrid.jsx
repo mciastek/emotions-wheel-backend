@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { GridList, GridTile } from 'material-ui/lib/grid-list';
 
+import DeleteButton from 'components/DeleteButton';
+
 import { fetchPhotos } from 'actions/photos';
 
 class PhotosGrid extends React.Component {
@@ -11,11 +13,12 @@ class PhotosGrid extends React.Component {
   }
 
   render() {
-
     const thumbs = (() => {
-      this.props.photos.collection.map((photo, index) => {
+      return this.props.photos.collection.map((photo, index) => {
+        const button = (<DeleteButton iconColor="white" />);
+
         return (
-          <GridTile key={index} title={photo.name}>
+          <GridTile key={index} title={photo.name} actionIcon={button}>
             <img src={photo.url} alt={photo.name} />
           </GridTile>
         );
@@ -23,7 +26,7 @@ class PhotosGrid extends React.Component {
     })();
 
     return (
-      <GridList cellHeight={200}>
+      <GridList cellHeight={200} cols={4}>
         {thumbs}
       </GridList>
     );
