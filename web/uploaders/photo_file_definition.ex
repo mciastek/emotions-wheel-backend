@@ -6,12 +6,12 @@ defmodule EmotionsWheelBackend.PhotoFileDefinition do
   @extension_whitelist ~w(.jpg .jpeg .gif .png)
 
   def transform(:thumb, _) do
-    {:convert, "-strip -thumbnail 200x200^ -gravity center -extent 200x200 -format png", :png}
+    {:convert, "-strip -thumbnail 200x200^ -gravity center -extent 200x200"}
   end
 
   def __storage, do: Arc.Storage.Local
 
-  def filename(version,  {file, _}), do: "#{version}-#{file.file_name}"
+  def filename(version,  {file, _}), do: "#{file.file_name}"
 
   # Whitelist file extensions:
   def validate({file, _}) do
@@ -19,9 +19,9 @@ defmodule EmotionsWheelBackend.PhotoFileDefinition do
   end
 
   # Override the storage directory:
-  # def storage_dir(version, {file, scope}) do
-  #   "uploads/photos/#{scope.id}"
-  # end
+  def storage_dir(version, {file, scope}) do
+    "uploads/photos/#{version}"
+  end
 
   # Provide a default URL if there hasn't been a file uploaded
   # def default_url(version, scope) do

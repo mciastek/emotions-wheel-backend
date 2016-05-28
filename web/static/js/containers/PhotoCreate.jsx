@@ -15,12 +15,12 @@ class PhotoCreate extends React.Component {
 
     const {
       name,
-      url
+      file
     } = this.refs;
 
     const requestData = {
       name: name.state.value,
-      url: url.files[0]
+      file: file.files[0]
     };
 
     const formData = this.buildFormData(requestData);
@@ -55,7 +55,7 @@ class PhotoCreate extends React.Component {
 
             <div className="form-row--splitted">
               <div className="form-row__column--12">
-                <input type="file" ref="url" />
+                <input type="file" ref="file" />
               </div>
             </div>
 
