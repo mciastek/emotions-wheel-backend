@@ -35,11 +35,12 @@ class Connection {
       .then((res) => res.json());
   }
 
-  post(endpoint, params) {
+  post(endpoint, params, options = {}) {
     return fetch(`${this.url}${endpoint}`, {
         method: 'POST',
         headers: buildHeaders(),
-        body: JSON.stringify(params)
+        body: JSON.stringify(params),
+        ...options
       })
       .then(checkStatus)
       .then((res) => res.json());
