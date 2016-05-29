@@ -5,17 +5,21 @@ import { GridList, GridTile } from 'material-ui/lib/grid-list';
 
 import DeleteButton from 'components/DeleteButton';
 
-import { fetchPhotos } from 'actions/photos';
+import { fetchPhotos, deleteSinglePhoto } from 'actions/photos';
 
 class PhotosGrid extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchPhotos());
   }
 
+  handleDeleteClick(photoId) {
+    this.props.dispatch(deleteSinglePhoto(photoId));
+  }
+
   render() {
     const thumbs = (() => {
       return this.props.photos.collection.map((photo, index) => {
-        const button = (<DeleteButton iconColor="white" />);
+        const button = (<DeleteButton iconColor="white" onTap={this.handleDeleteClick.bind(this, photo.id)} />);
 
         return (
           <GridTile key={index} title={photo.name} actionIcon={button}>

@@ -36,3 +36,19 @@ export function fetchPhotos() {
       });
   };
 }
+
+export function deleteSinglePhoto(id) {
+  return (dispatch) => {
+
+    dispatch(photosFetchRequest());
+
+    Connection.delete(`/photos/${id}`)
+      .then((data) => {
+        const { photos } = data;
+        dispatch(photosFetchSuccess(photos));
+      })
+      .catch(() => {
+
+      });
+  };
+}
