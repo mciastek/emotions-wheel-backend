@@ -30,3 +30,24 @@ export function setQrDialogValue(value) {
     value
   };
 }
+
+export function openCustomDialog() {
+  return {
+    type: actionTypes.UI_OPEN_CUSTOM_DIALOG
+  };
+}
+
+export function closeCustomDialog() {
+  return {
+    type: actionTypes.UI_CLOSE_CUSTOM_DIALOG
+  };
+}
+
+export function setCustomDialogContent({ title, content, actions }) {
+  return {
+    type: actionTypes.UI_CUSTOM_DIALOG_SET_CONTENT,
+    title,
+    content,
+    actions
+  };
+}

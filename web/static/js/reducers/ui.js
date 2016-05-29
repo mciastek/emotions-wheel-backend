@@ -5,6 +5,12 @@ const initialState = {
   qrDialog: {
     open: false,
     value: null
+  },
+  customDialog: {
+    title: null,
+    content: null,
+    actions: [],
+    open: false
   }
 };
 
@@ -46,6 +52,35 @@ export default function reducer(state = initialState, action) {
         qrDialog: {
           ...state.qrDialog,
           value: action.value
+        }
+      };
+
+    case actionTypes.UI_OPEN_CUSTOM_DIALOG:
+      return {
+        ...state,
+        customDialog: {
+          ...state.customDialog,
+          open: true
+        }
+      };
+
+    case actionTypes.UI_CLOSE_CUSTOM_DIALOG:
+      return {
+        ...state,
+        customDialog: {
+          ...state.customDialog,
+          open: false
+        }
+      };
+
+    case actionTypes.UI_CUSTOM_DIALOG_SET_CONTENT:
+      return {
+        ...state,
+        customDialog: {
+          ...state.customDialog,
+          title: action.title,
+          content: action.content,
+          actions: action.actions
         }
       };
     default:
