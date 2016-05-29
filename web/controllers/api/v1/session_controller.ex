@@ -20,14 +20,20 @@ defmodule EmotionsWheelBackend.SessionController do
   end
 
   def delete(conn, _) do
-    {:ok, claims} = Guardian.Plug.claims(conn)
+    case Guardian.Plug.claims(conn) do
+      {:ok, claims} ->
+        conn
+        |> Guardian.Plug.current_token
+        |> Guardian.revoke!(claims)
 
-    conn
-    |> Guardian.Plug.current_token
-    |> Guardian.revoke!(claims)
+        conn
+        |> render("delete.json")
+      {:error, reason} ->
+        IO.puts "Session error, reason: #{reason}"
 
-    conn
-    |> render("delete.json")
+        conn
+        |> render("delete.json")
+    end
   end
 
   def unauthenticated(conn, _params) do
