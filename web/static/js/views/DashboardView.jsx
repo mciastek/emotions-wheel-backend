@@ -4,6 +4,7 @@ import TopBar from 'containers/TopBar';
 import MainNav from 'containers/MainNav';
 import QrDialog from 'containers/QrDialog';
 import CustomDialog from 'containers/CustomDialog';
+import NotificationBar from 'containers/NotificationBar';
 
 import DashboardContainer from 'containers/DashboardContainer';
 
@@ -18,6 +19,7 @@ class DashboardView extends React.Component {
         </DashboardContainer>
         <QrDialog />
         <CustomDialog />
+        <NotificationBar />
       </div>
     );
   }

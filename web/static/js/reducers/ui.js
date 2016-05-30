@@ -11,6 +11,11 @@ const initialState = {
     content: null,
     actions: [],
     open: false
+  },
+  notificationBar: {
+    visible: false,
+    message: '',
+    hideDuration: 2000
   }
 };
 
@@ -81,6 +86,34 @@ export default function reducer(state = initialState, action) {
           title: action.title,
           content: action.content,
           actions: action.actions
+        }
+      };
+
+    case actionTypes.UI_SHOW_NOTIFICATION_BAR:
+      return {
+        ...state,
+        notificationBar: {
+          ...state.notificationBar,
+          visible: true
+        }
+      };
+
+    case actionTypes.UI_HIDE_NOTIFICATION_BAR:
+      return {
+        ...state,
+        notificationBar: {
+          ...state.notificationBar,
+          visible: false
+        }
+      };
+
+    case actionTypes.UI_SET_NOTIFICATION_BAR_CONTENT:
+      return {
+        ...state,
+        notificationBar: {
+          ...state.notificationBar,
+          message: action.message,
+          hideDuration: action.hideDuration
         }
       };
     default:

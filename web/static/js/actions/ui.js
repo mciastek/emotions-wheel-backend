@@ -51,3 +51,23 @@ export function setCustomDialogContent({ title, content, actions }) {
     actions
   };
 }
+
+export function showNotificationBar() {
+  return {
+    type: actionTypes.UI_SHOW_NOTIFICATION_BAR
+  };
+}
+
+export function hideNotificationBar() {
+  return {
+    type: actionTypes.UI_HIDE_NOTIFICATION_BAR
+  };
+}
+
+export function setNotificationBarContent({ message, hideDuration = 2000 }) {
+  return {
+    type: actionTypes.UI_SET_NOTIFICATION_BAR_CONTENT,
+    message,
+    hideDuration
+  };
+}
