@@ -42,7 +42,8 @@ defmodule EmotionsWheelBackend.ParticipantController do
 
     case Repo.update(changeset) do
       {:ok, participant} ->
-          render(conn, "success.json", participant: participant)
+          conn
+          |> render("success.json", participant: participant)
       {:error, changeset} ->
           conn
           |> put_status(:unprocessable_entity)

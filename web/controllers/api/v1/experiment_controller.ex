@@ -62,7 +62,6 @@ defmodule EmotionsWheelBackend.ExperimentController do
           attached_participants = fetch_participants(experiment)
 
           conn
-          |> put_status(:created)
           |> render("success.json", experiment: Map.put(experiment, :attached_participants, attached_participants))
       end
     else
@@ -79,9 +78,9 @@ defmodule EmotionsWheelBackend.ExperimentController do
   end
 
   defp update_participants_in_experiment(new_participants, experiment_id) do
-    all_ehp = ExperimentsHasParticipants |> Repo.all(experiment_id: experiment_id)
+    ehp_model = Repo.all(ehp_query(experiment_id))
 
-    saved_participants = all_ehp |> Enum.map(fn(ehp) ->
+    saved_participants = ehp_model |> Enum.map(fn(ehp) ->
       ehp.participant_id
     end)
 
@@ -119,11 +118,7 @@ defmodule EmotionsWheelBackend.ExperimentController do
   end
 
   defp fetch_participants(experiment) do
-    ehp_query = from ehp in ExperimentsHasParticipants,
-      where: ehp.experiment_id == ^experiment.id,
-      select: ehp
-
-    ehp_model = Repo.all(ehp_query)
+    ehp_model = Repo.all(ehp_query(experiment.id))
 
     participants_uuids = ehp_model |> Enum.map(fn(record) -> %{id: record.participant_id, uuid: record.uuid} end)
     participants_ids = ehp_model |> Enum.map(fn(record) -> record.participant_id end)
@@ -140,5 +135,11 @@ defmodule EmotionsWheelBackend.ExperimentController do
     end)
 
     built_participant_model
+  end
+
+  defp ehp_query(experiment_id) do
+    from ehp in ExperimentsHasParticipants,
+      where: ehp.experiment_id == ^experiment_id,
+      select: ehp
   end
 end
