@@ -27,7 +27,7 @@ export function fetchPhoto(id) {
 
     dispatch(photoFetchRequest());
 
-    Connection.get(`/photos/${id}`)
+    return Connection.get(`/photos/${id}`)
       .then((data) => {
         const { photo } = data;
         dispatch(photoFetchSuccess(photo));
@@ -41,17 +41,17 @@ export function createPhoto(photo) {
 
     dispatch(photoFetchRequest());
 
-    Connection.post(`/photos`, null, {
+    return Connection.post(`/photos`, null, {
       headers: {
         Accept: 'application/json',
         Authorization: Storage.getItem('authenticated').token
       },
       body: photo
     })
-      .then((data) => {
-        const { photo } = data;
-        dispatch(photoFetchSuccess(photo));
-      })
-      .catch(() => {});
+    .then((data) => {
+      const { photo } = data;
+      dispatch(photoFetchSuccess(photo));
+    })
+    .catch(() => {});
   };
 }

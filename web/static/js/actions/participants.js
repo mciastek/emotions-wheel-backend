@@ -28,14 +28,12 @@ export function fetchParticipants(getAllFree = false) {
 
     dispatch(participantsFetchRequest());
 
-    Connection.get(endpoint)
+    return Connection.get(endpoint)
       .then((data) => {
         const { participants } = data;
         dispatch(participantsFetchSuccess(participants));
       })
-      .catch(() => {
-
-      });
+      .catch(() => {});
   };
 }
 
@@ -44,13 +42,11 @@ export function deleteSingleParticipant(id) {
 
     dispatch(participantsFetchRequest());
 
-    Connection.delete(`/participants/${id}`)
+    return Connection.delete(`/participants/${id}`)
       .then((data) => {
         const { participants } = data;
         dispatch(participantsFetchSuccess(participants));
       })
-      .catch(() => {
-
-      });
+      .catch(() => {});
   };
 }

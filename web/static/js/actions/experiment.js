@@ -28,7 +28,7 @@ export function fetchExperiment(id) {
 
     dispatch(experimentFetchRequest());
 
-    Connection.get(`/experiments/${id}`)
+    return Connection.get(`/experiments/${id}`)
       .then((data) => {
         const { experiment } = data;
         dispatch(experimentFetchSuccess(experiment));
@@ -42,7 +42,7 @@ export function createExperiment(experiment) {
 
     dispatch(experimentFetchRequest());
 
-    Connection.post(`/experiments`, { experiment })
+    return Connection.post(`/experiments`, { experiment })
       .then((data) => {
         const { experiment } = data;
         dispatch(experimentFetchSuccess(experiment));
@@ -55,11 +55,10 @@ export function updateExperiment(id, experiment) {
   return (dispatch) => {
     dispatch(experimentFetchRequest());
 
-    Connection.put(`/experiments/${id}`, { experiment })
+    return Connection.put(`/experiments/${id}`, { experiment })
       .then((data) => {
         const { experiment } = data;
         dispatch(experimentFetchSuccess(experiment));
-        dispatch(fetchParticipants(true));
       })
       .catch(() => {});
   };

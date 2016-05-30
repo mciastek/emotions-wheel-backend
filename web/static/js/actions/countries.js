@@ -26,13 +26,11 @@ export function fetchCountries() {
 
     dispatch(fetchCountriesRequest());
 
-    Connection.get('/countries')
+    return Connection.get('/countries')
       .then((data) => {
         const { countries } = data;
         dispatch(fetchCountriesSuccess(countries));
       })
-      .catch(() => {
-
-      });
+      .catch(() => {});
   };
 }

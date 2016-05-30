@@ -26,7 +26,7 @@ export function fetchParticipant(id) {
 
     dispatch(participantFetchRequest());
 
-    Connection.get(`/participants/${id}`)
+    return Connection.get(`/participants/${id}`)
       .then((data) => {
         const { participant } = data;
         dispatch(participantFetchSuccess(participant));
@@ -40,7 +40,7 @@ export function createParticipant(participant) {
 
     dispatch(participantFetchRequest());
 
-    Connection.post(`/participants`, { participant })
+    return Connection.post(`/participants`, { participant })
       .then((data) => {
         const { participant } = data;
         dispatch(participantFetchSuccess(participant));
@@ -53,7 +53,7 @@ export function updateParticipant(id, participant) {
   return (dispatch) => {
     dispatch(participantFetchRequest());
 
-    Connection.put(`/participants/${id}`, { participant })
+    return Connection.put(`/participants/${id}`, { participant })
       .then((data) => {
         const { participant } = data;
         dispatch(participantFetchSuccess(participant));

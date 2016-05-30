@@ -26,14 +26,12 @@ export function fetchPhotos() {
 
     dispatch(photosFetchRequest());
 
-    Connection.get('/photos')
+    return Connection.get('/photos')
       .then((data) => {
         const { photos } = data;
         dispatch(photosFetchSuccess(photos));
       })
-      .catch(() => {
-
-      });
+      .catch(() => {});
   };
 }
 
@@ -42,13 +40,11 @@ export function deleteSinglePhoto(id) {
 
     dispatch(photosFetchRequest());
 
-    Connection.delete(`/photos/${id}`)
+    return Connection.delete(`/photos/${id}`)
       .then((data) => {
         const { photos } = data;
         dispatch(photosFetchSuccess(photos));
       })
-      .catch(() => {
-
-      });
+      .catch(() => {});
   };
 }

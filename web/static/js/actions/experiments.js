@@ -26,14 +26,12 @@ export function fetchExperiments() {
 
     dispatch(experimentsFetchRequest());
 
-    Connection.get('/experiments')
+    return Connection.get('/experiments')
       .then((data) => {
         const { experiments } = data;
         dispatch(experimentsFetchSuccess(experiments));
       })
-      .catch(() => {
-
-      });
+      .catch(() => {});
   };
 }
 
@@ -42,13 +40,11 @@ export function deleteSingleExperiment(id) {
 
     dispatch(experimentsFetchRequest());
 
-    Connection.delete(`/experiments/${id}`)
+    return Connection.delete(`/experiments/${id}`)
       .then((data) => {
         const { experiments } = data;
         dispatch(experimentsFetchSuccess(experiments));
       })
-      .catch(() => {
-
-      });
+      .catch(() => {});
   };
 }

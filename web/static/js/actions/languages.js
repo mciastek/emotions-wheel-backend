@@ -26,13 +26,11 @@ export function fetchLanguages() {
 
     dispatch(fetchLanguagesRequest());
 
-    Connection.get('/languages')
+    return Connection.get('/languages')
       .then((data) => {
         const { languages } = data;
         dispatch(fetchLanguagesSuccess(languages));
       })
-      .catch(() => {
-
-      });
+      .catch(() => {});
   };
 }
