@@ -7,7 +7,14 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import DeleteButton from 'components/DeleteButton';
 
 import { fetchPhotos, deleteSinglePhoto } from 'actions/photos';
-import { openCustomDialog, closeCustomDialog, setCustomDialogContent, showNotificationBar, setNotificationBarContent } from 'actions/ui';
+
+import {
+  openCustomDialog,
+  closeCustomDialog,
+  setCustomDialogContent,
+  showNotificationBar,
+  setNotificationBarContent
+} from 'actions/ui';
 
 const confirmButtonStyle = {
   marginLeft: 10
