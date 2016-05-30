@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import DeleteButton from 'components/DeleteButton';
 
 import { fetchPhotos, deleteSinglePhoto } from 'actions/photos';
-import { openCustomDialog, closeCustomDialog, setCustomDialogContent } from 'actions/ui';
+import { openCustomDialog, closeCustomDialog, setCustomDialogContent, showNotificationBar, setNotificationBarContent } from 'actions/ui';
 
 const confirmButtonStyle = {
   marginLeft: 10
@@ -18,15 +18,14 @@ class PhotosGrid extends React.Component {
     this.props.dispatch(fetchPhotos());
   }
 
-  handleModalConfirmClick(photoId) {
-    this.props.dispatch(deleteSinglePhoto(photoId));
-    this.props.dispatch(closeCustomDialog())
+  handleModalConfirmClick(photo) {
+    this.deletePhoto(photo);
   }
 
   handleDeleteClick(photo) {
     const actions = [
       <RaisedButton label="Cancel" secondary={true} onTouchTap={() => this.props.dispatch(closeCustomDialog())} />,
-      <RaisedButton label="Delete" primary={true} style={confirmButtonStyle} onTouchTap={this.handleModalConfirmClick.bind(this, photo.id)} />
+      <RaisedButton label="Delete" primary={true} style={confirmButtonStyle} onTouchTap={this.handleModalConfirmClick.bind(this, photo)} />
     ];
 
     this.props.dispatch(openCustomDialog());
@@ -36,6 +35,19 @@ class PhotosGrid extends React.Component {
       content: 'Are you sure that you want to delete that file?',
       actions: actions
     }));
+  }
+
+  deletePhoto(photo) {
+    this.props.dispatch(deleteSinglePhoto(photo.id))
+      .then(() => {
+        this.props.dispatch(showNotificationBar());
+
+        this.props.dispatch(setNotificationBarContent({
+          message: `Photo: "${photo.name}" deleted!`
+        }));
+
+        this.props.dispatch(closeCustomDialog());
+      });
   }
 
   render() {

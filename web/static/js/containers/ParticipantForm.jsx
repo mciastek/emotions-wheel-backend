@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
 
 import { createParticipant, updateParticipant } from 'actions/participant';
+import { showNotificationBar, setNotificationBarContent } from 'actions/ui';
 
 import Input from 'components/Input';
 import InputSearch from 'components/InputSearch';
@@ -52,10 +54,34 @@ class ParticipantForm extends React.Component {
     };
 
     if (this.props.actionType === 'create') {
-      this.props.dispatch(createParticipant(requestData));
+      this.createParticipant(requestData);
     } else {
-      this.props.dispatch(updateParticipant(pariticpantId, requestData));
+      this.updateParticipant(pariticpantId, requestData);
     }
+  }
+
+  createParticipant(params) {
+    this.props.dispatch(createParticipant(params))
+      .then(() => {
+        this.props.dispatch(push('/dashboard/participants'));
+
+        this.props.dispatch(showNotificationBar());
+
+        this.props.dispatch(setNotificationBarContent({
+          message: `New participant created!`
+        }));
+      });
+  }
+
+  updateParticipant(id, params) {
+    this.props.dispatch(updateParticipant(id, params))
+      .then(() => {
+        this.props.dispatch(showNotificationBar());
+
+        this.props.dispatch(setNotificationBarContent({
+          message: `Participant "${params.first_name} ${params.last_name}" updated!`
+        }));
+      });
   }
 
   getCityByName(name) {

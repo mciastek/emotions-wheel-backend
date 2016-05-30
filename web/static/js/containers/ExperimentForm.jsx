@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
@@ -13,7 +14,7 @@ import ActionOpenInNew from 'material-ui/lib/svg-icons/action/open-in-new';
 
 import { createExperiment, updateExperiment } from 'actions/experiment';
 import { fetchParticipants } from 'actions/participants';
-import { openQrDialog, setQrDialogValue } from 'actions/ui';
+import { openQrDialog, setQrDialogValue, showNotificationBar, setNotificationBarContent } from 'actions/ui';
 
 import Input from 'components/Input';
 import DateTimeField from 'components/DateTimeField';
@@ -56,11 +57,36 @@ class ExperimentForm extends React.Component {
     };
 
     if (this.props.actionType === 'create') {
-      this.props.dispatch(createExperiment(requestData));
+      this.createExperiment(requestData);
     } else {
-      this.props.dispatch(updateExperiment(experimentId, requestData));
+      this.updateExperiment(experimentId, requestData);
     }
+  }
 
+  createExperiment(params) {
+    this.props.dispatch(createExperiment(params))
+      .then(() => {
+        this.props.dispatch(push('/dashboard/experiments'));
+
+        this.props.dispatch(showNotificationBar());
+
+        this.props.dispatch(setNotificationBarContent({
+          message: `New experiment created!`
+        }));
+      });
+  }
+
+  updateExperiment(id, params) {
+    this.props.dispatch(updateExperiment(id, params))
+      .then(() => {
+        this.props.dispatch(fetchParticipants(true));
+
+        this.props.dispatch(showNotificationBar());
+
+        this.props.dispatch(setNotificationBarContent({
+          message: `Experiment "${params.name}" updated!`
+        }));
+      });
   }
 
   openDialog(dialogValue) {

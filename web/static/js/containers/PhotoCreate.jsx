@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import RaisedButton from 'material-ui/lib/raised-button';
 
@@ -8,6 +9,7 @@ import Input from 'components/Input';
 import LinkButton from 'containers/LinkButton';
 
 import { createPhoto } from 'actions/photo';
+import { showNotificationBar, setNotificationBarContent } from 'actions/ui';
 
 class PhotoCreate extends React.Component {
   handleSubmit(e) {
@@ -18,16 +20,29 @@ class PhotoCreate extends React.Component {
       file
     } = this.refs;
 
-    const requestData = {
+    const params = {
       name: name.state.value,
       file: file.files[0],
       author_type: 'researcher',
       author_id: this.props.session.currentUser.id
     };
 
-    const formData = this.buildFormData(requestData);
+    const formData = this.buildFormData(params);
 
-    this.props.dispatch(createPhoto(formData));
+    this.createPhoto(formData);
+  }
+
+  createPhoto(data) {
+    this.props.dispatch(createPhoto(data))
+      .then(() => {
+        this.props.dispatch(push('/dashboard/photos'));
+
+        this.props.dispatch(showNotificationBar());
+
+        this.props.dispatch(setNotificationBarContent({
+          message: `Photo uploaded!`
+        }));
+      });
   }
 
   buildFormData(params) {
