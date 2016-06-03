@@ -1,8 +1,6 @@
 import actionTypes from 'constants/action-types';
 import Connection from 'utils/Connection';
 
-import { fetchParticipants } from 'actions/participants';
-
 export function experimentFetchRequest() {
   return {
     type: actionTypes.EXPERIMENT_FETCH_REQUEST

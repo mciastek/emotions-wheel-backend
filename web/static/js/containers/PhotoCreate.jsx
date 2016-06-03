@@ -5,6 +5,7 @@ import { push } from 'react-router-redux';
 import RaisedButton from 'material-ui/lib/raised-button';
 
 import Input from 'components/Input';
+import PhotoPreview from 'components/PhotoPreview';
 
 import LinkButton from 'containers/LinkButton';
 
@@ -22,7 +23,7 @@ class PhotoCreate extends React.Component {
 
     const params = {
       name: name.state.value,
-      file: file.files[0],
+      file: file.state.file,
       author_type: 'researcher',
       author_id: this.props.session.currentUser.id
     };
@@ -65,14 +66,11 @@ class PhotoCreate extends React.Component {
           <form className="form" onSubmit={this.handleSubmit.bind(this)} noValidate>
 
             <div className="form-row--splitted">
-              <div className="form-row__column--12">
-                <Input ref="name" floatingLabelText="Photo's name" />
+              <div className="form-row__column--3">
+                <PhotoPreview ref="file" />
               </div>
-            </div>
-
-            <div className="form-row--splitted">
-              <div className="form-row__column--12">
-                <input type="file" ref="file" />
+              <div className="form-row__column--6">
+                <Input ref="name" floatingLabelText="Photo's name" />
               </div>
             </div>
 
