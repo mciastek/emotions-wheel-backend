@@ -1,0 +1,19 @@
+/**
+ * Photo full preview
+ */
+
+.photo-full-preview {
+  position: relative;
+
+  &__photo {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  &__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}

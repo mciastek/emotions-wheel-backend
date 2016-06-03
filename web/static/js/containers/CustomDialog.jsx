@@ -13,14 +13,13 @@ class CustomDialog extends React.Component {
   render() {
     return (
       <Dialog
-          title={this.props.ui.customDialog.title}
-          actions={this.props.ui.customDialog.actions}
-          modal={false}
-          open={this.props.ui.customDialog.open}
-          onRequestClose={this.handleClose.bind(this)}
-        >
+        title={this.props.ui.customDialog.title}
+        actions={this.props.ui.customDialog.actions}
+        modal={false}
+        open={this.props.ui.customDialog.open}
+        onRequestClose={this.handleClose.bind(this)} >
           {this.props.ui.customDialog.content}
-        </Dialog>
+      </Dialog>
     );
   }
 }
