@@ -71,3 +71,22 @@ export function setNotificationBarContent({ message, hideDuration = 2000 }) {
     hideDuration
   };
 }
+
+export function openPhotoFullPreview() {
+  return {
+    type: actionTypes.UI_OPEN_PHOTO_FULL_PREVIEW
+  };
+}
+
+export function closePhotoFullPreview() {
+  return {
+    type: actionTypes.UI_CLOSE_PHOTO_FULL_PREVIEW
+  };
+}
+
+export function setPhotoFullPreviewContent(image) {
+  return {
+    type: actionTypes.UI_SET_PHOTO_FULL_PREVIEW_CONTENT,
+    image
+  };
+}

@@ -16,6 +16,10 @@ const initialState = {
     visible: false,
     message: '',
     hideDuration: 2000
+  },
+  photoFullPreview: {
+    open: false,
+    image: null
   }
 };
 
@@ -114,6 +118,33 @@ export default function reducer(state = initialState, action) {
           ...state.notificationBar,
           message: action.message,
           hideDuration: action.hideDuration
+        }
+      };
+
+    case actionTypes.UI_OPEN_PHOTO_FULL_PREVIEW:
+      return {
+        ...state,
+        photoFullPreview: {
+          ...state.photoFullPreview,
+          open: true
+        }
+      };
+
+    case actionTypes.UI_CLOSE_PHOTO_FULL_PREVIEW:
+      return {
+        ...state,
+        photoFullPreview: {
+          ...state.photoFullPreview,
+          open: false
+        }
+      };
+
+    case actionTypes.UI_SET_PHOTO_FULL_PREVIEW_CONTENT:
+      return {
+        ...state,
+        photoFullPreview: {
+          ...state.photoFullPreview,
+          image: action.image
         }
       };
     default:
