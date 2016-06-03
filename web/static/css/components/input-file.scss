@@ -1,0 +1,27 @@
+@import '../base/settings';
+
+/**
+ * Input file
+ */
+
+.input-file {
+  display: flex;
+  align-items: center;
+
+  &__input {
+    position: absolute;
+    left: -9999px;
+  }
+
+  &__trigger ~ &__label {
+    margin-left: 15px;
+  }
+
+  &__label {
+    overflow: hidden;
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
