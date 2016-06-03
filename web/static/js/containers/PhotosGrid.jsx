@@ -5,6 +5,7 @@ import { GridList, GridTile } from 'material-ui/lib/grid-list';
 import RaisedButton from 'material-ui/lib/raised-button';
 
 import DeleteButton from 'components/DeleteButton';
+import OpenButton from 'components/OpenButton';
 
 import { fetchPhotos, deleteSinglePhoto } from 'actions/photos';
 
@@ -13,7 +14,9 @@ import {
   closeCustomDialog,
   setCustomDialogContent,
   showNotificationBar,
-  setNotificationBarContent
+  setNotificationBarContent,
+  openPhotoFullPreview,
+  setPhotoFullPreviewContent
 } from 'actions/ui';
 
 const confirmButtonStyle = {
@@ -27,6 +30,11 @@ class PhotosGrid extends React.Component {
 
   handleModalConfirmClick(photo) {
     this.deletePhoto(photo);
+  }
+
+  handlePreviewClick(photo) {
+    this.props.dispatch(openPhotoFullPreview());
+    this.props.dispatch(setPhotoFullPreviewContent(photo.url));
   }
 
   handleDeleteClick(photo) {
@@ -57,13 +65,22 @@ class PhotosGrid extends React.Component {
       });
   }
 
+  tileButtons(photo) {
+    return (
+      <div>
+        <OpenButton iconColor="white" onTap={this.handlePreviewClick.bind(this, photo)} />
+        <DeleteButton iconColor="white" onTap={this.handleDeleteClick.bind(this, photo)} />
+      </div>
+    );
+  }
+
   render() {
     const thumbs = (() => {
       return this.props.photos.collection.map((photo, index) => {
-        const button = (<DeleteButton iconColor="white" onTap={this.handleDeleteClick.bind(this, photo)} />);
+        const buttons = this.tileButtons(photo);
 
         return (
-          <GridTile key={index} title={photo.name} actionIcon={button}>
+          <GridTile key={index} title={photo.name} actionIcon={buttons}>
             <img src={photo.url} alt={photo.name} />
           </GridTile>
         );
