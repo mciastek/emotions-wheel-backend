@@ -5,7 +5,8 @@ import { GridList, GridTile } from 'material-ui/lib/grid-list';
 import RaisedButton from 'material-ui/lib/raised-button';
 
 import DeleteButton from 'components/DeleteButton';
-import OpenButton from 'components/OpenButton';
+
+import PhotoPreviewButton from 'containers/PhotoPreviewButton';
 
 import { fetchPhotos, deleteSinglePhoto } from 'actions/photos';
 
@@ -14,9 +15,7 @@ import {
   closeCustomDialog,
   setCustomDialogContent,
   showNotificationBar,
-  setNotificationBarContent,
-  openPhotoFullPreview,
-  setPhotoFullPreviewContent
+  setNotificationBarContent
 } from 'actions/ui';
 
 const confirmButtonStyle = {
@@ -30,11 +29,6 @@ class PhotosGrid extends React.Component {
 
   handleModalConfirmClick(photo) {
     this.deletePhoto(photo);
-  }
-
-  handlePreviewClick(photo) {
-    this.props.dispatch(openPhotoFullPreview());
-    this.props.dispatch(setPhotoFullPreviewContent(photo.url));
   }
 
   handleDeleteClick(photo) {
@@ -68,7 +62,7 @@ class PhotosGrid extends React.Component {
   tileButtons(photo) {
     return (
       <div>
-        <OpenButton iconColor="white" onTap={this.handlePreviewClick.bind(this, photo)} />
+        <PhotoPreviewButton photo={photo} />
         <DeleteButton iconColor="white" onTap={this.handleDeleteClick.bind(this, photo)} />
       </div>
     );
