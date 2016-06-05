@@ -3,15 +3,15 @@ defmodule EmotionsWheelBackend.ExperimentController do
 
   import Ecto.Query, only: [from: 2]
 
-  alias EmotionsWheelBackend.{Repo, Experiment, Participant, ExperimentsHasParticipants}
+  alias EmotionsWheelBackend.{Repo, Experiment, ExperimentsHasParticipants}
 
   def index(conn, _params) do
-    experiments = Experiment |> Repo.all
+    experiments = Experiment.with_participants_and_photos |> Repo.all
     render(conn, "index.json", experiments: experiments)
   end
 
   def show(conn, %{"id" => id}) do
-    experiment = Experiment |> Repo.get(id)
+    experiment = Experiment.with_participants_and_photos |> Repo.get(id)
 
     case experiment do
       nil ->
@@ -19,10 +19,8 @@ defmodule EmotionsWheelBackend.ExperimentController do
         |> put_status(:not_found)
         |> render("error.json", message: "Couldn't find matching experiment")
       _ ->
-        attached_participants = fetch_participants(experiment)
-
         conn
-        |> render("show.json", experiment: Map.put(experiment, :attached_participants, attached_participants))
+        |> render("show.json", experiment: %{experiment | :participants => participants_with_uuid(experiment)})
     end
   end
 
@@ -55,14 +53,14 @@ defmodule EmotionsWheelBackend.ExperimentController do
     if experiment_changeset.valid? do
       participants_ids = experiment_params |> Map.fetch!("participants_ids")
 
-      experiment = Repo.update!(experiment_changeset)
+      experiment = experiment_changeset |> Repo.update!
 
       case update_participants_in_experiment(participants_ids, experiment.id) do
         {:ok, _} ->
-          attached_participants = fetch_participants(experiment)
+          experiment = Experiment.with_participants_and_photos |> Repo.get(id)
 
           conn
-          |> render("success.json", experiment: Map.put(experiment, :attached_participants, attached_participants))
+          |> render("success.json", experiment: %{experiment | :participants => participants_with_uuid(experiment)})
       end
     else
       conn
@@ -117,24 +115,13 @@ defmodule EmotionsWheelBackend.ExperimentController do
     |> Repo.delete!
   end
 
-  defp fetch_participants(experiment) do
-    ehp_model = Repo.all(ehp_query(experiment.id))
+  defp participants_with_uuid(experiment) do
+    experiment.participants |> Enum.map(fn(participant) ->
+      ehp = experiment.experiments_has_participants
+        |> Enum.find(&(&1.participant_id == participant.id))
 
-    participants_uuids = ehp_model |> Enum.map(fn(record) -> %{id: record.participant_id, uuid: record.uuid} end)
-    participants_ids = ehp_model |> Enum.map(fn(record) -> record.participant_id end)
-
-    p_query = from p in Participant,
-      where: p.id in ^participants_ids,
-      select: p
-
-    p_model = Repo.all(p_query)
-
-    built_participant_model = p_model |> Enum.map(fn(participant) ->
-      participant_uuid = Enum.find(participants_uuids, fn(item) -> participant.id == item.id end)
-      participant |> Map.put(:experiment_uuid, participant_uuid.uuid)
+      %{participant | :experiment_uuid => ehp.uuid}
     end)
-
-    built_participant_model
   end
 
   defp ehp_query(experiment_id) do

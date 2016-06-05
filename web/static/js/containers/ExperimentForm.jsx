@@ -167,7 +167,7 @@ class ExperimentForm extends React.Component {
           leftLabel="All participants"
           rightLabel="Participants in that experiment"
           collection={this.props.participants.collection}
-          selected={this.props.experiment.attached_participants}
+          selected={this.props.experiment.participants}
           selectBy="id"
           rightListItemAction={this.dialogButton.bind(this)}
           listItemLabel={this.listItemLabel} />

@@ -1,7 +1,7 @@
 defmodule EmotionsWheelBackend.Experiment do
   use EmotionsWheelBackend.Web, :model
 
-  alias EmotionsWheelBackend.{ExperimentsHasPhotos, ExperimentsHasParticipants, Researcher, Rate}
+  alias EmotionsWheelBackend.{Experiment, ExperimentsHasPhotos, ExperimentsHasParticipants, Researcher, Rate}
 
   @derive {Poison.Encoder, only: [
     :id,
@@ -10,6 +10,8 @@ defmodule EmotionsWheelBackend.Experiment do
     :start_date,
     :end_date,
     :researcher_id,
+    :participants,
+    :photos,
     :attached_participants
   ]}
 
@@ -18,8 +20,8 @@ defmodule EmotionsWheelBackend.Experiment do
     field :kind, :string
     field :start_date, Ecto.DateTime
     field :end_date, Ecto.DateTime
-    field :attached_participants, {:array, :map}, virtual: true
     field :participants_ids, {:array, :integer}, virtual: true
+    field :photos_ids, {:array, :integer}, virtual: true
     timestamps
 
     belongs_to :researcher, Researcher
@@ -32,8 +34,31 @@ defmodule EmotionsWheelBackend.Experiment do
   end
 
   @required_fields ~w(name kind)
-  @optional_fields ~w(start_date end_date researcher_id participants_ids)
+  @optional_fields ~w(start_date end_date researcher_id participants_ids photos_ids)
   @kind_valid ~w(free_mode experiment)
+
+  def with_participants do
+    from e in Experiment,
+      left_join: ehp in assoc(e, :experiments_has_participants),
+      left_join: p in assoc(ehp, :participant),
+      preload: [participants: p]
+  end
+
+  def with_photos do
+    from e in Experiment,
+      left_join: ehp in assoc(e, :experiments_has_photos),
+      left_join: p in assoc(ehp, :photo),
+      preload: [photos: p]
+  end
+
+  def with_participants_and_photos do
+    from e in Experiment,
+      left_join: ehp in assoc(e, :experiments_has_participants),
+      left_join: pa in assoc(ehp, :participant),
+      left_join: ehph in assoc(e, :experiments_has_photos),
+      left_join: ph in assoc(ehph, :photo),
+      preload: [participants: pa, photos: ph, experiments_has_participants: ehp]
+  end
 
   @doc """
   Creates a changeset based on the `model` and `params`.
