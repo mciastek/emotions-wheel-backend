@@ -14,11 +14,13 @@ import ActionOpenInNew from 'material-ui/lib/svg-icons/action/open-in-new';
 
 import { createExperiment, updateExperiment } from 'actions/experiment';
 import { fetchParticipants } from 'actions/participants';
+import { fetchPhotos } from 'actions/photos';
 import { openQrDialog, setQrDialogValue, showNotificationBar, setNotificationBarContent } from 'actions/ui';
 
 import Input from 'components/Input';
 import DateTimeField from 'components/DateTimeField';
 import DualListbox from 'components/DualListbox';
+import PhotosSelection from 'components/PhotosSelection';
 
 import LinkButton from 'containers/LinkButton';
 
@@ -32,6 +34,8 @@ class ExperimentForm extends React.Component {
 
     // Fetch all free participants
     this.props.dispatch(fetchParticipants(true));
+
+    this.props.dispatch(fetchPhotos());
   }
 
   handleSubmit(e) {
@@ -168,6 +172,13 @@ class ExperimentForm extends React.Component {
           rightListItemAction={this.dialogButton.bind(this)}
           listItemLabel={this.listItemLabel} />
 
+        <PhotosSelection
+          ref="photos_ids"
+          title="Photos in experiment"
+          collection={this.props.photos.collection}
+          selected={this.props.experiment.attached_photos}
+          selectBy="id" />
+
         <div className="form-row--splitted form-row--submit">
           <div className="form-row__column--4"></div>
           <div className="form-row__column--4">
@@ -185,6 +196,7 @@ class ExperimentForm extends React.Component {
 function mapStateToProps(state) {
   return {
     participants: state.participants,
+    photos: state.photos,
     session: state.session
   };
 }
