@@ -26,7 +26,7 @@ class ExperimentPreview extends React.Component {
       kind,
       start_date,
       end_date,
-      attached_participants = []
+      participants = []
     } = this.props.experiment.single;
 
     return (
@@ -54,14 +54,14 @@ class ExperimentPreview extends React.Component {
 
           <p className="page-details__row">
             <strong className="page-details__label">Participants</strong>
-            <span className="page-details__text">{attached_participants.length}</span>
+            <span className="page-details__text">{participants.length}</span>
           </p>
         </Paper>
 
         <Paper className="page-details">
           <h3 className="page-details__title">Participants list</h3>
 
-          <BlockList collection={attached_participants} itemLabel={this.blockListItemLabel} />
+          <BlockList collection={participants} itemLabel={this.blockListItemLabel} />
         </Paper>
 
         <div className="page-actions">
