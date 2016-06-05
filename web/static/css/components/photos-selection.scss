@@ -1,0 +1,27 @@
+@import 'node_modules/sass-material-colors/sass/sass-material-colors';
+
+@import '../base/settings';
+
+/**
+ * Photos selection
+ */
+
+.photos-selection {
+  padding: 30px 0;
+
+  &__header {
+    margin-bottom: 40px;
+  }
+
+  &__item {
+    transition: box-shadow $duration;
+  }
+
+  &__item.is-active {
+    box-shadow: 0 0 0 5px rgba(material-color('cyan', '700'), 0.8);
+  }
+
+  &__checkbox {
+    display: inline-block;
+  }
+}
