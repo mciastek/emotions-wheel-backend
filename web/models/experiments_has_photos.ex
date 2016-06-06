@@ -10,7 +10,7 @@ defmodule EmotionsWheelBackend.ExperimentsHasPhotos do
     belongs_to :photo, Photo
   end
 
-  @required_fields ~w()
+  @required_fields ~w(experiment_id photo_id)
   @optional_fields ~w()
 
   @doc """
