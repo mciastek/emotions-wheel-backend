@@ -48,7 +48,8 @@ class ExperimentForm extends React.Component {
       kind,
       start_date,
       end_date,
-      participants_ids
+      participants_ids,
+      photos_ids
     } = this.refs;
 
     const requestData = {
@@ -57,7 +58,8 @@ class ExperimentForm extends React.Component {
       start_date: start_date.state.value,
       end_date: end_date.state.value,
       researcher_id: this.props.session.currentUser.id,
-      participants_ids: participants_ids.state.selection
+      participants_ids: participants_ids.state.selection,
+      photos_ids: photos_ids.state.selection
     };
 
     if (this.props.actionType === 'create') {
@@ -176,7 +178,7 @@ class ExperimentForm extends React.Component {
           ref="photos_ids"
           title="Photos in experiment"
           collection={this.props.photos.collection}
-          selected={this.props.experiment.attached_photos}
+          selected={this.props.experiment.photos}
           selectBy="id" />
 
         <div className="form-row--splitted form-row--submit">

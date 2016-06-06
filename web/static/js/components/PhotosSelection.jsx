@@ -29,7 +29,7 @@ class PhotosSelection extends React.Component {
 
     if (selected.length) {
       this.setState({
-        selection: [...selected]
+        selection: this.mappedToProp(selected)
       });
     }
   }
@@ -57,9 +57,13 @@ class PhotosSelection extends React.Component {
     });
   }
 
+  mappedToProp(collection) {
+    return collection.map((item) => item[this.props.selectBy]);
+  }
+
   render() {
     const thumbs = this.props.collection.map((photo, index) => {
-      const isChecked = this.state.selection.indexOf(photo.id) !== -1;
+      const isChecked = this.state.selection.indexOf(photo[this.props.selectBy]) !== -1;
 
       const actions = (() => {
         return (

@@ -31,7 +31,7 @@ class DualListbox extends React.Component {
       this.setState({
         leftList: this.xor(collection, selected),
         rightList: selected,
-        selection: this.mappedToIds(selected)
+        selection: this.mappedToProp(selected)
       });
     } else {
       this.setState({
@@ -90,13 +90,13 @@ class DualListbox extends React.Component {
     return collection.filter((item) => item[this.props.selectBy] !== prop);
   }
 
-  mappedToIds(collection) {
+  mappedToProp(collection) {
     return collection.map((item) => item[this.props.selectBy]);
   }
 
   updateSelection() {
     this.setState({
-      selection: this.mappedToIds(this.state.rightList)
+      selection: this.mappedToProp(this.state.rightList)
     });
   }
 
