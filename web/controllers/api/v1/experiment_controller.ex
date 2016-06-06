@@ -3,7 +3,7 @@ defmodule EmotionsWheelBackend.ExperimentController do
 
   import Ecto.Query, only: [from: 2]
 
-  alias EmotionsWheelBackend.{Repo, Experiment, ExperimentsHasParticipants}
+  alias EmotionsWheelBackend.{Repo, Experiment}
 
   def index(conn, _params) do
     experiments = Experiment.with_participants_and_photos |> Repo.all
@@ -28,16 +28,28 @@ defmodule EmotionsWheelBackend.ExperimentController do
     experiment_changeset = Experiment.changeset(%Experiment{}, experiment_params)
 
     if experiment_changeset.valid? do
+      participants_ids = experiment_params |> Map.fetch!("participants_ids")
+      photos_ids = experiment_params |> Map.fetch!("photos_ids")
+
       experiment = Repo.insert!(experiment_changeset)
 
-      case Map.fetch(experiment_params, "participants_ids") do
-        {:ok, participants_ids} ->
-          add_participants_to_experiment(participants_ids, experiment)
+      transaction = Repo.transaction(fn ->
+        "participant" |> insert_assoc_multiple(experiment.id, participants_ids)
+        "photo" |> insert_assoc_multiple(experiment.id, photos_ids)
+      end)
+
+      case transaction do
+        {:ok, _} ->
+          conn
+          |> put_status(:created)
+          |> render("success.json", experiment: experiment)
+
+        {:error, res} ->
+          conn
+          |> put_status(:unprocessable_entity)
+          |> render("error.json", message: res)
       end
 
-      conn
-      |> put_status(:created)
-      |> render("success.json", experiment: experiment)
     else
       conn
       |> put_status(:unprocessable_entity)
@@ -52,15 +64,27 @@ defmodule EmotionsWheelBackend.ExperimentController do
 
     if experiment_changeset.valid? do
       participants_ids = experiment_params |> Map.fetch!("participants_ids")
+      photos_ids = experiment_params |> Map.fetch!("photos_ids")
 
       experiment = experiment_changeset |> Repo.update!
 
-      case update_participants_in_experiment(participants_ids, experiment.id) do
+      transaction = Repo.transaction(fn ->
+        experiment.id |> update_assoc_in_experiment("participant", participants_ids)
+        experiment.id |> update_assoc_in_experiment("photo", photos_ids)
+      end)
+
+      case transaction do
         {:ok, _} ->
           experiment = Experiment.with_participants_and_photos |> Repo.get(id)
 
           conn
           |> render("success.json", experiment: %{experiment | :participants => participants_with_uuid(experiment)})
+
+        {:error, res} ->
+
+          conn
+          |> put_status(:unprocessable_entity)
+          |> render("error.json", message: res)
       end
     else
       conn
@@ -69,50 +93,58 @@ defmodule EmotionsWheelBackend.ExperimentController do
     end
   end
 
-  defp add_participants_to_experiment(participants_ids, experiment) do
-    for participant_id <- participants_ids do
-      insert_participant(participant_id, experiment.id)
+  defp update_assoc_in_experiment(experiment_id, model_name, ids) do
+    model_name_pluralized = "#{model_name}s"
+
+    assoc_model = model_name_pluralized |> assoc_query(experiment_id) |> Repo.all
+
+    saved_ids = assoc_model |> Enum.map(fn(record) ->
+      Map.get(record, :"#{model_name}_id")
+    end)
+
+    diff = (ids -- saved_ids) ++ (saved_ids -- ids)
+
+    for id <- diff do
+      if Enum.member?(saved_ids, id) do
+        model_name |> remove_assoc(experiment_id, id)
+      else
+        model_name |> insert_assoc(experiment_id, id)
+      end
     end
   end
 
-  defp update_participants_in_experiment(new_participants, experiment_id) do
-    ehp_model = Repo.all(ehp_query(experiment_id))
-
-    saved_participants = ehp_model |> Enum.map(fn(ehp) ->
-      ehp.participant_id
-    end)
-
-    diff = (new_participants -- saved_participants) ++ (saved_participants -- new_participants)
-
-    Repo.transaction(fn ->
-
-      for participant_id <- diff do
-        if Enum.member?(saved_participants, participant_id) do
-          remove_participant(participant_id, experiment_id)
-        else
-          insert_participant(participant_id, experiment_id)
-        end
-      end
-
-    end)
+  defp insert_assoc_multiple(model_name, experiment_id, ids) do
+    for id <- ids do
+      model_name |> insert_assoc(experiment_id, id)
+    end
   end
 
-  defp insert_participant(participant_id, experiment_id) do
-    changeset = ExperimentsHasParticipants.changeset(
-      %ExperimentsHasParticipants{},
-      %{"participant_id" => participant_id, "experiment_id" => experiment_id}
+  defp insert_assoc(model_name, experiment_id, record_id) do
+    model = Module.concat(EmotionsWheelBackend, "ExperimentsHas#{String.capitalize(model_name)}s")
+    record_key = "#{model_name}_id"
+
+    changeset = model.changeset(
+      struct(model),
+      %{record_key => record_id, "experiment_id" => experiment_id}
     )
 
     changeset |> Repo.insert!
   end
 
-  defp remove_participant(participant_id, experiment_id) do
-    ExperimentsHasParticipants
-    |> Repo.get_by!(
-      participant_id: participant_id,
-      experiment_id: experiment_id
-    )
+  defp remove_assoc(model_name, experiment_id, record_id) do
+    model = Module.concat(EmotionsWheelBackend, "ExperimentsHas#{String.capitalize(model_name)}s")
+
+    model
+    |> Repo.get_by!([{:"#{model_name}_id", record_id}, {:experiment_id, experiment_id}])
     |> Repo.delete!
+  end
+
+  defp assoc_query(model_name, experiment_id) do
+    model = Module.concat(EmotionsWheelBackend, "ExperimentsHas#{String.capitalize(model_name)}")
+
+    from m in model,
+      where: m.experiment_id == ^experiment_id,
+      select: m
   end
 
   defp participants_with_uuid(experiment) do
@@ -122,11 +154,5 @@ defmodule EmotionsWheelBackend.ExperimentController do
 
       %{participant | :experiment_uuid => ehp.uuid}
     end)
-  end
-
-  defp ehp_query(experiment_id) do
-    from ehp in ExperimentsHasParticipants,
-      where: ehp.experiment_id == ^experiment_id,
-      select: ehp
   end
 end
