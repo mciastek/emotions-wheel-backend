@@ -2,7 +2,7 @@ defmodule EmotionsWheelBackend.Participant do
   use EmotionsWheelBackend.Web, :model
   use Timex
 
-  alias EmotionsWheelBackend.{Country, City, Language, Rate, ExperimentsHasParticipants}
+  alias EmotionsWheelBackend.{Participant, Country, City, Language, Rate, ExperimentsHasParticipants}
 
   @derive {Poison.Encoder, only: [
     :id,
@@ -66,5 +66,13 @@ defmodule EmotionsWheelBackend.Participant do
     else
       changeset
     end
+  end
+
+  def without_experiment do
+    from p in Participant,
+      left_join: ehp in assoc(p, :experiments_has_participants),
+      left_join: e in assoc(ehp, :experiment),
+      where: e.end_date < ^Ecto.DateTime.utc or is_nil(ehp.participant_id),
+      select: p
   end
 end

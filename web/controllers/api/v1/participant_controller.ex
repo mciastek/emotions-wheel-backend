@@ -66,13 +66,7 @@ defmodule EmotionsWheelBackend.ParticipantController do
   end
 
   def get_free_participants(conn, _params) do
-    query = from p in Participant,
-      left_join: ehp in assoc(p, :experiments_has_participants),
-      left_join: e in assoc(ehp, :experiment),
-      where: e.end_date < ^Ecto.DateTime.utc or is_nil(ehp.participant_id),
-      select: p
-
-    participants = query |> Repo.all
+    participants = Participant.without_experiment |> Repo.all
 
     render(conn, "index.json", participants: participants)
   end

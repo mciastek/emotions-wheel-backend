@@ -37,29 +37,6 @@ defmodule EmotionsWheelBackend.Experiment do
   @optional_fields ~w(start_date end_date researcher_id participants_ids photos_ids)
   @kind_valid ~w(free_mode experiment)
 
-  def with_participants do
-    from e in Experiment,
-      left_join: ehp in assoc(e, :experiments_has_participants),
-      left_join: p in assoc(ehp, :participant),
-      preload: [participants: p]
-  end
-
-  def with_photos do
-    from e in Experiment,
-      left_join: ehp in assoc(e, :experiments_has_photos),
-      left_join: p in assoc(ehp, :photo),
-      preload: [photos: p]
-  end
-
-  def with_participants_and_photos do
-    from e in Experiment,
-      left_join: ehp in assoc(e, :experiments_has_participants),
-      left_join: pa in assoc(ehp, :participant),
-      left_join: ehph in assoc(e, :experiments_has_photos),
-      left_join: ph in assoc(ehph, :photo),
-      preload: [participants: pa, photos: ph, experiments_has_participants: ehp]
-  end
-
   @doc """
   Creates a changeset based on the `model` and `params`.
 
@@ -101,5 +78,28 @@ defmodule EmotionsWheelBackend.Experiment do
     else
       changeset
     end
+  end
+
+  def with_participants do
+    from e in Experiment,
+      left_join: ehp in assoc(e, :experiments_has_participants),
+      left_join: p in assoc(ehp, :participant),
+      preload: [participants: p]
+  end
+
+  def with_photos do
+    from e in Experiment,
+      left_join: ehp in assoc(e, :experiments_has_photos),
+      left_join: p in assoc(ehp, :photo),
+      preload: [photos: p]
+  end
+
+  def with_participants_and_photos do
+    from e in Experiment,
+      left_join: ehp in assoc(e, :experiments_has_participants),
+      left_join: pa in assoc(ehp, :participant),
+      left_join: ehph in assoc(e, :experiments_has_photos),
+      left_join: ph in assoc(ehph, :photo),
+      preload: [participants: pa, photos: ph, experiments_has_participants: ehp]
   end
 end
