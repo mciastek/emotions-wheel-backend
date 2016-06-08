@@ -2,7 +2,7 @@ defmodule EmotionsWheelBackend.Photo do
   use EmotionsWheelBackend.Web, :model
   use Arc.Ecto.Model
 
-  alias EmotionsWheelBackend.{ExperimentsHasPhotos, PhotoFileDefinition}
+  alias EmotionsWheelBackend.{ExperimentsHasPhotos, Rate, PhotoFileDefinition}
 
   @derive {Poison.Encoder, only: [
     :id,
@@ -20,8 +20,7 @@ defmodule EmotionsWheelBackend.Photo do
     field :author_id, :integer
     timestamps
 
-    belongs_to :rate, Rate
-
+    has_many :rates, Rate
     has_many :experiments_has_photos, ExperimentsHasPhotos
     has_many :experiments, through: [:experiments_has_photos, :experiments]
   end

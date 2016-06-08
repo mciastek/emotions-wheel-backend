@@ -1,7 +1,7 @@
 defmodule EmotionsWheelBackend.Rate do
   use EmotionsWheelBackend.Web, :model
 
-  alias EmotionsWheelBackend.{Participant, Photo}
+  alias EmotionsWheelBackend.{Participant, Experiment, Photo, Rate}
 
   schema "rates" do
     field :name, :string
@@ -13,6 +13,8 @@ defmodule EmotionsWheelBackend.Rate do
     timestamps
 
     belongs_to :participant, Participant
+    belongs_to :experiment, Experiment
+    belongs_to :rate, Rate
 
     has_one :photo, Photo
   end
