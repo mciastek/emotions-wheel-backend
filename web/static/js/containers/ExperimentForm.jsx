@@ -15,7 +15,7 @@ import ActionOpenInNew from 'material-ui/lib/svg-icons/action/open-in-new';
 import { createExperiment, updateExperiment } from 'actions/experiment';
 import { fetchParticipants } from 'actions/participants';
 import { fetchPhotos } from 'actions/photos';
-import { openQrDialog, setQrDialogValue, showNotificationBar, setNotificationBarContent } from 'actions/ui';
+import { showNotificationBar, setNotificationBarContent } from 'actions/ui';
 
 import Input from 'components/Input';
 import DateTimeField from 'components/DateTimeField';
@@ -95,25 +95,22 @@ class ExperimentForm extends React.Component {
       });
   }
 
-  openDialog(dialogValue) {
-    this.props.dispatch(setQrDialogValue(dialogValue));
-    this.props.dispatch(openQrDialog());
+  showQrCode(id) {
+    this.props.dispatch(push(`/dashboard/participants/${id}/qr-code`));
   }
 
   listItemLabel(participant) {
     return `${participant.first_name} ${participant.last_name} (${participant.age})`;
   }
 
-  dialogButton(item) {
-    const { experiment_uuid } = item;
+  dialogButton(participant) {
+    const { id } = participant;
 
-    if (experiment_uuid) {
-      return (
-        <IconButton onTouchTap={this.openDialog.bind(this, experiment_uuid)}>
-          <ActionOpenInNew color={Colors.grey500} />
-        </IconButton>
-      );
-    }
+    return (
+      <IconButton onTouchTap={this.showQrCode.bind(this, id)}>
+        <ActionOpenInNew color={Colors.grey500} />
+      </IconButton>
+    );
   }
 
   render() {
