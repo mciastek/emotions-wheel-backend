@@ -12,25 +12,6 @@ export function closeNav() {
   };
 }
 
-export function openQrDialog() {
-  return {
-    type: actionTypes.UI_OPEN_QR_DIALOG
-  };
-}
-
-export function closeQrDialog() {
-  return {
-    type: actionTypes.UI_CLOSE_QR_DIALOG
-  };
-}
-
-export function setQrDialogValue(value) {
-  return {
-    type: actionTypes.UI_QR_DIALOG_SET_VALUE,
-    value
-  };
-}
-
 export function openCustomDialog() {
   return {
     type: actionTypes.UI_OPEN_CUSTOM_DIALOG

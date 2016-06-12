@@ -2,7 +2,6 @@ import React from 'react';
 
 import TopBar from 'containers/TopBar';
 import MainNav from 'containers/MainNav';
-import QrDialog from 'containers/QrDialog';
 import CustomDialog from 'containers/CustomDialog';
 import NotificationBar from 'containers/NotificationBar';
 import PhotoFullPreview from 'containers/PhotoFullPreview';
@@ -18,7 +17,6 @@ class DashboardView extends React.Component {
         <DashboardContainer>
           {this.props.children}
         </DashboardContainer>
-        <QrDialog />
         <CustomDialog />
         <NotificationBar />
         <PhotoFullPreview />
