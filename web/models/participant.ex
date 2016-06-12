@@ -75,4 +75,12 @@ defmodule EmotionsWheelBackend.Participant do
       where: e.end_date < ^Ecto.DateTime.utc or is_nil(ehp.participant_id),
       select: p
   end
+
+  def with_experiment_uuid do
+    from p in Participant,
+      left_join: ehp in assoc(p, :experiments_has_participants),
+      left_join: e in assoc(ehp, :experiment),
+      where: e.end_date >= ^Ecto.DateTime.utc,
+      select: {p, ehp.uuid}
+  end
 end

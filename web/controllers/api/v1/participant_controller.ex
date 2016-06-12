@@ -1,7 +1,7 @@
 defmodule EmotionsWheelBackend.ParticipantController do
   use EmotionsWheelBackend.Web, :controller
 
-  alias EmotionsWheelBackend.{Repo, Participant, ExperimentsHasParticipants}
+  alias EmotionsWheelBackend.{Repo, Participant}
 
   def index(conn, _params) do
     participants = Participant |> Repo.all
@@ -9,14 +9,24 @@ defmodule EmotionsWheelBackend.ParticipantController do
   end
 
   def show(conn, %{"id" => id}) do
-    participant = Participant |> Repo.get_by(id: id)
+    participant_with_uuid = Participant.with_experiment_uuid |> Repo.get(id)
 
-    case participant do
+    case participant_with_uuid do
       nil ->
-        conn
-        |> put_status(:not_found)
-        |> render("error.json", message: "Couldn't find matching participant")
-      _ -> render(conn, "show.json", participant: participant)
+        participant = Participant |> Repo.get(id)
+
+        case participant do
+          nil ->
+            conn
+            |> put_status(:not_found)
+            |> render("error.json", message: "Couldn't find matching participant")
+
+          _ ->
+            render(conn, "show.json", participant: participant)
+        end
+
+      {participant, uuid} ->
+        render(conn, "show.json", participant: %{participant | experiment_uuid: uuid})
     end
   end
 
