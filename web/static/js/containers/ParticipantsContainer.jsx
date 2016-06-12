@@ -26,6 +26,7 @@ import {
 } from 'actions/ui';
 
 import EditButton from 'components/EditButton';
+import PreviewButton from 'components/PreviewButton';
 import DeleteButton from 'components/DeleteButton';
 
 const shortColumnStyle = {
@@ -50,8 +51,12 @@ class ParticipantsContainer extends React.Component {
     this.deleteParticipant(participant);
   }
 
-  handleEditClick(participantId) {
+  handlePreviewClick(participantId) {
     this.props.dispatch(push(`/dashboard/participants/${participantId}`));
+  }
+
+  handleEditClick(participantId) {
+    this.props.dispatch(push(`/dashboard/participants/edit/${participantId}`));
   }
 
   handleDeleteClick(participant) {
@@ -96,6 +101,7 @@ class ParticipantsContainer extends React.Component {
           <TableRowColumn style={shortColumnStyle}>{participant.age}</TableRowColumn>
           <TableRowColumn>{participant.email}</TableRowColumn>
           <TableRowColumn>
+            <PreviewButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handlePreviewClick.bind(this, participant.id)} />
             <EditButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleEditClick.bind(this, participant.id)} />
             <DeleteButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleDeleteClick.bind(this, participant)} />
           </TableRowColumn>

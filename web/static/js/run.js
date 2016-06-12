@@ -20,6 +20,7 @@ import DashboardIndexView from 'views/DashboardIndexView';
 import ParticipantsView from 'views/ParticipantsView';
 import ParticipantEditView from 'views/ParticipantEditView';
 import ParticipantNewView from 'views/ParticipantNewView';
+import ParticipantPreview from 'containers/ParticipantPreview';
 
 import ExperimentsView from 'views/ExperimentsView';
 import ExperimentNewView from 'views/ExperimentNewView';
@@ -65,7 +66,8 @@ ReactDOM.render(
           <Route path="participants">
             <IndexRoute component={ParticipantsView} />
             <Route path="new" component={ParticipantNewView} />
-            <Route path=":id" component={ParticipantEditView} />
+            <Route path=":id" component={ParticipantPreview} />
+            <Route path="edit/:id" component={ParticipantEditView} />
             <Route path=":id/qr-code" component={QrCodePrint} />
           </Route>
 
