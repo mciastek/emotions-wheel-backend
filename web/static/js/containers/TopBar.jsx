@@ -38,7 +38,7 @@ class TopBar extends React.Component {
     })();
 
     return (
-      <AppBar title="Dashboard" iconElementLeft={menuButton} iconElementRight={logoutButton} />
+      <AppBar title="Dashboard" className="top-bar" iconElementLeft={menuButton} iconElementRight={logoutButton} />
     );
   }
 }

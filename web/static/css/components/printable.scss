@@ -1,0 +1,69 @@
+@import '../base/settings';
+
+/**
+ * Printable
+ */
+
+.printable {
+  padding: 20px;
+  background-color: #fff;
+
+  header {
+    padding-bottom: 20px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  canvas {
+    display: block;
+    margin: 50px auto;
+  }
+
+  p {
+    margin: 20px 0;
+    text-align: justify;
+  }
+}
+
+@media print {
+  .printable {
+    padding: 0;
+    background-color: none;
+    font-size: 14pt;
+    line-height: 1.33;
+
+    header {
+      padding-bottom: 0;
+    }
+
+    h1 {
+      font-size: 30pt;
+    }
+
+    h2 {
+      font-size: 20pt;
+    }
+
+    canvas {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  // Overwrite styles for elements on page
+  @page {
+    margin: 1.5cm;
+  }
+
+  body {
+    background: none;
+  }
+
+  .top-bar,
+  .page-header,
+  .print-button {
+    display: none !important;
+  }
+}
