@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ParticipantForm from 'containers/ParticipantForm';
+import ParticipantForm from 'containers/participant/ParticipantForm';
 
 class ParticipantNewView extends React.Component {
   render() {

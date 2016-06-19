@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ParticipantsContainer from 'containers/ParticipantsContainer';
+import ParticipantsContainer from 'containers/participant/ParticipantsContainer';
 import LinkButton from 'containers/LinkButton';
 
 class ParticipantsView extends React.Component {

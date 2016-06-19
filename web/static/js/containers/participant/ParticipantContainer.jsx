@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchParticipant } from 'actions/participant';
 
-import ParticipantForm from 'containers/ParticipantForm';
+import ParticipantForm from 'containers/participant/ParticipantForm';
 
 class ParticipantContainer extends React.Component {
   componentDidMount() {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ExperimentContainer from 'containers/ExperimentContainer';
+import ExperimentContainer from 'containers/experiment/ExperimentContainer';
 
 class ExperimentEditView extends React.Component {
   render() {

@@ -20,7 +20,7 @@ import DashboardIndexView from 'views/DashboardIndexView';
 import ParticipantsView from 'views/ParticipantsView';
 import ParticipantEditView from 'views/ParticipantEditView';
 import ParticipantNewView from 'views/ParticipantNewView';
-import ParticipantPreview from 'containers/ParticipantPreview';
+import ParticipantPreview from 'containers/participant/ParticipantPreview';
 
 import ExperimentsView from 'views/ExperimentsView';
 import ExperimentNewView from 'views/ExperimentNewView';
@@ -28,7 +28,7 @@ import ExperimentEditView from 'views/ExperimentEditView';
 import ExperimentPreviewView from 'views/ExperimentPreviewView';
 
 import PhotosView from 'views/PhotosView';
-import PhotoCreate from 'containers/PhotoCreate';
+import PhotoCreate from 'containers/photo/PhotoCreate';
 
 import QrCodePrint from 'containers/QrCodePrint';
 

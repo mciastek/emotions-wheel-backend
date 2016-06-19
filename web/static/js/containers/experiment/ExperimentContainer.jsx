@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchExperiment } from 'actions/experiment';
 
-import ExperimentForm from 'containers/ExperimentForm';
+import ExperimentForm from 'containers/experiment/ExperimentForm';
 
 class ExperimentContainer extends React.Component {
   componentDidMount() {

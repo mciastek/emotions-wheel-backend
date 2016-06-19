@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ExperimentForm from 'containers/ExperimentForm';
+import ExperimentForm from 'containers/experiment/ExperimentForm';
 
 class ExperimentNewView extends React.Component {
   render() {

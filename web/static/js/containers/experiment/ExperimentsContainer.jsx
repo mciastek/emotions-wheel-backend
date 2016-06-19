@@ -1,4 +1,4 @@
-import config from '../config';
+import config from '../../config';
 
 import React from 'react';
 import { connect } from 'react-redux';

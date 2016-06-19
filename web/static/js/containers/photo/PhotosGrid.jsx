@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 
 import DeleteButton from 'components/DeleteButton';
 
-import PhotoPreviewButton from 'containers/PhotoPreviewButton';
+import PhotoPreviewButton from 'containers/photo/PhotoPreviewButton';
 
 import { fetchPhotos, deleteSinglePhoto } from 'actions/photos';
 

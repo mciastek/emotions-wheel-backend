@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { GridList, GridTile } from 'material-ui/lib/grid-list';
 import Checkbox from 'material-ui/lib/checkbox';
 
-import PhotoPreviewButton from 'containers/PhotoPreviewButton';
+import PhotoPreviewButton from 'containers/photo/PhotoPreviewButton';
 
 const checkboxIconStyle = {
   fill: 'white'

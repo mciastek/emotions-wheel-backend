@@ -4,7 +4,7 @@ import TopBar from 'containers/TopBar';
 import MainNav from 'containers/MainNav';
 import CustomDialog from 'containers/CustomDialog';
 import NotificationBar from 'containers/NotificationBar';
-import PhotoFullPreview from 'containers/PhotoFullPreview';
+import PhotoFullPreview from 'containers/photo/PhotoFullPreview';
 
 import DashboardContainer from 'containers/DashboardContainer';
 

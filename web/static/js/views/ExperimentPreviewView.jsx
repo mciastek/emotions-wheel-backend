@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ExperimentPreview from 'containers/ExperimentPreview';
+import ExperimentPreview from 'containers/experiment/ExperimentPreview';
 
 class ExperimentPreviewView extends React.Component {
   render() {

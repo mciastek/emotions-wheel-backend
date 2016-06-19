@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ExperimentsContainer from 'containers/ExperimentsContainer';
+import ExperimentsContainer from 'containers/experiment/ExperimentsContainer';
 import LinkButton from 'containers/LinkButton';
 
 class ExperimentsView extends React.Component {
