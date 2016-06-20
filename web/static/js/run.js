@@ -12,22 +12,22 @@ import configureStore from 'store';
 
 import Main from 'containers/Main';
 
-import LoginView from 'views/LoginView';
+import LoginView from 'views/common/LoginView';
 
-import DashboardView from 'views/DashboardView';
-import DashboardIndexView from 'views/DashboardIndexView';
+import DashboardView from 'views/common/DashboardView';
+import DashboardIndexView from 'views/common/DashboardIndexView';
 
-import ParticipantsView from 'views/ParticipantsView';
-import ParticipantEditView from 'views/ParticipantEditView';
-import ParticipantNewView from 'views/ParticipantNewView';
+import ParticipantsView from 'views/participant/ParticipantsView';
+import ParticipantEditView from 'views/participant/ParticipantEditView';
+import ParticipantNewView from 'views/participant/ParticipantNewView';
 import ParticipantPreview from 'containers/participant/ParticipantPreview';
 
-import ExperimentsView from 'views/ExperimentsView';
-import ExperimentNewView from 'views/ExperimentNewView';
-import ExperimentEditView from 'views/ExperimentEditView';
-import ExperimentPreviewView from 'views/ExperimentPreviewView';
+import ExperimentsView from 'views/experiment/ExperimentsView';
+import ExperimentNewView from 'views/experiment/ExperimentNewView';
+import ExperimentEditView from 'views/experiment/ExperimentEditView';
+import ExperimentPreviewView from 'views/experiment/ExperimentPreviewView';
 
-import PhotosView from 'views/PhotosView';
+import PhotosView from 'views/photo/PhotosView';
 import PhotoCreate from 'containers/photo/PhotoCreate';
 
 import QrCodePrint from 'containers/QrCodePrint';
