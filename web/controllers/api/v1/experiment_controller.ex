@@ -93,6 +93,20 @@ defmodule EmotionsWheelBackend.ExperimentController do
     end
   end
 
+  def delete(conn, %{"id" => id}) do
+    experiment = Experiment |> Repo.get!(id)
+
+    case Repo.delete(experiment) do
+      {:ok, _} ->
+        experiments = Experiment.with_participants_and_photos |> Repo.all
+        render(conn, "index.json", experiments: experiments)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render("error.json", changeset: changeset)
+    end
+  end
+
   defp update_assoc_in_experiment(experiment_id, model_name, ids) do
     model_name_pluralized = "#{model_name}s"
 

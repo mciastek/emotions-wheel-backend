@@ -19,4 +19,18 @@ defmodule EmotionsWheelBackend.CityController do
       _ -> render(conn, "show.json", city: city)
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    city = City |> Repo.get!(id)
+
+    case Repo.delete(city) do
+      {:ok, _} ->
+        cities = City |> Repo.all
+        render(conn, "index.json", cities: cities)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render("error.json", changeset: changeset)
+    end
+  end
 end

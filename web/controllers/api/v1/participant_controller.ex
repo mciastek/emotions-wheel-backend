@@ -62,7 +62,7 @@ defmodule EmotionsWheelBackend.ParticipantController do
   end
 
   def delete(conn, %{"id" => id}) do
-    participant = Repo.get!(Participant, id)
+    participant = Participant |> Repo.get!(id)
 
     case Repo.delete(participant) do
       {:ok, _} ->
