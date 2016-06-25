@@ -45,7 +45,20 @@ const checkIfAuthenticated = (nextState, replace, callback) => {
   callback();
 };
 
+const setPageTitle = (pathname) => {
+  const defaultTitle = 'Admin Panel';
+  const regex = /\/dashboard\/([a-z]+)/g;
+  const matched = regex.exec(pathname);
+
+  if (matched) {
+    document.title = `${defaultTitle} | ${matched[1][0].toUpperCase() + matched[1].slice(1)}`;
+  } else {
+    document.title = defaultTitle;
+  }
+};
+
 injectTapEventPlugin();
+history.listen(location => setPageTitle(location.pathname))
 
 ReactDOM.render(
   <Provider store={store}>
