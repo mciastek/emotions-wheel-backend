@@ -1,8 +1,8 @@
 import actionTypes from 'constants/action-types';
 
 const initialState = {
-  currentUser: null,
-  error: null
+  currentUser: {},
+  error: {}
 };
 
 export default function reducer(state = initialState, action) {

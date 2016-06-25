@@ -1,0 +1,49 @@
+@import 'node_modules/sass-material-colors/sass/sass-material-colors';
+
+@import '../base/settings';
+@import '../utils/grid';
+
+/**
+ * Stats
+ */
+
+.stats {
+  @extend %row;
+
+  &__col {
+    @include column(12);
+    margin-top: 30px;
+  }
+
+  &__col:first-child {
+    margin-top: 0;
+  }
+}
+
+.stats-card {
+  padding: 30px;
+
+  &__header {
+    color: material-color('pink', '500');
+    text-align: center;
+  }
+
+  &__header + &__results {
+    margin-top: 40px;
+  }
+
+  &__results {
+    font-size: 30px;
+    text-align: center;
+  }
+}
+
+@media #{$screen-md} {
+  .stats__col {
+    @include column(6);
+  }
+
+  .stats__col:nth-child(2) {
+    margin-top: 0;
+  }
+}
