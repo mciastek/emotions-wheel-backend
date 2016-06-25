@@ -10,7 +10,7 @@ defmodule EmotionsWheelBackend.Country do
     timestamps
 
     has_many :participants, Participant
-    has_many :cities, City
+    has_many :cities, City, on_delete: :delete_all
   end
 
   @required_fields ~w(name)

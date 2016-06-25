@@ -32,8 +32,8 @@ defmodule EmotionsWheelBackend.Participant do
     belongs_to :city, City
     belongs_to :language, Language
 
-    has_many :rates, Rate
-    has_many :experiments_has_participants, ExperimentsHasParticipants
+    has_many :rates, Rate, on_delete: :delete_all
+    has_many :experiments_has_participants, ExperimentsHasParticipants, on_delete: :delete_all
     has_many :experiments, through: [:experiments_has_participants, :experiments]
   end
 

@@ -26,10 +26,10 @@ defmodule EmotionsWheelBackend.Experiment do
 
     belongs_to :researcher, Researcher
 
-    has_many :rates, Rate
-    has_many :experiments_has_photos, ExperimentsHasPhotos
+    has_many :rates, Rate, on_delete: :delete_all
+    has_many :experiments_has_photos, ExperimentsHasPhotos, on_delete: :delete_all
     has_many :photos, through: [:experiments_has_photos, :photos]
-    has_many :experiments_has_participants, ExperimentsHasParticipants
+    has_many :experiments_has_participants, ExperimentsHasParticipants, on_delete: :delete_all
     has_many :participants, through: [:experiments_has_participants, :participants]
   end
 

@@ -20,8 +20,8 @@ defmodule EmotionsWheelBackend.Photo do
     field :author_id, :integer
     timestamps
 
-    has_many :rates, Rate
-    has_many :experiments_has_photos, ExperimentsHasPhotos
+    has_many :rates, Rate, on_delete: :delete_all
+    has_many :experiments_has_photos, ExperimentsHasPhotos, on_delete: :delete_all
     has_many :experiments, through: [:experiments_has_photos, :experiments]
   end
 
