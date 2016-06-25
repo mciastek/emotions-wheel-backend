@@ -13,8 +13,17 @@ import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
 import TableBody from 'material-ui/lib/table/table-body';
 import TableRow from 'material-ui/lib/table/table-row';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 import { fetchExperiments, deleteSingleExperiment } from 'actions/experiments';
+
+import {
+  openCustomDialog,
+  closeCustomDialog,
+  setCustomDialogContent,
+  showNotificationBar,
+  setNotificationBarContent
+} from 'actions/ui';
 
 import EditButton from 'components/EditButton';
 import PreviewButton from 'components/PreviewButton';
@@ -27,6 +36,10 @@ const shortColumnStyle = {
 const optionIconStyle = {
   width: 20,
   height: 20
+};
+
+const confirmButtonStyle = {
+  marginLeft: 10
 };
 
 class ExperimentsContainer extends React.Component {
@@ -42,8 +55,36 @@ class ExperimentsContainer extends React.Component {
     this.props.dispatch(push(`/dashboard/experiments/edit/${experimentId}`));
   }
 
-  handleDeleteClick(experimentId) {
-    this.props.dispatch(deleteSingleExperiment(experimentId));
+  handleModalConfirmClick(experiment) {
+    this.deleteExperiment(experiment);
+  }
+
+  handleDeleteClick(experiment) {
+    const actions = [
+      <RaisedButton label="Cancel" secondary={true} onTouchTap={() => this.props.dispatch(closeCustomDialog())} />,
+      <RaisedButton label="Delete" primary={true} style={confirmButtonStyle} onTouchTap={this.handleModalConfirmClick.bind(this, experiment)} />
+    ];
+
+    this.props.dispatch(openCustomDialog());
+
+    this.props.dispatch(setCustomDialogContent({
+      title: `Delete ${experiment.name}`,
+      content: 'Are you sure that you want to delete that experiment?',
+      actions: actions
+    }));
+  }
+
+  deleteExperiment(experiment) {
+    this.props.dispatch(deleteSingleExperiment(experiment.id))
+      .then(() => {
+        this.props.dispatch(showNotificationBar());
+
+        this.props.dispatch(setNotificationBarContent({
+          message: `${experiment.name} deleted!`
+        }));
+
+        this.props.dispatch(closeCustomDialog());
+      });
   }
 
   formattedDate(date) {
@@ -75,7 +116,7 @@ class ExperimentsContainer extends React.Component {
           <TableRowColumn>
             <PreviewButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handlePreviewClick.bind(this, experiment.id)} />
             {editButton}
-            <DeleteButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleDeleteClick.bind(this, experiment.id)} />
+            <DeleteButton iconStyle={optionIconStyle} iconColor={Colors.cyan500} onTap={this.handleDeleteClick.bind(this, experiment)} />
           </TableRowColumn>
         </TableRow>
       );
