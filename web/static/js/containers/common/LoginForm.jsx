@@ -3,6 +3,7 @@ import 'css/containers/login-form.scss';
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import isEmpty from 'lodash/lang/isEmpty';
 
 import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
@@ -30,7 +31,7 @@ class LoginForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const hasCurrentUser = this.props.session.currentUser !== null;
+    const hasCurrentUser = !isEmpty(this.props.session.currentUser);
 
     if (hasCurrentUser) {
       this._redirectToDashboard();
@@ -66,14 +67,14 @@ class LoginForm extends React.Component {
 
   render() {
     const errorMessage = (() => {
-      if (this.props.session.error) {
+      if (!isEmpty(this.props.session.error)) {
         return (
           <FlashMessage type="error" message={this.props.session.error.message} />
         );
       }
     })();
 
-    const hasCurrentUser = this.props.session.currentUser !== null;
+    const hasCurrentUser = !isEmpty(this.props.session.currentUser);
     const { email, password } = this.props.session.currentUser || {};
 
     const passwordField = (() => {
