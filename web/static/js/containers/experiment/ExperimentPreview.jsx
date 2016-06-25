@@ -9,7 +9,7 @@ import Paper from 'material-ui/lib/paper';
 import { fetchExperiment } from 'actions/experiment';
 
 import BlockList from 'components/BlockList';
-import LinkButton from 'containers/LinkButton';
+import LinkButton from 'containers/common/LinkButton';
 
 class ExperimentPreview extends React.Component {
   componentDidMount() {

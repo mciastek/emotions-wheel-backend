@@ -10,7 +10,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import Storage from 'utils/Storage';
 import configureStore from 'store';
 
-import Main from 'containers/Main';
+import Main from 'containers/common/Main';
 
 import LoginView from 'views/common/LoginView';
 
@@ -30,7 +30,7 @@ import ExperimentPreviewView from 'views/experiment/ExperimentPreviewView';
 import PhotosView from 'views/photo/PhotosView';
 import PhotoCreate from 'containers/photo/PhotoCreate';
 
-import QrCodePrint from 'containers/QrCodePrint';
+import QrCodePrint from 'containers/common/QrCodePrint';
 
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);

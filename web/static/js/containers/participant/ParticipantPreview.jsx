@@ -8,7 +8,7 @@ import Paper from 'material-ui/lib/paper';
 
 import { fetchParticipant } from 'actions/participant';
 
-import LinkButton from 'containers/LinkButton';
+import LinkButton from 'containers/common/LinkButton';
 
 class ParticipantPreview extends React.Component {
   componentDidMount() {

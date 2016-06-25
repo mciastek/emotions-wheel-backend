@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Input from 'components/Input';
 import PhotoPreview from 'components/PhotoPreview';
 
-import LinkButton from 'containers/LinkButton';
+import LinkButton from 'containers/common/LinkButton';
 
 import { createPhoto } from 'actions/photo';
 import { showNotificationBar, setNotificationBarContent } from 'actions/ui';

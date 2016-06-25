@@ -13,7 +13,7 @@ import InputSearch from 'components/InputSearch';
 import Select from 'components/Select';
 import BirthdateField from 'components/BirthdateField';
 
-import LinkButton from 'containers/LinkButton';
+import LinkButton from 'containers/common/LinkButton';
 
 const genderSelectOptions = [{
   value: 'male',

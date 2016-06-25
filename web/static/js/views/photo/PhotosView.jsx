@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LinkButton from 'containers/LinkButton';
+import LinkButton from 'containers/common/LinkButton';
 import PhotosGrid from 'containers/photo/PhotosGrid';
 
 class ParticipantsView extends React.Component {

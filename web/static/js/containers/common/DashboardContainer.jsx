@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/lang/isEmpty';
 
 import { fetchCurrentUser } from 'actions/session';
 import { fetchLanguages } from 'actions/languages';
@@ -8,7 +9,7 @@ import { fetchCities } from 'actions/cities';
 
 class DashboardContainer extends React.Component {
   componentDidMount() {
-    if (!this.props.session.currentUser) {
+    if (isEmpty(this.props.session.currentUser)) {
       this.props.dispatch(fetchCurrentUser());
     }
 

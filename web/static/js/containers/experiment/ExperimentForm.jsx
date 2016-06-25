@@ -22,7 +22,7 @@ import DateTimeField from 'components/DateTimeField';
 import DualListbox from 'components/DualListbox';
 import PhotosSelection from 'components/PhotosSelection';
 
-import LinkButton from 'containers/LinkButton';
+import LinkButton from 'containers/common/LinkButton';
 
 const radioStyle = {
   float: 'left',

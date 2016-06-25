@@ -6,7 +6,7 @@ import CustomDialog from 'containers/ui/CustomDialog';
 import NotificationBar from 'containers/ui/NotificationBar';
 import PhotoFullPreview from 'containers/photo/PhotoFullPreview';
 
-import DashboardContainer from 'containers/DashboardContainer';
+import DashboardContainer from 'containers/common/DashboardContainer';
 
 class DashboardView extends React.Component {
   render() {
