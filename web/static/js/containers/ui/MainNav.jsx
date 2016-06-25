@@ -41,10 +41,6 @@ const navigationItems = [{
   label: 'Photos',
   icon: ImagePhotoLibrary,
   route: '/dashboard/photos'
-}, {
-  label: 'Settings',
-  icon: ActionSettings,
-  route: '/dashboard/settings'
 }];
 
 class MainNav extends React.Component {
