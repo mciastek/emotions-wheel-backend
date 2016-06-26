@@ -11,7 +11,6 @@ import ActionHome from 'material-ui/lib/svg-icons/action/home';
 import ActionQuestionAnswer from 'material-ui/lib/svg-icons/action/question-answer';
 import ImagePhotoLibrary from 'material-ui/lib/svg-icons/image/photo-library';
 import SocialPeople from 'material-ui/lib/svg-icons/social/people';
-import ActionSettings from 'material-ui/lib/svg-icons/action/settings';
 import ActionPowerSettingsNew from 'material-ui/lib/svg-icons/action/power-settings-new';
 
 import { closeNav } from 'actions/ui';

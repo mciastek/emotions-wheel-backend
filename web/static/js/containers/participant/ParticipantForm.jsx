@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 
 import { createParticipant, updateParticipant } from 'actions/participant';
 import { showNotificationBar, setNotificationBarContent } from 'actions/ui';
+import { createCity } from 'actions/cities';
 
 import Input from 'components/Input';
 import InputSearch from 'components/InputSearch';
@@ -35,12 +36,14 @@ class ParticipantForm extends React.Component {
       email,
       gender,
       birthdate,
-      language_id,
-      country_id,
-      cityName
+      language,
+      country,
+      city
     } = this.refs;
 
-    const { id: city_id } = this.getCityByName(cityName.state.value);
+    const cityName = city.state.value;
+
+    const { id: city_id } = this.getCityByName(cityName) || {};
 
     const requestData = {
       first_name: first_name.state.value,
@@ -48,19 +51,43 @@ class ParticipantForm extends React.Component {
       email: email.state.value,
       gender: gender.state.value,
       birthdate: birthdate.state.value,
-      language_id: language_id.state.value,
-      country_id: country_id.state.value,
+      language_id: language.state.value,
+      country_id: country.state.value,
       city_id: city_id
     };
 
+    if (!city_id) {
+      this.newCity({
+        name: cityName,
+        country_id: country.state.value
+      })
+      .then(() => {
+        const { id: city_id } = this.getCityByName(cityName);
+
+        this.submitParticipant(pariticpantId, {
+          ...requestData,
+          city_id: city_id
+        })
+      });
+    } else {
+      this.submitParticipant(pariticpantId, requestData);
+    }
+
+  }
+
+  newCity(params) {
+    return this.props.dispatch(createCity(params));
+  }
+
+  submitParticipant(pariticpantId, requestData) {
     if (this.props.actionType === 'create') {
-      this.createParticipant(requestData);
+      this.newParticipant(requestData);
     } else {
       this.updateParticipant(pariticpantId, requestData);
     }
   }
 
-  createParticipant(params) {
+  newParticipant(params) {
     this.props.dispatch(createParticipant(params))
       .then(() => {
         this.props.dispatch(push('/dashboard/participants'));
@@ -154,13 +181,13 @@ class ParticipantForm extends React.Component {
 
           <div className="form-row--splitted">
             <div className="form-row__column--3">
-              <Select ref="language_id" options={languageSelectOptions} value={language_id} floatingLabelText="Language" />
+              <Select ref="language" options={languageSelectOptions} value={language_id} floatingLabelText="Language" />
             </div>
             <div className="form-row__column--3">
-              <Select ref="country_id" options={countrySelectOptions} value={country_id} floatingLabelText="Country" />
+              <Select ref="country" options={countrySelectOptions} value={country_id} floatingLabelText="Country" />
             </div>
             <div className="form-row__column--3">
-              <InputSearch ref="cityName" dataSource={cityOptions} value={citySearchText} filterType="caseInsensitiveFilter" floatingLabelText="City" />
+              <InputSearch ref="city" dataSource={cityOptions} value={citySearchText} filterType="caseInsensitiveFilter" floatingLabelText="City" />
             </div>
           </div>
 

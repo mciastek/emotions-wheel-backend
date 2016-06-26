@@ -34,3 +34,17 @@ export function fetchCities() {
       .catch(() => {});
   };
 }
+
+export function createCity(city) {
+  return (dispatch) => {
+
+    dispatch(fetchCitiesRequest());
+
+    return Connection.post(`/cities`, { city })
+      .then((data) => {
+        const { cities } = data;
+        dispatch(fetchCitiesSuccess(cities));
+      })
+      .catch(() => {});
+  };
+}

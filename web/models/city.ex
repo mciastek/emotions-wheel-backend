@@ -15,7 +15,7 @@ defmodule EmotionsWheelBackend.City do
   end
 
   @required_fields ~w(name)
-  @optional_fields ~w()
+  @optional_fields ~w(country_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
