@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { goBack } from 'react-router-redux';
+import isEmpty from 'lodash/lang/isEmpty';
 
 import QRCode from 'qrcode.react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ActionPrint from 'material-ui/lib/svg-icons/action/print';
+
+import Translation, { rep } from 'utils/Translation';
 
 import { fetchParticipant } from 'actions/participant';
 
@@ -18,11 +21,45 @@ const actionButtonStyle = {
 };
 
 class QrCodePrint extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      translations: {}
+    };
+  }
+
   componentDidMount() {
     const { id } = this.props.participant.single;
 
     if (id !== this.props.params.id) {
       this.props.dispatch(fetchParticipant(this.props.params.id));
+    }
+  }
+
+  shouldComponentUpdate(_, nextState) {
+    return !isEmpty(nextState.translations);
+  }
+
+  componentWillReceiveProps({ participant, languages }) {
+    if (!isEmpty(participant.single) && !isEmpty(languages.collection)) {
+      this.fetchTranslations(participant.single, languages.collection);
+    }
+  }
+
+  getLanguage(languages, id) {
+    return languages.find((language) => language.id === id);
+  }
+
+  fetchTranslations(participant, languages) {
+    const languageId = participant.language_id;
+    const { code } = this.getLanguage(languages, languageId);
+
+    if (code) {
+      Translation.changeLanguage(code)
+        .then((translations) => {
+          this.setState({ translations });
+        });
     }
   }
 
@@ -32,6 +69,7 @@ class QrCodePrint extends React.Component {
 
   render() {
     const { first_name, last_name } = this.props.participant.single;
+    const full_name = `${first_name} ${last_name}`;
 
     return (
       <div className="page">
@@ -48,23 +86,20 @@ class QrCodePrint extends React.Component {
         <section className="page__content">
           <Printable>
             <header>
-              <h1>Hi {first_name} {last_name}</h1>
+              <h1>{rep(Translation.getTranslations('QrCodePrint').welcome, { full_name })}</h1>
             </header>
 
             <article>
-              <h2>Lorem ipsum dolor</h2>
+              <h2>{Translation.getTranslations('QrCodePrint').subheading}</h2>
 
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur aperiam rerum, consequatur sequi culpa sapiente incidunt architecto magnam reiciendis, ab consectetur eveniet nulla hic delectus voluptatum. Facere, nulla quasi modi.
-                Modi corporis, voluptatum in commodi excepturi possimus cumque beatae aspernatur quas inventore sit ad ea quasi labore cum quo et fugiat. Officiis, tempore explicabo odio labore amet est error a!
-                Error dolore vel voluptates autem iure magnam ipsa dolorem neque deserunt dolor asperiores fugiat consequuntur officiis, tempore quia, consectetur provident blanditiis. Laboriosam commodi, nisi odio rerum cupiditate, doloribus facere labore.
+                {Translation.getTranslations('QrCodePrint').first_paragraph}
               </p>
 
               <QRCode value={this.props.participant.single.experiment_uuid || ''} />
 
               <p>
-                Dolore at architecto, saepe modi voluptatem neque vitae, quia animi repellat, voluptates similique illo fugiat? Numquam dignissimos, unde odio ut vero officiis autem, quisquam! Illo architecto debitis, distinctio et incidunt!
-                Aliquid totam quos perspiciatis nam eligendi placeat, nostrum sunt ad pariatur tenetur vero sequi dolore dignissimos ut aspernatur nihil iste voluptatem fugit officiis repudiandae temporibus dolorum aut praesentium facilis. Nihil!
+                {Translation.getTranslations('QrCodePrint').second_paragraph}
               </p>
             </article>
           </Printable>
@@ -80,6 +115,7 @@ class QrCodePrint extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    languages: state.languages,
     participant: state.participant
   };
 }
