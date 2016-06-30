@@ -9,7 +9,7 @@ defmodule EmotionsWheelBackend.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :emotions_wheel_backend, gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js translations favicon.ico robots.txt)
 
   plug Plug.Static,
     at: "/uploads", from: Path.expand('./uploads'), gzip: false

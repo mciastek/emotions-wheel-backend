@@ -5,6 +5,7 @@ var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var srcPath = path.join(__dirname, 'web/static/js');
 var publicPath = '/assets/';
@@ -48,7 +49,11 @@ var config = {
     new webpack.ProvidePlugin({
       'Promise': 'es6-promise',
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-    })
+    }),
+    new CopyWebpackPlugin([{
+      from: srcPath + '/../translations',
+      to: 'translations'
+    }])
   ],
 
   module: {

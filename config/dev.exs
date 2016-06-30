@@ -20,7 +20,7 @@ config :emotions_wheel_backend, EmotionsWheelBackend.Endpoint,
 config :emotions_wheel_backend, EmotionsWheelBackend.Endpoint,
   live_reload: [
     patterns: [
-      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg|json)$},
       ~r{priv/gettext/.*(po)$},
       ~r{web/views/.*(ex)$},
       ~r{web/templates/.*(eex)$}
