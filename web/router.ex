@@ -14,6 +14,8 @@ defmodule EmotionsWheelBackend.Router do
 
     plug Guardian.Plug.VerifyHeader
     plug Guardian.Plug.LoadResource
+
+    plug Corsica, origins: "*"
   end
 
   scope "/api", EmotionsWheelBackend do
