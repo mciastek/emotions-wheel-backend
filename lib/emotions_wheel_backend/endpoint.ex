@@ -38,5 +38,6 @@ defmodule EmotionsWheelBackend.Endpoint do
     key: "_emotions_wheel_backend_key",
     signing_salt: "A0Lu/wFx"
 
+  plug EmotionsWheelBackend.CORS
   plug EmotionsWheelBackend.Router
 end
