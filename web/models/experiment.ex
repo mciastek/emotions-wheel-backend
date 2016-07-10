@@ -80,6 +80,10 @@ defmodule EmotionsWheelBackend.Experiment do
     end
   end
 
+  def active?(model) do
+    model.end_date >= Ecto.DateTime.utc
+  end
+
   def with_participants do
     from e in Experiment,
       left_join: ehp in assoc(e, :experiments_has_participants),

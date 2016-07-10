@@ -14,8 +14,6 @@ defmodule EmotionsWheelBackend.Router do
 
     plug Guardian.Plug.VerifyHeader
     plug Guardian.Plug.LoadResource
-
-    plug Corsica, origins: "*"
   end
 
   scope "/api", EmotionsWheelBackend do
@@ -34,6 +32,11 @@ defmodule EmotionsWheelBackend.Router do
       delete "/session", SessionController, :delete
 
       get "/participants_free", ParticipantController, :get_free_participants
+
+      scope "app" do
+        # options "/sign-in", SignInController, :options
+        post "/sign-in", SignInController, :create
+      end
     end
   end
 
