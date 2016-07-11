@@ -1,32 +1,17 @@
 defmodule EmotionsWheelBackend.SignInController do
   use EmotionsWheelBackend.Web, :controller
 
-  alias EmotionsWheelBackend.{Repo, ExperimentsHasParticipants, Experiment}
+  alias EmotionsWheelBackend.{ParticipantAuth}
 
-  def create(conn, %{"token" => token}) do
-    experiments_has_participants = ExperimentsHasParticipants |> Repo.get_by(uuid: token)
-    experiment = Experiment |> Repo.get(experiments_has_participants.experiment_id)
-
-    case experiment do
-      nil ->
+  def create(conn, params) do
+    case ParticipantAuth.authenticate(params) do
+      {:ok, experiment, participant} ->
+        conn
+        |> render("success.json", experiment: experiment, participant: participant)
+      {:error, message} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render("error.json", message: "No experiment found")
-      _ ->
-        conn
-        |> check_if_experiment_active(experiment)
-    end
-  end
-
-  defp check_if_experiment_active(conn, experiment) do
-    case experiment |> Experiment.active? do
-      true ->
-        conn
-        |> render("success.json", success: true)
-      _ ->
-        conn
-        |> put_status(:forbidden)
-        |> render("error.json", message: "Experiment is inactive")
+        |> render("error.json", message: message)
     end
   end
 end
