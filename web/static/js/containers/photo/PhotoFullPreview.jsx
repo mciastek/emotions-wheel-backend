@@ -11,7 +11,8 @@ import { closePhotoFullPreview } from 'actions/ui';
 
 const contentStyle = {
   width: 'auto',
-  maxWidth: '50%'
+  maxWidth: '50%',
+  textAlign: 'center'
 };
 
 const closeButtonStyle = {
@@ -41,6 +42,7 @@ class PhotoFullPreview extends React.Component {
           <NavigationClose/>
         </FloatingActionButton>
         <img src={this.props.ui.photoFullPreview.image} className="photo-full-preview__photo" />
+        <p>{this.props.ui.photoFullPreview.caption}</p>
       </Dialog>
     );
   }

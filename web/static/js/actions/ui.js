@@ -65,9 +65,10 @@ export function closePhotoFullPreview() {
   };
 }
 
-export function setPhotoFullPreviewContent(image) {
+export function setPhotoFullPreviewContent(image, caption) {
   return {
     type: actionTypes.UI_SET_PHOTO_FULL_PREVIEW_CONTENT,
-    image
+    image,
+    caption
   };
 }

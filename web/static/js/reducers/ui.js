@@ -15,6 +15,7 @@ const initialState = {
   },
   photoFullPreview: {
     open: false,
+    caption: null,
     image: null
   }
 };
@@ -113,7 +114,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         photoFullPreview: {
           ...state.photoFullPreview,
-          image: action.image
+          image: action.image,
+          caption: action.caption
         }
       };
     default:
