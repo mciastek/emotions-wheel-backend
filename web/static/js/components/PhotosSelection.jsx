@@ -82,7 +82,7 @@ class PhotosSelection extends React.Component {
 
       return (
         <GridTile key={index} className={className} title={photo.name} actionIcon={actions} >
-          <img src={photo.url} alt={photo.name} />
+          <img src={photo.thumb} alt={photo.name} />
         </GridTile>
       );
     });

@@ -8,7 +8,7 @@ import OpenButton from 'components/OpenButton';
 class PhotoPreviewButton extends React.Component {
   handleClick(photo) {
     this.props.dispatch(openPhotoFullPreview());
-    this.props.dispatch(setPhotoFullPreviewContent(photo.url));
+    this.props.dispatch(setPhotoFullPreviewContent(photo.original));
   }
 
   render() {

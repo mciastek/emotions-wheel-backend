@@ -75,7 +75,7 @@ class PhotosGrid extends React.Component {
 
         return (
           <GridTile key={index} title={photo.name} actionIcon={buttons}>
-            <img src={photo.url} alt={photo.name} />
+            <img src={photo.thumb} alt={photo.name} />
           </GridTile>
         );
       });

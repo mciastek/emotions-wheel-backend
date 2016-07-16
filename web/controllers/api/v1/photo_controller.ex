@@ -6,9 +6,7 @@ defmodule EmotionsWheelBackend.PhotoController do
   def index(conn, _params) do
     photos = Photo |> Repo.all
 
-    thumbs = photo_thumbs(photos)
-
-    render(conn, "index.json", photos: thumbs)
+    render(conn, "index.json", photos: photos)
   end
 
   def create(conn, %{"photo" => photo_params}) do
@@ -35,23 +33,14 @@ defmodule EmotionsWheelBackend.PhotoController do
       {:ok, _} ->
         photos = Photo |> Repo.all
 
-        thumbs = photo_thumbs(photos)
-
         delete_file(photo)
 
-        render(conn, "index.json", photos: thumbs)
+        render(conn, "index.json", photos: photos)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
         |> render("error.json", changeset: changeset)
     end
-  end
-
-  defp photo_thumbs(photos) do
-    Enum.map(photos, fn(photo) ->
-      url = PhotoFileDefinition.url({ photo.file, photo }, :thumb)
-      %{photo | url: "/" <> url}
-    end)
   end
 
   defp delete_file(photo) do
