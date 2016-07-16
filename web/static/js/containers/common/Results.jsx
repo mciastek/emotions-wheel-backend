@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchExperiment } from 'actions/experiment';
 import { fetchParticipant } from 'actions/participant';
+import { openPhotoFullPreview, setPhotoFullPreviewContent } from 'actions/ui';
 
 import LinkButton from 'containers/common/LinkButton';
 
@@ -14,6 +15,11 @@ class Results extends React.Component {
 
     this.props.dispatch(fetchExperiment(experimentId));
     this.props.dispatch(fetchParticipant(participantId));
+  }
+
+  handlePhotoClick(photo) {
+    this.props.dispatch(openPhotoFullPreview());
+    this.props.dispatch(setPhotoFullPreviewContent(photo.original, photo.name));
   }
 
   render() {
@@ -35,7 +41,7 @@ class Results extends React.Component {
         </header>
 
         <section className="page__content">
-          <WheelResults photos={photos} />
+          <WheelResults photos={photos} photoClickHandler={this.handlePhotoClick.bind(this)} />
         </section>
       </section>
     );

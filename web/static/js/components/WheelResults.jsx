@@ -3,32 +3,37 @@ import 'css/components/wheel-results.scss';
 import wheelImg from 'images/wheel.svg';
 
 import React from 'react';
-import { GridList, GridTile } from 'material-ui/lib/grid-list';
-
-import PhotoPreviewButton from 'containers/photo/PhotoPreviewButton';
 
 class WheelResults extends React.Component {
+  handleButtonClick(photo) {
+    if (this.props.photoClickHandler) {
+      this.props.photoClickHandler(photo);
+    }
+  }
+
   render() {
     const thumbs = (() => {
       return this.props.photos.map((photo, index) => {
+        const style = {
+          backgroundImage: `url(${photo.thumb})`
+        };
+
         return (
-          <GridTile key={index} title={photo.name} actionIcon={<PhotoPreviewButton photo={photo} />}>
-            <img src={photo.thumb} alt={photo.name} />
-          </GridTile>
+          <button
+            key={index}
+            className="wheel-results__photo"
+            style={style}
+            title={photo.name}
+            onClick={this.handleButtonClick.bind(this, photo)}></button>
         );
       });
     })();
 
     return (
       <section className="wheel-results">
-        <div className="wheel-results__left">
+        <div className="wheel-results__board">
+          {thumbs}
           <img src={wheelImg} className="wheel-results__image" />
-        </div>
-
-        <div className="wheel-results__right">
-          <GridList cellHeight={200} cols={2}>
-            {thumbs}
-          </GridList>
         </div>
       </section>
     );
