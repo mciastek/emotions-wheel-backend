@@ -9,7 +9,8 @@ const models = [
   'experiments',
   'experiment',
   'photos',
-  'photo'
+  'photo',
+  'rates'
 ];
 
 const actions = {
