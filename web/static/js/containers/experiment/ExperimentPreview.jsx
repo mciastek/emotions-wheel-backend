@@ -20,6 +20,15 @@ class ExperimentPreview extends React.Component {
     return `${participant.first_name} ${participant.last_name} (${participant.age})`;
   }
 
+  blockListItemAction(participant) {
+    const experiment = this.props.experiment.single;
+    const route = `/dashboard/experiments/${experiment.id}/participant/${participant.id}/results`;
+
+    return (
+      <LinkButton label="Results" secondary={true} route={route} />
+    );
+  }
+
   render() {
     const {
       name,
@@ -61,13 +70,13 @@ class ExperimentPreview extends React.Component {
         <Paper className="page-details">
           <h3 className="page-details__title">Participants list</h3>
 
-          <BlockList collection={participants} itemLabel={this.blockListItemLabel} />
+          <BlockList collection={participants} itemLabel={this.blockListItemLabel} itemAction={this.blockListItemAction.bind(this)} />
         </Paper>
 
         <div className="page-actions">
           <div className="page-actions__row">
             <div className="page-actions__column--right">
-              <LinkButton label="Back" parimary={true} fullWidth={true} route="/dashboard/experiments" />
+              <LinkButton label="Back" fullWidth={true} route="/dashboard/experiments" />
             </div>
           </div>
         </div>

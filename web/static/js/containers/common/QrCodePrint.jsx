@@ -72,7 +72,7 @@ class QrCodePrint extends React.Component {
     const full_name = `${first_name} ${last_name}`;
 
     return (
-      <div className="page">
+      <section className="page">
         <header className="page-header">
           <div className="page-header__left">
             <h1 className="page__title">QR code for {first_name} {last_name}</h1>
@@ -108,7 +108,7 @@ class QrCodePrint extends React.Component {
             <ActionPrint />
           </FloatingActionButton>
         </section>
-      </div>
+      </section>
     );
   }
 }

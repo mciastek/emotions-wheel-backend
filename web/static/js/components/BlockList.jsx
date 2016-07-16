@@ -4,10 +4,23 @@ import React, { PropTypes } from 'react';
 
 class BlockList extends React.Component {
   render() {
+
     const items = this.props.collection.map((item, index) => {
+      const itemAction = (item) => {
+        return (
+          <div className="block-list__item-right">
+            {this.props.itemAction(item)}
+          </div>
+        );
+      };
+
       return (
         <li key={index} className="block-list__item">
-          {(this.props.itemLabel) ? this.props.itemLabel(item) : item}
+          <div className="block-list__item-left">
+            {(this.props.itemLabel) ? this.props.itemLabel(item) : item}
+          </div>
+
+          {(this.props.itemAction) ? itemAction(item) : null}
         </li>
       );
     });

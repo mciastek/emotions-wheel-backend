@@ -31,6 +31,7 @@ import PhotosView from 'views/photo/PhotosView';
 import PhotoCreate from 'containers/photo/PhotoCreate';
 
 import QrCodePrint from 'containers/common/QrCodePrint';
+import Results from 'containers/common/Results';
 
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -88,6 +89,8 @@ ReactDOM.render(
             <IndexRoute component={PhotosView} />
             <Route path="new" component={PhotoCreate} />
           </Route>
+
+          <Route path="experiments/:experimentId/participant/:participantId/results" component={Results} />
         </Route>
       </Route>
     </Router>
