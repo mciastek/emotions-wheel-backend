@@ -6,7 +6,7 @@ defmodule EmotionsWheelBackend.ExperimentController do
   alias EmotionsWheelBackend.{Repo, Experiment}
 
   def index(conn, _params) do
-    experiments = Experiment.with_participants_and_photos |> Repo.all
+    experiments = Experiment |> Repo.all
     render(conn, "index.json", experiments: experiments)
   end
 

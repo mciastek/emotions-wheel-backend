@@ -3,18 +3,6 @@ defmodule EmotionsWheelBackend.Experiment do
 
   alias EmotionsWheelBackend.{Experiment, ExperimentsHasPhotos, ExperimentsHasParticipants, Researcher, Rate}
 
-  @derive {Poison.Encoder, only: [
-    :id,
-    :name,
-    :kind,
-    :start_date,
-    :end_date,
-    :researcher_id,
-    :participants,
-    :photos,
-    :attached_participants
-  ]}
-
   schema "experiments" do
     field :name, :string
     field :kind, :string
