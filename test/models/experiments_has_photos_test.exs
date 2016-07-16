@@ -3,7 +3,10 @@ defmodule EmotionsWheelBackend.ExperimentsHasPhotosTest do
 
   alias EmotionsWheelBackend.ExperimentsHasPhotos
 
-  @valid_attrs %{}
+  @valid_attrs %{
+    experiment_id: 1,
+    photo_id: 1
+  }
 
   test "changeset with valid attributes" do
     changeset = ExperimentsHasPhotos.changeset(%ExperimentsHasPhotos{}, @valid_attrs)

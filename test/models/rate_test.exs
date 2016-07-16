@@ -6,8 +6,8 @@ defmodule EmotionsWheelBackend.RateTest do
 
   @valid_attrs %{
     name: "Rate 1",
-    pos_x: 50.25,
-    pos_y: 60.24,
+    pos_x: 0.25,
+    pos_y: 0.577,
     start_time: Convertable.to_erlang_datetime(DateTime.now),
     end_time: Convertable.to_erlang_datetime(DateTime.now),
     time: 1232133

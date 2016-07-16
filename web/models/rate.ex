@@ -1,7 +1,7 @@
 defmodule EmotionsWheelBackend.Rate do
   use EmotionsWheelBackend.Web, :model
 
-  alias EmotionsWheelBackend.{Participant, Experiment, Photo, Rate}
+  alias EmotionsWheelBackend.{Participant, Experiment, Photo}
 
   schema "rates" do
     field :name, :string
@@ -14,7 +14,6 @@ defmodule EmotionsWheelBackend.Rate do
 
     belongs_to :participant, Participant
     belongs_to :experiment, Experiment
-    belongs_to :rate, Rate
 
     has_one :photo, Photo
   end
@@ -31,5 +30,7 @@ defmodule EmotionsWheelBackend.Rate do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_number(:pos_x, greater_than_or_equal_to: Decimal.new(0), less_than_or_equal_to: Decimal.new(1))
+    |> validate_number(:pos_y, greater_than_or_equal_to: Decimal.new(0), less_than_or_equal_to: Decimal.new(1))
   end
 end
