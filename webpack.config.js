@@ -8,7 +8,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var srcPath = path.join(__dirname, 'web/static/js');
-var publicPath = '/assets/';
 
 var config = {
   entry: [
@@ -17,8 +16,7 @@ var config = {
 
   output: {
     path: path.join(__dirname, 'priv/static'),
-    filename: 'js/app.js',
-    publicPath: publicPath
+    filename: 'js/app.js'
   },
 
   devtool: 'source-map',
@@ -83,8 +81,8 @@ var config = {
       test: /\.styl/,
       loader: 'style-loader!css-loader!postcss-loader!stylus-loader'
     }, {
-      test: /\.(png|jpg|gif|woff|woff2)$/,
-      loader: 'url-loader?limit=8192'
+      test: /\.(png|jpg|gif|svg)$/,
+      loader: 'url-loader?limit=8192&name=/images/[name].[ext]'
     }]
   },
 

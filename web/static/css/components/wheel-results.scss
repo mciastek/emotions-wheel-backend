@@ -1,0 +1,30 @@
+@import '../base/settings';
+@import '../utils/grid';
+
+/**
+ * Wheel results
+ */
+
+.wheel-results {
+  @include clearfix;
+
+  &__left,
+  &__right, {
+    @include column(12);
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+  }
+}
+
+@media #{$screen-md} {
+  .wheel-results__left {
+    @include column(8);
+  }
+
+  .wheel-results__right {
+    @include column(4);
+  }
+}
