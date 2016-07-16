@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import WebSocket from 'utils/WebSocket';
 import { fetchExperiment } from 'actions/experiment';
 import { fetchParticipant } from 'actions/participant';
 import { openPhotoFullPreview, setPhotoFullPreviewContent } from 'actions/ui';
@@ -15,6 +16,13 @@ class Results extends React.Component {
 
     this.props.dispatch(fetchExperiment(experimentId));
     this.props.dispatch(fetchParticipant(participantId));
+
+    WebSocket.connect();
+    WebSocket.join('experiments:results');
+  }
+
+  componentWillUnmount() {
+    WebSocket.leave();
   }
 
   handlePhotoClick(photo) {

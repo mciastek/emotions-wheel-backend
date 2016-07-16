@@ -1,7 +1,8 @@
 export default {
   api: {
     url: '/api',
-    namespace: '/v1'
+    namespace: '/v1',
+    socket: '/socket'
   },
 
   date: {
