@@ -14,6 +14,6 @@ defmodule EmotionsWheelBackend.ResearcherView do
   end
 
   def render("error.json", %{changeset: changeset}) do
-
+    %{changeset: changeset}
   end
 end
