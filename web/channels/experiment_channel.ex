@@ -15,10 +15,15 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
     :ok
   end
 
-  # Channels can be used in a request/response fashion
-  # by sending replies to requests from the client
-  def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
+  def handle_in("participant:new_rate", payload, socket) do
+    case save_new_rate(payload) do
+      {:ok, rate} ->
+        broadcast!(socket, "experiment:new_rate", rate)
+
+        {:reply, {:ok, rate}, socket}
+      :error ->
+        {:reply, :error, socket}
+    end
   end
 
   # It is also common to receive messages from the client and
@@ -26,6 +31,18 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
   def handle_in("shout", payload, socket) do
     broadcast socket, "shout", payload
     {:noreply, socket}
+  end
+
+  defp save_new_rate(params) do
+    changeset = Rate.changeset(%Rate{}, params)
+
+    case changeset.valid? do
+      true ->
+        rate = changeset |> Repo.insert!
+        {:ok, rate}
+      _ ->
+        :error
+    end
   end
 
   defp saved_rates(experiment_id, participant_id) do
