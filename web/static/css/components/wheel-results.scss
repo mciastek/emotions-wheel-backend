@@ -1,3 +1,5 @@
+@import 'node_modules/sass-material-colors/sass/sass-material-colors';
+
 @import '../base/settings';
 @import '../utils/grid';
 
@@ -31,6 +33,18 @@
 
   &__photo:hover {
     z-index: 9;
+  }
+}
+
+.wheel-results__board + .wheel-results-photos-grid {
+  margin-top: 50px;
+}
+
+.wheel-results-photos-grid {
+  &__header {
+    padding: 15px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid material-color('grey', '300');
   }
 }
 
