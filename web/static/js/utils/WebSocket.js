@@ -15,13 +15,13 @@ class WebSocket {
     this.socket.disconnect();
   }
 
-  join(channelName) {
-    this.channel = this.socket.channel(channelName);
-    this.channel.join();
+  join(channelName, params) {
+    this.channel = this.socket.channel(channelName, params);
+    return this.channel.join();
   }
 
   leave() {
-    this.channel.leave();
+    return this.channel.leave();
   }
 }
 

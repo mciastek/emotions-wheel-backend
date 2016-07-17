@@ -1,36 +1,68 @@
 import actionTypes from 'constants/action-types';
-import Connection from 'utils/Connection';
+import WebSocket from 'utils/WebSocket';
 
-export function fetchRatesRequest() {
+export function connectRatesSocketRequest() {
   return {
-    type: actionTypes.RATES_FETCH_REQUEST
+    type: actionTypes.RATES_SOCKET_CONNECT_REQUEST
   };
 }
 
-export function fetchRatesSuccess(collection) {
+export function connectRatesSocketSuccess(collection) {
   return {
-    type: actionTypes.RATES_FETCH_SUCCESS,
+    type: actionTypes.RATES_SOCKET_CONNECT_SUCCESS,
     collection
   };
 }
 
-export function fetchRatesError(error) {
+export function connectRatesSocketError(error) {
   return {
-    type: actionTypes.RATES_FETCH_ERROR,
+    type: actionTypes.RATES_SOCKET_CONNECT_ERROR,
     error
   };
 }
 
-export function fetchRates(experimentId, participantId) {
+export function disconnectRatesSocketSuccess() {
+  return {
+    type: actionTypes.RATES_SOCKET_DISCONNECT_SUCCESS
+  };
+}
+
+export function participantConnected() {
+  return {
+    type: actionTypes.RATES_PARTICIPANT_CONNECTED
+  };
+}
+
+export function participantDisconnected() {
+  return {
+    type: actionTypes.RATES_PARTICIPANT_DISCONNECTED
+  };
+}
+
+export function connectRatesSocket(experimentId, participantId) {
   return (dispatch) => {
+    dispatch(connectRatesSocketRequest());
 
-    dispatch(fetchRatesRequest());
+    WebSocket.connect();
 
-    return Connection.get(`/experiments/${experimentId}/participant/${participantId}/rates`)
-      .then((data) => {
-        const { rates } = data;
-        dispatch(fetchRatesSuccess(rates));
-      })
-      .catch(() => {});
+    WebSocket
+      .join(`experiments:results:${experimentId}`, { participant_id: participantId })
+      .receive('ok', ({ rates }) => {
+        dispatch(connectRatesSocketSuccess(rates));
+      });
+
+    WebSocket.channel.on('experiment:new_rate', (rates) => {
+      dispatch(connectRatesSocketSuccess(rates));
+    });
+  };
+}
+
+export function disconnectRatesSocket() {
+  return (dispatch) => {
+    WebSocket
+      .leave()
+      .receive('ok', () => {
+        dispatch(disconnectRatesSocketSuccess());
+      });
   };
 }

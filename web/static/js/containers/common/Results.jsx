@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import WebSocket from 'utils/WebSocket';
 import { fetchExperiment } from 'actions/experiment';
 import { fetchParticipant } from 'actions/participant';
 import { openPhotoFullPreview, setPhotoFullPreviewContent } from 'actions/ui';
+import { connectRatesSocket, disconnectRatesSocket } from 'actions/rates';
 
 import LinkButton from 'containers/common/LinkButton';
 
@@ -17,12 +17,11 @@ class Results extends React.Component {
     this.props.dispatch(fetchExperiment(experimentId));
     this.props.dispatch(fetchParticipant(participantId));
 
-    WebSocket.connect();
-    WebSocket.join('experiments:results');
+    this.props.dispatch(connectRatesSocket(experimentId, participantId));
   }
 
   componentWillUnmount() {
-    WebSocket.leave();
+    this.props.dispatch(disconnectRatesSocket());
   }
 
   handlePhotoClick(photo) {
@@ -34,6 +33,7 @@ class Results extends React.Component {
     const { experimentId } = this.props.params;
     const { first_name, last_name } = this.props.participant.single;
     const { name:experimentName, photos = [] } = this.props.experiment.single;
+    const rates = this.props.rates.collection;
 
     return (
       <section className="page">
@@ -49,7 +49,7 @@ class Results extends React.Component {
         </header>
 
         <section className="page__content">
-          <WheelResults photos={photos} photoClickHandler={this.handlePhotoClick.bind(this)} />
+          <WheelResults photos={photos} rates={rates} photoClickHandler={this.handlePhotoClick.bind(this)} />
         </section>
       </section>
     );
@@ -58,6 +58,7 @@ class Results extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    rates: state.rates,
     experiment: state.experiment,
     participant: state.participant
   };
