@@ -4,7 +4,6 @@ import wheelImg from 'images/wheel.svg';
 
 import React from 'react';
 import { GridList, GridTile } from 'material-ui/lib/grid-list';
-import Divider from 'material-ui/lib/divider';
 
 class WheelResults extends React.Component {
   constructor(props) {
