@@ -11,6 +11,14 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
     {:ok, %{rates: rates}, assign(socket, :rates, rates)}
   end
 
+  def join("experiments:" <> experiment_id, %{"participant_id" => participant_id}, socket) do
+    rates = saved_rates(experiment_id, participant_id)
+
+    send(self, :after_join)
+
+    {:ok, %{rates: rates}, assign(socket, :rates, rates)}
+  end
+
   def terminate(_reason, _socket) do
     :ok
   end
