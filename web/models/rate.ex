@@ -47,6 +47,12 @@ defmodule EmotionsWheelBackend.Rate do
       select: r
   end
 
+  def by_experiment_participant_photo(experiment_id: experiment_id, participant_id: participant_id, photo_id: photo_id) do
+    from r in Rate,
+      where: r.experiment_id == ^experiment_id and r.participant_id == ^participant_id and r.photo_id == ^photo_id,
+      select: r
+  end
+
   defp validate_by_experiment_mode(changeset) do
     experiment_id = get_field(changeset, :experiment_id)
     experiment = Experiment |> Repo.get(experiment_id)

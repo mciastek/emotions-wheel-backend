@@ -7,16 +7,16 @@ export function connectRatesSocketRequest() {
   };
 }
 
-export function connectRatesSocketSuccess(collection) {
+export function fetchRatesSuccess(collection) {
   return {
-    type: actionTypes.RATES_SOCKET_CONNECT_SUCCESS,
+    type: actionTypes.FETCH_RATES_SUCCESS,
     collection
   };
 }
 
 export function connectRatesSocketError(error) {
   return {
-    type: actionTypes.RATES_SOCKET_CONNECT_ERROR,
+    type: actionTypes.FETCH_RATES_ERROR,
     error
   };
 }
@@ -46,13 +46,14 @@ export function connectRatesSocket(experimentId, participantId) {
     WebSocket.connect();
 
     WebSocket
-      .join(`experiments:results:${experimentId}`, { participant_id: participantId })
+      .join(`experiments:${experimentId}`, { participant_id: participantId })
       .receive('ok', ({ rates }) => {
-        dispatch(connectRatesSocketSuccess(rates));
+        dispatch(fetchRatesSuccess(rates));
       });
 
-    WebSocket.channel.on('experiment:new_rate', (rates) => {
-      dispatch(connectRatesSocketSuccess(rates));
+    WebSocket.channel.on('experiment:new_rate', ({ rates }) => {
+      console.log('>>>>', rates)
+      dispatch(fetchRatesSuccess(rates));
     });
   };
 }

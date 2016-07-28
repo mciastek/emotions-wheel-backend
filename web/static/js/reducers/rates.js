@@ -15,14 +15,14 @@ export default function reducer(state = initialState, action) {
         loading: true
       };
 
-    case actionTypes.RATES_SOCKET_CONNECT_SUCCESS:
+    case actionTypes.FETCH_RATES_SUCCESS:
       return {
         ...state,
         loading: false,
         collection: action.collection
       };
 
-    case actionTypes.RATES_SOCKET_CONNECT_ERROR:
+    case actionTypes.FETCH_RATES_ERROR:
       return {
         ...state,
         loading: false,

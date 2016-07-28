@@ -3,20 +3,14 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
 
   alias EmotionsWheelBackend.{Rate, RateView}
 
-  def join("experiments:results:" <> experiment_id, %{"participant_id" => participant_id}, socket) do
-    rates = saved_rates(experiment_id, participant_id)
-
-    send(self, :after_join)
-
-    {:ok, %{rates: rates}, assign(socket, :rates, rates)}
-  end
-
   def join("experiments:" <> experiment_id, %{"participant_id" => participant_id}, socket) do
     rates = saved_rates(experiment_id, participant_id)
 
-    send(self, :after_join)
+    socket = socket
+      |> assign(:experiment_id, experiment_id)
+      |> assign(:participant_id, participant_id)
 
-    {:ok, %{rates: rates}, assign(socket, :rates, rates)}
+    {:ok, %{rates: rates}, socket}
   end
 
   def terminate(_reason, _socket) do
@@ -24,33 +18,40 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
   end
 
   def handle_in("participant:new_rate", payload, socket) do
-    case save_new_rate(payload) do
-      {:ok, rate} ->
-        broadcast!(socket, "experiment:new_rate", rate)
+    case save_or_update_rate(payload) do
+      {:ok, _rate} ->
+        rates = saved_rates(socket.assigns[:experiment_id], socket.assigns[:participant_id])
 
-        {:reply, {:ok, rate}, socket}
-      :error ->
-        {:reply, :error, socket}
+        broadcast_from!(socket, "experiment:new_rate", %{rates: rates})
+
+        {:reply, {:ok, %{rates: rates}}, socket}
+      {:error, changeset} ->
+        errors = RateView.render("error.json", %{changeset: changeset})
+
+        {:reply, {:error, errors}, socket}
     end
   end
 
-  # It is also common to receive messages from the client and
-  # broadcast to everyone in the current topic (experiments:lobby).
-  def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
-    {:noreply, socket}
-  end
+  defp save_or_update_rate(params) do
+    experiment_id = params["experiment_id"]
+    participant_id = params["participant_id"]
+    photo_id = params["photo_id"]
 
-  defp save_new_rate(params) do
-    changeset = Rate.changeset(%Rate{}, params)
+    clauses = [
+      experiment_id: experiment_id,
+      participant_id: participant_id,
+      photo_id: photo_id
+    ]
 
-    case changeset.valid? do
-      true ->
-        rate = changeset |> Repo.insert!
-        {:ok, rate}
-      _ ->
-        :error
-    end
+    model =
+      case Rate |> Repo.get_by(clauses) do
+        nil -> %Rate{}
+        rate -> rate
+      end
+
+    result = model
+      |> Rate.changeset(params)
+      |> Repo.insert_or_update
   end
 
   defp saved_rates(experiment_id, participant_id) do
