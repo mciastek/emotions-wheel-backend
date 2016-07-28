@@ -5,6 +5,14 @@ defmodule EmotionsWheelBackend.RateView do
     %{rates: rates |> render_many}
   end
 
+  def render("error.json", %{changeset: changeset}) do
+    errors = Enum.map(changeset.errors, fn{field, details} ->
+      "#{field}: #{details}"
+    end)
+
+    %{errors: errors}
+  end
+
   def render_many(rates) do
     rates |> Enum.map(&Map.take(&1, @attributes_index))
   end
