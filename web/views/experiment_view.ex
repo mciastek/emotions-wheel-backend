@@ -16,7 +16,7 @@ defmodule EmotionsWheelBackend.ExperimentView do
   end
 
   def render("success.json", %{experiment: experiment}) do
-    %{experiment: experiment}
+    %{experiment: experiment |> render_one}
   end
 
   def render("error.json", %{message: message}) do

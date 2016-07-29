@@ -52,7 +52,6 @@ export function connectRatesSocket(experimentId, participantId) {
       });
 
     WebSocket.channel.on('experiment:new_rate', ({ rates }) => {
-      console.log('>>>>', rates)
       dispatch(fetchRatesSuccess(rates));
     });
   };
