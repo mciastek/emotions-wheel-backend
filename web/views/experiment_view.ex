@@ -5,7 +5,7 @@ defmodule EmotionsWheelBackend.ExperimentView do
 
   @attributes_index ~w(id name kind start_date end_date)a
   @attributes_single ~w(id name kind start_date end_date researcher_id participants photos)a
-  @attributes_single_photos ~w(id name kind start_date end_date researcher_id photos)a
+  @attributes_single_photos_researcher ~w(id name kind start_date end_date researcher photos)a
 
   def render("index.json", %{experiments: experiments}) do
     %{experiments: experiments |> render_many}
@@ -37,9 +37,9 @@ defmodule EmotionsWheelBackend.ExperimentView do
     |> Map.put(:photos, experiment.photos |> set_photos)
   end
 
-  def render_one_only_photos(experiment) do
+  def render_one_photos_researcher(experiment) do
     experiment
-    |> Map.take(@attributes_single_photos)
+    |> Map.take(@attributes_single_photos_researcher)
     |> Map.put(:photos, experiment.photos |> set_photos)
   end
 
