@@ -4,20 +4,6 @@ defmodule EmotionsWheelBackend.Participant do
 
   alias EmotionsWheelBackend.{Participant, Country, City, Language, Rate, ExperimentsHasParticipants}
 
-  @derive {Poison.Encoder, only: [
-    :id,
-    :email,
-    :first_name,
-    :last_name,
-    :birthdate,
-    :age,
-    :gender,
-    :experiment_uuid,
-    :language_id,
-    :country_id,
-    :city_id
-  ]}
-
   schema "participants" do
     field :email, :string
     field :first_name, :string
@@ -82,5 +68,11 @@ defmodule EmotionsWheelBackend.Participant do
       left_join: e in assoc(ehp, :experiment),
       where: e.end_date >= ^Ecto.DateTime.utc,
       select: {p, ehp.uuid}
+  end
+
+  def with_language do
+    from p in Participant,
+      preload: [:language],
+      select: p
   end
 end

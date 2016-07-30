@@ -6,7 +6,7 @@ defmodule EmotionsWheelBackend.ParticipantAuth do
       {:ok, _} ->
         experiments_has_participants = ExperimentsHasParticipants |> Repo.get_by(uuid: token)
         experiment = Experiment.with_photos |> Repo.get(experiments_has_participants.experiment_id)
-        participant = Participant |> Repo.get(experiments_has_participants.participant_id)
+        participant = Participant.with_language |> Repo.get(experiments_has_participants.participant_id)
 
         experiment |> check_experiment(participant)
       :error -> {:error, "Token is invalid!"}
