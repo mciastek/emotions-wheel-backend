@@ -1,7 +1,7 @@
 defmodule EmotionsWheelBackend.ExperimentView do
   use EmotionsWheelBackend.Web, :view
 
-  alias EmotionsWheelBackend.{Photo, PhotoView}
+  alias EmotionsWheelBackend.{Photo, PhotoView, ParticipantView}
 
   @attributes_index ~w(id name kind start_date end_date)a
   @attributes_single ~w(id name kind start_date end_date researcher_id participants photos)a
@@ -34,6 +34,7 @@ defmodule EmotionsWheelBackend.ExperimentView do
   def render_one(experiment) do
     experiment
     |> Map.take(@attributes_single)
+    |> Map.put(:participants, experiment.participants |> ParticipantView.render_many)
     |> Map.put(:photos, experiment.photos |> set_photos)
   end
 

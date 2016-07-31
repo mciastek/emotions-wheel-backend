@@ -69,7 +69,10 @@ defmodule EmotionsWheelBackend.Experiment do
   end
 
   def active?(model) do
-    model.end_date >= Ecto.DateTime.utc
+    Ecto.DateTime.compare(
+      model.end_date,
+      Ecto.DateTime.utc
+    ) == :gt
   end
 
   def with_participants do

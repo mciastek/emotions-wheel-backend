@@ -4,9 +4,14 @@ defmodule EmotionsWheelBackend.ParticipantAuth do
   def authenticate(%{"token" => token}) do
     case check_token(token) do
       {:ok, _} ->
-        experiments_has_participants = ExperimentsHasParticipants |> Repo.get_by(uuid: token)
-        experiment = Experiment.with_photos_researcher |> Repo.get(experiments_has_participants.experiment_id)
-        participant = Participant.with_language |> Repo.get(experiments_has_participants.participant_id)
+        experiments_has_participants = ExperimentsHasParticipants
+          |> Repo.get_by(uuid: token)
+
+        experiment = Experiment.with_photos_researcher
+          |> Repo.get(experiments_has_participants.experiment_id)
+
+        participant = Participant.with_language
+          |> Repo.get(experiments_has_participants.participant_id)
 
         experiment |> check_experiment(participant)
       :error -> {:error, "Token is invalid!"}
