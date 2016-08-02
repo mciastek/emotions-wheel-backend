@@ -31,16 +31,24 @@ defmodule EmotionsWheelBackend.ExperimentView do
     experiments |> Enum.map(&Map.take(&1, @attributes_index))
   end
 
-  def render_one(experiment) do
+  def render_one(experiment, :lite) do
+    attributes = ~w(id name kind start_date end_date photos)a
+
     experiment
-    |> Map.take(@attributes_single)
+    |> Map.take(attributes)
+    |> Map.put(:photos, experiment.photos |> set_photos)
+  end
+
+  def render_one(experiment, attributes \\ @attributes_single) do
+    experiment
+    |> Map.take(attributes)
     |> Map.put(:participants, experiment.participants |> ParticipantView.render_many)
     |> Map.put(:photos, experiment.photos |> set_photos)
   end
 
-  def render_one_photos_researcher(experiment) do
+  def render_one_photos_researcher(experiment, attributes \\ @attributes_single_photos_researcher) do
     experiment
-    |> Map.take(@attributes_single_photos_researcher)
+    |> Map.take(attributes)
     |> Map.put(:photos, experiment.photos |> set_photos)
   end
 
