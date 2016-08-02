@@ -77,7 +77,7 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
 
   defp check_experiment_progress(experiment_id, participant_id, rates) do
     experiment = Experiment.with_photos
-      |> Repo.get!(experiment_id)
+      |> Repo.get(experiment_id)
       |> ExperimentView.render_one(:lite)
 
     experiment

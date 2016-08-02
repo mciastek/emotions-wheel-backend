@@ -54,22 +54,37 @@ defmodule EmotionsWheelBackend.Rate do
 
   defp validate_by_experiment_mode(changeset) do
     experiment_id = get_field(changeset, :experiment_id)
+    participant_id = get_field(changeset, :participant_id)
+    photo_id = get_field(changeset, :photo_id)
+
     experiment = Experiment |> Repo.get(experiment_id)
+
+    clauses = [
+      experiment_id: experiment_id,
+      participant_id: participant_id,
+      photo_id: photo_id
+    ]
 
     if experiment.kind == ExperimentCompletion.restricted_mode do
       changeset
-      |> validate_by_experiment_mode(experiment_id)
+      |> validate_by_experiment_mode(clauses)
     else
       changeset
     end
   end
 
-  defp validate_by_experiment_mode(changeset, experiment_id) do
-    rate_by_experiment = experiment_id
-      |> Rate.by_experiment
+  defp validate_by_experiment_mode(changeset, experiment_id: experiment_id, participant_id: participant_id, photo_id: photo_id) do
+    clauses = [
+      experiment_id: experiment_id,
+      participant_id: participant_id,
+      photo_id: photo_id
+    ]
+
+    founded_rate = clauses
+      |> Rate.by_experiment_participant_photo
       |> Repo.all
 
-    case rate_by_experiment do
+    case founded_rate do
       nil ->
         changeset
       _ ->
