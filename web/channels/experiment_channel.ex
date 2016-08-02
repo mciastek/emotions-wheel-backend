@@ -1,7 +1,14 @@
 defmodule EmotionsWheelBackend.ExperimentChannel do
   use EmotionsWheelBackend.Web, :channel
 
-  alias EmotionsWheelBackend.{Rate, RateView}
+  alias EmotionsWheelBackend.{
+    Repo,
+    Experiment,
+    Rate,
+    ExperimentView,
+    RateView,
+    ExperimentCompletion
+  }
 
   def join("experiments:" <> experiment_id, %{"participant_id" => participant_id}, socket) do
     rates = saved_rates(experiment_id, participant_id)
@@ -20,11 +27,19 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
   def handle_in("participant:new_rate", payload, socket) do
     case save_or_update_rate(payload) do
       {:ok, _rate} ->
-        rates = saved_rates(socket.assigns[:experiment_id], socket.assigns[:participant_id])
+        experiment_id = socket.assigns[:experiment_id]
+        participant_id = socket.assigns[:participant_id]
 
-        broadcast_from!(socket, "experiment:new_rate", %{rates: rates})
+        rates = saved_rates(experiment_id, participant_id)
 
-        {:reply, {:ok, %{rates: rates}}, socket}
+        experiment_completed = experiment_id
+          |> check_experiment_progress(participant_id, rates)
+
+        response = %{rates: rates, experiment_completed: experiment_completed}
+
+        broadcast_from!(socket, "experiment:new_rate", response)
+
+        {:reply, {:ok, response}, socket}
       {:error, changeset} ->
         errors = RateView.render("error.json", %{changeset: changeset})
 
@@ -58,5 +73,14 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
     Rate.by_experiment_participant(experiment_id, participant_id)
     |> Repo.all
     |> RateView.render_many
+  end
+
+  defp check_experiment_progress(experiment_id, participant_id, rates) do
+    experiment = Experiment.with_photos
+      |> Repo.get!(experiment_id)
+      |> ExperimentView.render_one(:lite)
+
+    experiment
+    |> ExperimentCompletion.completed?(participant_id, rates)
   end
 end

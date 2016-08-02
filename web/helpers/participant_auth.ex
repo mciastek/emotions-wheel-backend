@@ -1,5 +1,11 @@
 defmodule EmotionsWheelBackend.ParticipantAuth do
-  alias EmotionsWheelBackend.{Repo, ExperimentsHasParticipants, Experiment, Participant}
+  alias EmotionsWheelBackend.{
+    Repo,
+    ExperimentsHasParticipants,
+    Experiment,
+    Participant,
+    ExperimentCompletion
+  }
 
   def authenticate(%{"token" => token}) do
     case check_token(token) do
@@ -23,9 +29,11 @@ defmodule EmotionsWheelBackend.ParticipantAuth do
   end
 
   defp check_experiment(experiment, participant) do
-    case experiment |> Experiment.active? do
-      true -> {:ok, experiment, participant}
-      _ -> {:error, "Experiment is inactive"}
-    end
+    is_active = experiment |> Experiment.active?
+    has_completed = experiment |> ExperimentCompletion.completed?(participant.id)
+
+    experiment = experiment |> Map.merge(%{ is_active: is_active, has_completed: has_completed })
+
+    {:ok, experiment, participant}
   end
 end
