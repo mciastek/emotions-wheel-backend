@@ -82,14 +82,14 @@ defmodule EmotionsWheelBackend.Rate do
 
     founded_rate = clauses
       |> Rate.by_experiment_participant_photo
-      |> Repo.all
+      |> Repo.one
 
     case founded_rate do
       nil ->
         changeset
       _ ->
         changeset
-        |> add_error(:experiment_id, "Can't insert new rate in \"#{ExperimentCompletion.restricted_mode}\" mode")
+        |> add_error(:rate_forbidden, "Can't insert new rate in \"#{ExperimentCompletion.restricted_mode}\" mode")
     end
   end
 end
