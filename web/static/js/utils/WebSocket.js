@@ -5,6 +5,7 @@ class WebSocket {
   constructor(socketUrl) {
     this.socketUrl = socketUrl;
     this.socket = new Socket(this.socketUrl);
+    this.channel = null;
   }
 
   connect() {

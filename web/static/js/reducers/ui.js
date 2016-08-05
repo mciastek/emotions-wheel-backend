@@ -105,6 +105,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         photoFullPreview: {
           ...state.photoFullPreview,
+          image: null,
           open: false
         }
       };
