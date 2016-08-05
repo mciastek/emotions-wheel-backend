@@ -2,7 +2,7 @@ defmodule EmotionsWheelBackend.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "experiments:*", EmotionsWheelBackend.ExperimentChannel
+  channel "experiment:*", EmotionsWheelBackend.ExperimentChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

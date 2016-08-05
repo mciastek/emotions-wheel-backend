@@ -13,6 +13,7 @@ defmodule EmotionsWheelBackend do
       supervisor(EmotionsWheelBackend.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(EmotionsWheelBackend.Worker, [arg1, arg2, arg3]),
+      supervisor(EmotionsWheelBackend.Presence, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

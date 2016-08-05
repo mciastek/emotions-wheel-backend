@@ -7,10 +7,13 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
     Rate,
     ExperimentView,
     RateView,
-    ExperimentCompletion
+    ExperimentCompletion,
+    Presence
   }
 
-  def join("experiments:" <> experiment_id, %{"participant_id" => participant_id}, socket) do
+  def join("experiment:results", params, socket) do
+    %{"experiment_id" => experiment_id, "participant_id" => participant_id} = params
+
     rates = saved_rates(experiment_id, participant_id)
 
     socket = socket
@@ -20,8 +23,32 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
     {:ok, %{rates: rates}, socket}
   end
 
+  def join("experiment:" <> experiment_id, %{"participant_id" => participant_id}, socket) do
+    rates = saved_rates(experiment_id, participant_id)
+
+    socket = socket
+      |> assign(:experiment_id, experiment_id)
+      |> assign(:participant_id, participant_id)
+
+    send(self, :after_join)
+
+    {:ok, %{rates: rates}, socket}
+  end
+
   def terminate(_reason, _socket) do
     :ok
+  end
+
+  def handle_info(:after_join, socket) do
+    IO.inspect "participant #{socket.assigns[:participant_id]} joined!"
+
+    push(socket, "participant:presence", Presence.list(socket))
+
+    {:ok, tracked} = Presence.track(socket, socket.assigns[:participant_id], %{
+      online_at: inspect(System.system_time(:seconds))
+    })
+
+    {:noreply, socket}
   end
 
   def handle_in("participant:new_rate", payload, socket) do
