@@ -1,0 +1,9 @@
+/**
+ * Small gallery
+ */
+
+.small-gallery {
+  &__title + &__grid {
+    margin-top: 30px;
+  }
+}
