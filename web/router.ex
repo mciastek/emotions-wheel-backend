@@ -33,9 +33,13 @@ defmodule EmotionsWheelBackend.Router do
 
       get "/participants_free", ParticipantController, :get_free_participants
 
+      get "/participants/:id/photos", GalleryController, :index
+
       scope "app" do
-        # options "/sign-in", SignInController, :options
         post "/sign-in", SignInController, :create
+
+        get "/participants/:id/photos", GalleryController, :index
+        post "/participants/:id/photos", PhotoController, :create
       end
     end
   end
