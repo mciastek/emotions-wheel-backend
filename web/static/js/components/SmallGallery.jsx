@@ -4,12 +4,14 @@ import React, { PropTypes } from 'react';
 
 import { GridList, GridTile } from 'material-ui/lib/grid-list';
 
+import PhotoPreviewButton from 'containers/photo/PhotoPreviewButton';
+
 class SmallGallery extends React.Component {
   render() {
     const thumbs = (() => {
       return this.props.photos.map((photo, index) => {
         return (
-          <GridTile key={index} title={photo.name}>
+          <GridTile key={index} title={photo.name} actionIcon={<PhotoPreviewButton photo={photo} />}>
             <img src={photo.thumb} alt={photo.name} />
           </GridTile>
         );

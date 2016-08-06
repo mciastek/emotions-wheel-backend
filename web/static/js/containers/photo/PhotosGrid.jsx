@@ -22,6 +22,10 @@ const confirmButtonStyle = {
   marginLeft: 10
 };
 
+const tileButtonsStyle = {
+  width: 96
+};
+
 class PhotosGrid extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchPhotos());
@@ -61,7 +65,7 @@ class PhotosGrid extends React.Component {
 
   tileButtons(photo) {
     return (
-      <div>
+      <div style={tileButtonsStyle}>
         <PhotoPreviewButton photo={photo} />
         <DeleteButton iconColor="white" onTap={this.handleDeleteClick.bind(this, photo)} />
       </div>

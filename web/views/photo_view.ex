@@ -18,7 +18,11 @@ defmodule EmotionsWheelBackend.PhotoView do
   end
 
   def render("error.json", %{changeset: changeset}) do
-    %{changeset: changeset}
+    errors = Enum.map(changeset.errors, fn{field, details} ->
+      "#{field}: #{details}"
+    end)
+
+    %{errors: errors}
   end
 
   def render_many(photos) do

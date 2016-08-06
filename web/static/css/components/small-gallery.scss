@@ -6,4 +6,8 @@
   &__title + &__grid {
     margin-top: 30px;
   }
+
+  & + .page-actions {
+    margin-top: 30px;
+  }
 }
