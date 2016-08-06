@@ -29,18 +29,6 @@ export default function reducer(state = initialState, action) {
         error: action.error
       };
 
-    case actionTypes.RATES_PARTICIPANT_CONNECTED:
-      return {
-        ...state,
-        participantConnected: true
-      };
-
-    case actionTypes.RATES_PARTICIPANT_DISCONNECTED:
-      return {
-        ...state,
-        participantConnected: false
-      };
-
     case actionTypes.RATES_SOCKET_DISCONNECT_SUCCESS:
       return {
         ...state,

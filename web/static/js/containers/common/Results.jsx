@@ -5,10 +5,12 @@ import { fetchExperiment } from 'actions/experiment';
 import { fetchParticipant } from 'actions/participant';
 import { openPhotoFullPreview, setPhotoFullPreviewContent } from 'actions/ui';
 import { connectRatesSocket, disconnectRatesSocket } from 'actions/rates';
+import { checkParticipantPresence } from 'actions/participant';
 
 import LinkButton from 'containers/common/LinkButton';
 
 import WheelResults from 'components/WheelResults';
+import PresenceIndicator from 'components/PresenceIndicator';
 
 class Results extends React.Component {
   componentDidMount() {
@@ -18,6 +20,7 @@ class Results extends React.Component {
     this.props.dispatch(fetchParticipant(participantId));
 
     this.props.dispatch(connectRatesSocket(experimentId, participantId));
+    this.props.dispatch(checkParticipantPresence());
   }
 
   componentWillUnmount() {
@@ -31,6 +34,7 @@ class Results extends React.Component {
 
   render() {
     const { experimentId } = this.props.params;
+    const { isOnline } = this.props.participant;
     const { first_name, last_name } = this.props.participant.single;
     const { name:experimentName, photos = [] } = this.props.experiment.single;
     const rates = this.props.rates.collection;
@@ -39,7 +43,7 @@ class Results extends React.Component {
       <section className="page">
         <header className="page-header">
           <div className="page-header__left">
-            <h1 className="page__title">Results for {first_name} {last_name}</h1>
+            <h1 className="page__title">Results for {first_name} {last_name} <PresenceIndicator online={isOnline} /></h1>
             <h3 className="page__subtitle">Experiment: "{experimentName}"</h3>
           </div>
 

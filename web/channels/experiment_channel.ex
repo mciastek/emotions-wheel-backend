@@ -2,6 +2,7 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
   use EmotionsWheelBackend.Web, :channel
 
   alias EmotionsWheelBackend.{
+    Endpoint,
     Repo,
     Experiment,
     Rate,
@@ -42,11 +43,11 @@ defmodule EmotionsWheelBackend.ExperimentChannel do
   def handle_info(:after_join, socket) do
     IO.inspect "participant #{socket.assigns[:participant_id]} joined!"
 
-    push(socket, "participant:presence", Presence.list(socket))
-
-    {:ok, tracked} = Presence.track(socket, socket.assigns[:participant_id], %{
+    {:ok, _} = Presence.track(socket, socket.assigns[:participant_id], %{
       online_at: inspect(System.system_time(:seconds))
     })
+
+    Endpoint.broadcast("experiment:results", "participant:presence", Presence.list(socket))
 
     {:noreply, socket}
   end

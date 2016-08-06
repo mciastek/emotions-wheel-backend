@@ -27,18 +27,6 @@ export function disconnectRatesSocketSuccess() {
   };
 }
 
-export function participantConnected() {
-  return {
-    type: actionTypes.RATES_PARTICIPANT_CONNECTED
-  };
-}
-
-export function participantDisconnected() {
-  return {
-    type: actionTypes.RATES_PARTICIPANT_DISCONNECTED
-  };
-}
-
 export function connectRatesSocket(experimentId, participantId) {
   return (dispatch) => {
     dispatch(connectRatesSocketRequest());
@@ -53,10 +41,6 @@ export function connectRatesSocket(experimentId, participantId) {
 
     WebSocket.channel.on('experiment:new_rate', ({ rates }) => {
       dispatch(fetchRatesSuccess(rates));
-    });
-
-    WebSocket.channel.on('participant:presence', (data) => {
-      console.log(data)
     });
   };
 }

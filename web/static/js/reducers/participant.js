@@ -3,6 +3,7 @@ import actionTypes from 'constants/action-types';
 const initialState = {
   single: {},
   loading: false,
+  isOnline: false,
   error: {}
 };
 
@@ -26,6 +27,13 @@ export default function reducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.error
+      };
+
+    case actionTypes.PARTICIPANT_PRESENCE_ONLINE:
+    case actionTypes.PARTICIPANT_PRESENCE_OFFLINE:
+      return {
+        ...state,
+        isOnline: action.isOnline
       };
 
     default:

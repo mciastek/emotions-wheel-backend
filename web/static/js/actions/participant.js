@@ -1,5 +1,8 @@
+import { Presence } from 'phoenixjs';
+
 import actionTypes from 'constants/action-types';
 import Connection from 'utils/Connection';
+import WebSocket from 'utils/WebSocket';
 
 export function participantFetchRequest() {
   return {
@@ -18,6 +21,20 @@ export function participantFetchError(error) {
   return {
     type: actionTypes.PARTICIPANT_FETCH_ERROR,
     error
+  };
+}
+
+export function participantPresenceOffline() {
+  return {
+    type: actionTypes.PARTICIPANT_PRESENCE_OFFLINE,
+    isOnline: false
+  };
+}
+
+export function participantPresenceOnline() {
+  return {
+    type: actionTypes.PARTICIPANT_PRESENCE_ONLINE,
+    isOnline: true
   };
 }
 
@@ -59,5 +76,16 @@ export function updateParticipant(id, participant) {
         dispatch(participantFetchSuccess(participant));
       })
       .catch(() => {});
+  };
+}
+
+export function checkParticipantPresence() {
+  return (dispatch) => {
+    if (WebSocket.channel) {
+      WebSocket.channel.on('participant:presence', (state) => {
+      });
+    } else {
+      dispatch(participantPresenceOffline());
+    }
   };
 }
