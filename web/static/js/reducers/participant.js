@@ -4,12 +4,14 @@ const initialState = {
   single: {},
   loading: false,
   isOnline: false,
+  photos: [],
   error: {}
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.PARTICIPANT_FETCH_REQUEST:
+    case actionTypes.PARTICIPANT_PHOTOS_FETCH_REQUEST:
       return {
         ...state,
         loading: true
@@ -23,6 +25,7 @@ export default function reducer(state = initialState, action) {
       };
 
     case actionTypes.PARTICIPANT_FETCH_ERROR:
+    case actionTypes.PARTICIPANT_PHOTOS_FETCH_ERROR:
       return {
         ...state,
         loading: false,
@@ -34,6 +37,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         isOnline: action.isOnline
+      };
+
+    case actionTypes.PARTICIPANT_PHOTOS_FETCH_SUCCESS:
+      return {
+        ...state,
+        photos: action.photos
       };
 
     default:

@@ -2,7 +2,7 @@ defmodule EmotionsWheelBackend.Photo do
   use EmotionsWheelBackend.Web, :model
   use Arc.Ecto.Model
 
-  alias EmotionsWheelBackend.{ExperimentsHasPhotos, Rate, PhotoFileDefinition}
+  alias EmotionsWheelBackend.{Photo, ExperimentsHasPhotos, Rate, PhotoFileDefinition}
 
   schema "photos" do
     field :name, :string
@@ -34,5 +34,11 @@ defmodule EmotionsWheelBackend.Photo do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> cast_attachments(params, @required_file_fields, @optional_file_fields)
+  end
+
+  def by_participant(participant_id) do
+    from p in Photo,
+      where: p.author_type == "participant" and p.author_id == ^participant_id,
+      select: p
   end
 end

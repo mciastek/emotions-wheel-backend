@@ -38,6 +38,26 @@ export function participantPresenceOnline() {
   };
 }
 
+export function participantPhotosFetchRequest() {
+  return {
+    type: actionTypes.PARTICIPANT_PHOTOS_FETCH_REQUEST
+  };
+}
+
+export function participantPhotosFetchSuccess(photos) {
+  return {
+    type: actionTypes.PARTICIPANT_PHOTOS_FETCH_SUCCESS,
+    photos
+  };
+}
+
+export function participantPhotosFetchError(error) {
+  return {
+    type: actionTypes.PARTICIPANT_PHOTOS_FETCH_ERROR,
+    error
+  };
+}
+
 export function fetchParticipant(id) {
   return (dispatch) => {
 
@@ -87,5 +107,18 @@ export function checkParticipantPresence() {
     } else {
       dispatch(participantPresenceOffline());
     }
+  };
+}
+
+export function fetchParticipantPhotos(id) {
+  return (dispatch) => {
+    dispatch(participantPhotosFetchRequest());
+
+    return Connection.get(`/participants/${id}/photos`)
+      .then((data) => {
+        const { photos } = data;
+        dispatch(participantPhotosFetchSuccess(photos));
+      })
+      .catch(() => {});
   };
 }

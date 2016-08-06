@@ -6,7 +6,7 @@ defmodule EmotionsWheelBackend.PhotoView do
   @attributes ~W(id name thumb original author_type author_id)a
 
   def render("index.json", %{photos: photos}) do
-    %{photos: photos |> Enum.map(&render_one(&1))}
+    %{photos: photos |> render_many}
   end
 
   def render("show.json", %{photo: photo}) do
@@ -19,6 +19,11 @@ defmodule EmotionsWheelBackend.PhotoView do
 
   def render("error.json", %{changeset: changeset}) do
     %{changeset: changeset}
+  end
+
+  def render_many(photos) do
+    photos
+    |> Enum.map(&render_one(&1))
   end
 
   def render_one(photo) do
