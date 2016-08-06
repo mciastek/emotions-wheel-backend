@@ -12,17 +12,15 @@ defmodule EmotionsWheelBackend.PhotoController do
   def create(conn, %{"photo" => photo_params}) do
     changeset = Photo.changeset(%Photo{}, photo_params)
 
-    if changeset.valid? do
-      photo = Repo.insert!(changeset)
-
-      conn
-      |> put_status(:created)
-      |> render("success.json", photo: photo)
-    else
-
-      conn
-      |> put_status(:unprocessable_entity)
-      |> render("error.json", changeset: changeset)
+    case Repo.insert(changeset) do
+      {:ok, photo} ->
+        conn
+        |> put_status(:created)
+        |> render("success.json", photo: photo)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render("error.json", changeset: changeset)
     end
   end
 

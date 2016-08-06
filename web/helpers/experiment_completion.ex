@@ -1,7 +1,7 @@
 defmodule EmotionsWheelBackend.ExperimentCompletion do
   alias EmotionsWheelBackend.{Repo, Rate}
 
-  @restricted_mode "free_mode"
+  @restricted_mode "experiment"
 
   def completed?(experiment, participant_id, rates \\ nil) do
     mode = experiment.kind

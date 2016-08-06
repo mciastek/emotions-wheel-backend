@@ -39,7 +39,7 @@ defmodule EmotionsWheelBackend.Router do
         post "/sign-in", SignInController, :create
 
         get "/participants/:id/photos", GalleryController, :index
-        post "/participants/:id/photos", PhotoController, :create
+        post "/participants/:id/photos", GalleryController, :create_photo
       end
     end
   end
