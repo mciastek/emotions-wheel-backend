@@ -1,5 +1,5 @@
 import config from '../config';
-import { Socket } from 'phoenix';
+import { Socket } from 'phoenixjs';
 
 class WebSocket {
   constructor(socketUrl) {

@@ -1,0 +1,26 @@
+@import 'node_modules/sass-material-colors/sass/sass-material-colors';
+
+/**
+ * Presence indicator
+ */
+
+.presence-indicator {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 12px;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 11px;
+    height: 11px;
+    margin-right: 5px;
+    border-radius: 50%;
+    background-color: material-color('grey', '300');
+  }
+
+  &.is-online:before {
+    background-color: material-color('light-green', '400');
+  }
+}

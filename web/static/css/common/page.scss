@@ -15,6 +15,10 @@
     margin-top: 0;
   }
 
+  &__title .presence-indicator {
+    margin-left: 15px;
+  }
+
   &__subtitle {
     color: material-color('cyan', '700');
   }
