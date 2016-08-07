@@ -3,6 +3,7 @@ import { Presence } from 'phoenixjs';
 import actionTypes from 'constants/action-types';
 import Connection from 'utils/Connection';
 import WebSocket from 'utils/WebSocket';
+import PresenceStatus from 'utils/PresenceStatus';
 
 export function participantFetchRequest() {
   return {
@@ -99,14 +100,21 @@ export function updateParticipant(id, participant) {
   };
 }
 
-export function checkParticipantPresence() {
+export function checkParticipantPresence(participantId) {
   return (dispatch) => {
-    if (WebSocket.channel) {
-      WebSocket.channel.on('participant:presence', (state) => {
-      });
-    } else {
-      dispatch(participantPresenceOffline());
+    if (!WebSocket.channel) {
+      return dispatch(participantPresenceOffline());
     }
+
+    const presenceState = new PresenceStatus(WebSocket.channel, participantId);
+
+    presenceState.onChange = (isPresent) => {
+      if (isPresent) {
+        dispatch(participantPresenceOnline());
+      } else {
+        dispatch(participantPresenceOffline());
+      }
+    };
   };
 }
 

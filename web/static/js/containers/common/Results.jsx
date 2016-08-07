@@ -20,7 +20,7 @@ class Results extends React.Component {
     this.props.dispatch(fetchParticipant(participantId));
 
     this.props.dispatch(connectRatesSocket(experimentId, participantId));
-    this.props.dispatch(checkParticipantPresence());
+    this.props.dispatch(checkParticipantPresence(participantId));
   }
 
   componentWillUnmount() {

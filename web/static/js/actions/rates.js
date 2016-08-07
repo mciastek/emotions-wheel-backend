@@ -34,7 +34,7 @@ export function connectRatesSocket(experimentId, participantId) {
     WebSocket.connect();
 
     WebSocket
-      .join('experiment:results', { experiment_id: experimentId, participant_id: participantId })
+      .join('admin:results', { experiment_id: experimentId, participant_id: participantId })
       .receive('ok', ({ rates }) => {
         dispatch(fetchRatesSuccess(rates));
       });
