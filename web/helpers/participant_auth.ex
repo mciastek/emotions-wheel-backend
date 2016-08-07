@@ -9,23 +9,34 @@ defmodule EmotionsWheelBackend.ParticipantAuth do
 
   def authenticate(%{"token" => token}) do
     case check_token(token) do
-      {:ok, _} ->
-        experiments_has_participants = ExperimentsHasParticipants
-          |> Repo.get_by(uuid: token)
-
+      {:ok, ehp} ->
         experiment = Experiment.with_photos_researcher
-          |> Repo.get(experiments_has_participants.experiment_id)
+          |> Repo.get(ehp.experiment_id)
 
         participant = Participant.with_language
-          |> Repo.get(experiments_has_participants.participant_id)
+          |> Repo.get(ehp.participant_id)
 
         experiment |> check_experiment(participant)
-      :error -> {:error, "Token is invalid!"}
+      :error ->
+        {:error, %{type: :invalid, message: "Token is invalid!"}}
+    end
+  end
+
+  defp check_token({:ok, token}) do
+    experiments_has_participants = ExperimentsHasParticipants
+          |> Repo.get_by(uuid: token)
+
+    case experiments_has_participants do
+      nil -> :error
+      _ -> {:ok, experiments_has_participants}
     end
   end
 
   defp check_token(token) do
-    Ecto.UUID.cast(token)
+    case Ecto.UUID.cast(token) do
+      {:ok, _} -> check_token({:ok, token})
+      :error -> :error
+    end
   end
 
   defp check_experiment(experiment, participant) do

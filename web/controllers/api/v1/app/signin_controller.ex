@@ -8,10 +8,10 @@ defmodule EmotionsWheelBackend.SignInController do
       {:ok, experiment, participant} ->
         conn
         |> render("success.json", experiment: experiment, participant: participant)
-      {:error, message} ->
+      {:error, error} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render("error.json", message: message)
+        |> render("error.json", error: error)
     end
   end
 end

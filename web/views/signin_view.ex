@@ -15,7 +15,7 @@ defmodule EmotionsWheelBackend.SignInView do
     %{experiment: experiment, participant: participant}
   end
 
-  def render("error.json", %{message: message}) do
-    %{message: message}
+  def render("error.json", %{error: error}) do
+    %{error: error}
   end
 end
