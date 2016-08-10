@@ -1,5 +1,3 @@
-import { Presence } from 'phoenixjs';
-
 import actionTypes from 'constants/action-types';
 import Connection from 'utils/Connection';
 import WebSocket from 'utils/WebSocket';

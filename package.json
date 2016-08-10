@@ -8,11 +8,12 @@
   "scripts": {
     "start": "node server.js --env=dev",
     "serve": "node server.js --env=dev",
-    "serve:dist": "node server.js --env=dist",
-    "dist": "npm run copy & webpack --env=dist",
+    "serve:dist": "node server.js --env=prod",
+    "dist": "npm run copy & webpack --env=prod",
     "lint": "eslint ./src",
     "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist",
-    "clean": "rimraf dist/*"
+    "clean": "rimraf dist/*",
+    "compile": "webpack -p"
   },
   "dependencies": {
     "classnames": "^2.2.3",
