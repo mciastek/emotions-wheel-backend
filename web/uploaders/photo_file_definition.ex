@@ -2,6 +2,7 @@ defmodule EmotionsWheelBackend.PhotoFileDefinition do
   use Arc.Definition
   use Arc.Ecto.Definition
 
+  @acl :public_read
   @versions [:original, :thumb]
   @extension_whitelist ~w(.jpg .jpeg .gif .png)
 
@@ -9,13 +10,14 @@ defmodule EmotionsWheelBackend.PhotoFileDefinition do
     {:convert, "-strip -thumbnail 200x200^ -gravity center -extent 200x200"}
   end
 
-  def __storage, do: Arc.Storage.Local
+  # def __storage, do: Arc.Storage.Local
 
   def filename(version,  {file, _}), do: "#{file.file_name}"
 
   # Whitelist file extensions:
   def validate({file, _}) do
-    @extension_whitelist |> Enum.member?(Path.extname(file.file_name))
+    file_extension = file.file_name |> Path.extname |> String.downcase
+    Enum.member?(@extension_whitelist, file_extension)
   end
 
   # Override the storage directory:
@@ -31,7 +33,7 @@ defmodule EmotionsWheelBackend.PhotoFileDefinition do
   #    :content_encoding, :content_length, :content_type,
   #    :expect, :expires, :storage_class, :website_redirect_location]
   #
-  # def s3_object_headers(version, {file, scope}) do
-  #   [content_type: Plug.MIME.path(file.file_name)]
-  # end
+  def s3_object_headers(version, {file, scope}) do
+    [content_type: Plug.MIME.path(file.file_name)]
+  end
 end
