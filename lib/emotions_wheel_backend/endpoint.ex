@@ -8,7 +8,7 @@ defmodule EmotionsWheelBackend.Endpoint do
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :emotions_wheel_backend, gzip: false,
+    at: "/", from: :emotions_wheel_backend, gzip: true,
     only: ~w(css fonts images js translations favicon.ico robots.txt)
 
   plug Plug.Static,

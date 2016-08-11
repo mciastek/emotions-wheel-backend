@@ -24,10 +24,4 @@ config :arc,
 
 config :ex_aws,
   access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
-  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
-  region: System.get_env("AWS_REGION"),
-  s3: [
-    scheme: "https://",
-    host: System.get_env("S3_BUCKET_HOST"),
-    region: System.get_env("S3_BUCKET_REGION")
-  ]
+  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY")
