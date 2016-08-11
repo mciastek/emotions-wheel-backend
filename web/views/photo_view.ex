@@ -38,8 +38,6 @@ defmodule EmotionsWheelBackend.PhotoView do
 
   defp set_urls(photo) do
     urls = PhotoFileDefinition.urls({ photo.file, photo })
-    urls = %{urls | original: "#{EmotionsWheelBackend.Endpoint.url}/" <> urls.original}
-    urls = %{urls | thumb: "#{EmotionsWheelBackend.Endpoint.url}/" <> urls.thumb}
     photo |> Map.merge(urls)
   end
 end

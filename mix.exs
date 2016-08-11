@@ -45,7 +45,7 @@ defmodule EmotionsWheelBackend.Mixfile do
      {:comeonin, "~> 2.2.0"},
      {:guardian, "~> 0.10.0"},
      {:arc, "~> 0.5.2"},
-     {:arc_ecto, "~> 0.3.2"},
+     {:arc_ecto, "~> 0.3.2", override: true},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:mock, "~> 0.1.1", only: :test},
      {:corsica, "~> 0.4"},

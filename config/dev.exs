@@ -48,3 +48,6 @@ config :emotions_wheel_backend, EmotionsWheelBackend.Repo,
 config :guardian, Guardian,
   ttl: { 30, :days },
   secret_key: "m3Lrx2Rop76O8Z8FNHw4dUrSC2UmPN+WUNhTEixEHnxbr4ZfkKgY/6GYTxI5s09S"
+
+# Import secret development config
+import_config "dev.secret.exs"
