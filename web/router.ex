@@ -28,6 +28,8 @@ defmodule EmotionsWheelBackend.Router do
       resources "cities", CityController, only: [:index, :show, :create]
       resources "photos", PhotoController, only: [:index, :create, :delete]
 
+      get "/stats", StatsController, :index
+
       post "/session", SessionController, :create
       delete "/session", SessionController, :delete
 

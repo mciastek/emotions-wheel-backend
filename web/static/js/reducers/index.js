@@ -13,6 +13,7 @@ import experiment from './experiment';
 import photos from './photos';
 import photo from './photo';
 import rates from './rates';
+import stats from './stats';
 
 export default combineReducers({
   routing: routerReducer,
@@ -27,5 +28,6 @@ export default combineReducers({
   experiment,
   photos,
   photo,
-  rates
+  rates,
+  stats
 });

@@ -5,15 +5,11 @@ import { connect } from 'react-redux';
 
 import Paper from 'material-ui/lib/paper';
 
-import { fetchExperiments } from 'actions/experiments';
-import { fetchParticipants } from 'actions/participants';
-import { fetchPhotos } from 'actions/photos';
+import { fetchStats } from 'actions/stats';
 
 class Stats extends React.Component {
   componentDidMount() {
-    this.props.dispatch(fetchExperiments());
-    this.props.dispatch(fetchParticipants());
-    this.props.dispatch(fetchPhotos());
+    this.props.dispatch(fetchStats());
   }
 
   render() {
@@ -22,28 +18,28 @@ class Stats extends React.Component {
         <div className="stats__col">
           <Paper className="stats-card">
             <h1 className="stats-card__header">Experiments</h1>
-            <p className="stats-card__results">{this.props.experiments.collection.length}</p>
+            <p className="stats-card__results">{this.props.stats.single.experiments}</p>
           </Paper>
         </div>
 
         <div className="stats__col">
           <Paper className="stats-card">
             <h1 className="stats-card__header">Participants</h1>
-            <p className="stats-card__results">{this.props.participants.collection.length}</p>
+            <p className="stats-card__results">{this.props.stats.single.participants}</p>
           </Paper>
         </div>
 
         <div className="stats__col">
           <Paper className="stats-card">
             <h1 className="stats-card__header">Photos</h1>
-            <p className="stats-card__results">{this.props.photos.collection.length}</p>
+            <p className="stats-card__results">{this.props.stats.single.photos}</p>
           </Paper>
         </div>
 
         <div className="stats__col">
           <Paper className="stats-card">
             <h1 className="stats-card__header">Rates</h1>
-            <p className="stats-card__results">0</p>
+            <p className="stats-card__results">{this.props.stats.single.rates}</p>
           </Paper>
         </div>
       </section>
@@ -53,9 +49,7 @@ class Stats extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    experiments: state.experiments,
-    participants: state.participants,
-    photos: state.photos
+    stats: state.stats
   };
 }
 
