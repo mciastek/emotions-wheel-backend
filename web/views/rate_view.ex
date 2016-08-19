@@ -5,6 +5,10 @@ defmodule EmotionsWheelBackend.RateView do
     %{rates: rates |> render_many}
   end
 
+  def render("deleted.json", %{deleted_number: deleted_number}) do
+    %{deleted_number: deleted_number}
+  end
+
   def render("error.json", %{changeset: changeset}) do
     errors = Enum.map(changeset.errors, fn{field, details} ->
       %{

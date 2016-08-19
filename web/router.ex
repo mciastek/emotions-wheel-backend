@@ -37,6 +37,8 @@ defmodule EmotionsWheelBackend.Router do
 
       get "/participants/:id/photos", GalleryController, :index
 
+      delete "/experiments/:experiment_id/participants/:participant_id/rates", RateController, :delete_by_experiment_participant
+
       scope "app" do
         post "/sign-in", SignInController, :create
 
