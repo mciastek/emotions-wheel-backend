@@ -1,5 +1,6 @@
 import actionTypes from 'constants/action-types';
 import WebSocket from 'utils/WebSocket';
+import Connection from 'utils/Connection';
 
 export function connectRatesSocketRequest() {
   return {
@@ -7,16 +8,22 @@ export function connectRatesSocketRequest() {
   };
 }
 
+export function fetchRatesRequest() {
+  return {
+    type: actionTypes.RATES_FETCH_REQUEST
+  };
+}
+
 export function fetchRatesSuccess(collection) {
   return {
-    type: actionTypes.FETCH_RATES_SUCCESS,
+    type: actionTypes.RATES_FETCH_SUCCESS,
     collection
   };
 }
 
 export function connectRatesSocketError(error) {
   return {
-    type: actionTypes.FETCH_RATES_ERROR,
+    type: actionTypes.RATES_FETCH_ERROR,
     error
   };
 }
@@ -52,5 +59,14 @@ export function disconnectRatesSocket() {
       .receive('ok', () => {
         dispatch(disconnectRatesSocketSuccess());
       });
+  };
+}
+
+export function deleteRatesForParticipant(experimentId, participantId) {
+  return (dispatch) => {
+    dispatch(fetchRatesRequest());
+
+    return Connection.delete(`/experiments/${experimentId}/participants/${participantId}/rates`)
+      .catch(() => {});
   };
 }

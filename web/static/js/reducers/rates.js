@@ -15,24 +15,30 @@ export default function reducer(state = initialState, action) {
         loading: true
       };
 
-    case actionTypes.FETCH_RATES_SUCCESS:
+    case actionTypes.RATES_SOCKET_DISCONNECT_SUCCESS:
+      return {
+        ...state,
+        collection: []
+      };
+
+    case actionTypes.RATES_FETCH_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case actionTypes.RATES_FETCH_SUCCESS:
       return {
         ...state,
         loading: false,
         collection: action.collection
       };
 
-    case actionTypes.FETCH_RATES_ERROR:
+    case actionTypes.RATES_FETCH_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error
-      };
-
-    case actionTypes.RATES_SOCKET_DISCONNECT_SUCCESS:
-      return {
-        ...state,
-        collection: []
       };
 
     default:

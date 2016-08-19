@@ -5,11 +5,18 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import Paper from 'material-ui/lib/paper';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 import { fetchExperiment } from 'actions/experiment';
+import { fetchRatesSuccess, deleteRatesForParticipant } from 'actions/rates';
+import { showNotificationBar, setNotificationBarContent } from 'actions/ui';
 
 import BlockList from 'components/BlockList';
 import LinkButton from 'containers/common/LinkButton';
+
+const deleteButtonStyle = {
+  marginLeft: 15
+};
 
 class ExperimentPreview extends React.Component {
   componentDidMount() {
@@ -22,11 +29,32 @@ class ExperimentPreview extends React.Component {
 
   blockListItemAction(participant) {
     const experiment = this.props.experiment.single;
-    const route = `/dashboard/experiments/${experiment.id}/participant/${participant.id}/results`;
+    const route = `/dashboard/experiments/${experiment.id}/participants/${participant.id}/results`;
 
     return (
-      <LinkButton label="Results" secondary={true} route={route} />
+      <div>
+        <LinkButton label="Results" secondary={true} route={route} />
+        <RaisedButton
+          label="Delete results"
+          style={deleteButtonStyle}
+          onTouchTap={this.deleteRates.bind(this, experiment.id, participant)} />
+      </div>
     );
+  }
+
+  deleteRates(experimentId, participant) {
+    const fullName = `${participant.first_name} ${participant.last_name}`;
+
+    this.props.dispatch(deleteRatesForParticipant(experimentId, participant.id))
+      .then(({ deleted_number }) => {
+        this.props.dispatch(fetchRatesSuccess([]));
+
+        this.props.dispatch(setNotificationBarContent({
+          message: `${fullName}'s deleted rates: ${deleted_number}`
+        }));
+
+        this.props.dispatch(showNotificationBar());
+      });
   }
 
   render() {
