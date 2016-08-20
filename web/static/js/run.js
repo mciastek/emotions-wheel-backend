@@ -90,7 +90,7 @@ ReactDOM.render(
             <Route path="new" component={PhotoCreate} />
           </Route>
 
-          <Route path="experiments/:experimentId/participant/:participantId/results" component={Results} />
+          <Route path="experiments/:experimentId/participants/:participantId/results" component={Results} />
         </Route>
       </Route>
     </Router>
