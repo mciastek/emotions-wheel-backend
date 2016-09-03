@@ -3,9 +3,10 @@ import 'css/components/photos-selection.scss';
 import React from 'react';
 import classNames from 'classnames';
 
-import { GridList, GridTile } from 'material-ui/lib/grid-list';
+import { GridList } from 'material-ui/lib/grid-list';
 import Checkbox from 'material-ui/lib/checkbox';
 
+import PhotosSelectionItem from 'components/PhotosSelectionItem';
 import PhotoPreviewButton from 'containers/photo/PhotoPreviewButton';
 
 const checkboxIconStyle = {
@@ -18,7 +19,8 @@ class PhotosSelection extends React.Component {
 
     this.state = {
       selection: [],
-      photos: []
+      photos: [],
+      draggingIndex: null
     };
   }
 
@@ -61,6 +63,12 @@ class PhotosSelection extends React.Component {
     return collection.map((item) => item[this.props.selectBy]);
   }
 
+  onOrderUpdate(dragState) {
+    this.setState({
+      draggingIndex: dragState.draggingIndex
+    });
+  }
+
   render() {
     const thumbs = this.props.collection.map((photo, index) => {
       const isChecked = this.state.selection.indexOf(photo[this.props.selectBy]) !== -1;
@@ -80,10 +88,23 @@ class PhotosSelection extends React.Component {
         'is-active': isChecked
       });
 
+      const itemProps = {
+        className,
+        title: photo.name,
+        actionIcon: actions
+      };
+
       return (
-        <GridTile key={index} className={className} title={photo.name} actionIcon={actions} >
+        <PhotosSelectionItem
+          key={index}
+          items={this.state.selection}
+          outline="list"
+          sortId={index}
+          draggingIndex={this.state.draggingIndex}
+          updateState={this.onOrderUpdate.bind(this)}
+          childProps={itemProps}>
           <img src={photo.thumb} alt={photo.name} />
-        </GridTile>
+        </PhotosSelectionItem>
       );
     });
 
