@@ -51,7 +51,8 @@ defmodule EmotionsWheelBackend.Mixfile do
      {:corsica, "~> 0.4"},
      {:ex_aws, "~> 0.4.10"},
      {:httpoison, "~> 0.7"},
-     {:poison, "~> 1.2"}]
+     {:poison, "~> 1.2"},
+     {:csv, "~> 1.4.2"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

@@ -39,6 +39,8 @@ defmodule EmotionsWheelBackend.Router do
 
       delete "/experiments/:experiment_id/participants/:participant_id/rates", RateController, :delete_by_experiment_participant
 
+      get "/experiments/:experiment_id/rates/csv", RatesCSVController, :export
+
       scope "app" do
         post "/sign-in", SignInController, :create
 

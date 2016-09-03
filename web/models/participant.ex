@@ -1,6 +1,5 @@
 defmodule EmotionsWheelBackend.Participant do
   use EmotionsWheelBackend.Web, :model
-  use Timex
 
   alias EmotionsWheelBackend.{Participant, Country, City, Language, Rate, ExperimentsHasParticipants}
 

@@ -89,6 +89,12 @@ defmodule EmotionsWheelBackend.Experiment do
       preload: [photos: p]
   end
 
+  def with_rates do
+    from e in Experiment,
+      preload: [:rates],
+      select: e
+  end
+
   def with_photos_researcher do
     from e in Experiment,
       left_join: ehp in assoc(e, :experiments_has_photos),
