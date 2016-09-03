@@ -4,6 +4,7 @@ defmodule EmotionsWheelBackend.ExperimentsHasPhotos do
   alias EmotionsWheelBackend.{Photo, Experiment}
 
   schema "experiments_has_photos" do
+    field :order_no, :integer
     timestamps
 
     belongs_to :experiment, Experiment
