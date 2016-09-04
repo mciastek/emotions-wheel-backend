@@ -12,6 +12,7 @@ class PhotosReorder extends React.Component {
 
     this.state = {
       photos: [],
+      order: {},
       draggingIndex: null
     };
   }
@@ -27,7 +28,15 @@ class PhotosReorder extends React.Component {
   }
 
   onReorderPhoto(newState) {
-    this.setState(newState);
+    const { draggingIndex } = newState;
+    const order = {};
+
+    this.state.photos.forEach((p, i) => order[i+1] = p.id);
+
+    this.setState({
+      order,
+      draggingIndex
+    });
   }
 
   render() {

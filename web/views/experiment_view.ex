@@ -36,24 +36,30 @@ defmodule EmotionsWheelBackend.ExperimentView do
 
     experiment
     |> Map.take(attributes)
-    |> Map.put(:photos, experiment.photos |> set_photos)
+    |> Map.put(:photos, experiment.photos |> set_photos(experiment.experiments_has_photos))
   end
 
   def render_one(experiment, attributes \\ @attributes_single) do
     experiment
     |> Map.take(attributes)
     |> Map.put(:participants, experiment.participants |> ParticipantView.render_many)
-    |> Map.put(:photos, experiment.photos |> set_photos)
+    |> Map.put(:photos, experiment.photos |> set_photos(experiment.experiments_has_photos))
   end
 
   def render_one_photos_researcher(experiment, attributes \\ @attributes_single_photos_researcher) do
     experiment
     |> Map.take(attributes)
-    |> Map.put(:photos, experiment.photos |> set_photos)
+    |> Map.put(:photos, experiment.photos |> set_photos(experiment.experiments_has_photos))
   end
 
-  defp set_photos(photos) do
+  defp set_photos(photos, experiments_has_photos) do
     photos
     |> Enum.map(&PhotoView.render_one(&1))
+    |> Enum.sort(fn(p1, p2) ->
+      p1_ehph = Enum.find(experiments_has_photos, &(&1.photo_id == p1.id))
+      p2_ehph = Enum.find(experiments_has_photos, &(&1.photo_id == p2.id))
+
+      p2_ehph.order_no > p1_ehph.order_no
+    end)
   end
 end

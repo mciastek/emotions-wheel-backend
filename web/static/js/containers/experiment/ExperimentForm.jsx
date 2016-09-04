@@ -67,7 +67,8 @@ class ExperimentForm extends React.Component {
       kind,
       start_date,
       end_date,
-      selectedParticipants
+      selectedParticipants,
+      photosReorder
     } = this.refs;
 
     const requestData = {
@@ -77,7 +78,8 @@ class ExperimentForm extends React.Component {
       end_date: end_date.state.value,
       researcher_id: this.props.session.currentUser.id,
       participants_ids: selectedParticipants.state.selection,
-      photos_ids: this.mapCollectionToIds(this.state.selectedPhotos)
+      photos_ids: this.mapCollectionToIds(this.state.selectedPhotos),
+      photos_order: photosReorder.state.order
     };
 
     if (this.props.actionType === 'create') {

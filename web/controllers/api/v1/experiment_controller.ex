@@ -1,9 +1,8 @@
 defmodule EmotionsWheelBackend.ExperimentController do
   use EmotionsWheelBackend.Web, :controller
 
-  import Ecto.Query, only: [from: 2]
-
-  alias EmotionsWheelBackend.{Repo, Experiment}
+  import EmotionsWheelBackend.ExperimentUpdate
+  alias EmotionsWheelBackend.{Repo, Experiment, ExperimentsHasPhotos}
 
   def index(conn, _params) do
     experiments = Experiment |> Repo.all
@@ -30,12 +29,14 @@ defmodule EmotionsWheelBackend.ExperimentController do
     if experiment_changeset.valid? do
       participants_ids = experiment_params |> Map.fetch!("participants_ids")
       photos_ids = experiment_params |> Map.fetch!("photos_ids")
+      photos_order = experiment_params |> Map.fetch!("photos_order")
 
       experiment = Repo.insert!(experiment_changeset)
 
       transaction = Repo.transaction(fn ->
         "participant" |> insert_assoc_multiple(experiment.id, participants_ids)
         "photo" |> insert_assoc_multiple(experiment.id, photos_ids)
+        experiment.id |> update_photos_order(photos_order)
       end)
 
       case transaction do
@@ -65,12 +66,14 @@ defmodule EmotionsWheelBackend.ExperimentController do
     if experiment_changeset.valid? do
       participants_ids = experiment_params |> Map.fetch!("participants_ids")
       photos_ids = experiment_params |> Map.fetch!("photos_ids")
+      photos_order = experiment_params |> Map.fetch!("photos_order")
 
       experiment = experiment_changeset |> Repo.update!
 
       transaction = Repo.transaction(fn ->
         experiment.id |> update_assoc_in_experiment("participant", participants_ids)
         experiment.id |> update_assoc_in_experiment("photo", photos_ids)
+        experiment.id |> update_photos_order(photos_order)
       end)
 
       case transaction do
@@ -107,58 +110,14 @@ defmodule EmotionsWheelBackend.ExperimentController do
     end
   end
 
-  defp update_assoc_in_experiment(experiment_id, model_name, ids) do
-    model_name_pluralized = "#{model_name}s"
+  defp update_photos_order(experiment_id, order) do
+    order |> Enum.each(fn({order_no, photo_id}) ->
+      ehp = ExperimentsHasPhotos
+        |> Repo.get_by!(experiment_id: experiment_id, photo_id: photo_id)
 
-    assoc_model = model_name_pluralized |> assoc_query(experiment_id) |> Repo.all
-
-    saved_ids = assoc_model |> Enum.map(fn(record) ->
-      Map.get(record, :"#{model_name}_id")
+      changeset = ExperimentsHasPhotos.changeset(ehp, %{:order_no => String.to_integer(order_no)})
+      changeset |> Repo.update!
     end)
-
-    diff = (ids -- saved_ids) ++ (saved_ids -- ids)
-
-    for id <- diff do
-      if Enum.member?(saved_ids, id) do
-        model_name |> remove_assoc(experiment_id, id)
-      else
-        model_name |> insert_assoc(experiment_id, id)
-      end
-    end
-  end
-
-  defp insert_assoc_multiple(model_name, experiment_id, ids) do
-    for id <- ids do
-      model_name |> insert_assoc(experiment_id, id)
-    end
-  end
-
-  defp insert_assoc(model_name, experiment_id, record_id) do
-    model = Module.concat(EmotionsWheelBackend, "ExperimentsHas#{String.capitalize(model_name)}s")
-    record_key = "#{model_name}_id"
-
-    changeset = model.changeset(
-      struct(model),
-      %{record_key => record_id, "experiment_id" => experiment_id}
-    )
-
-    changeset |> Repo.insert!
-  end
-
-  defp remove_assoc(model_name, experiment_id, record_id) do
-    model = Module.concat(EmotionsWheelBackend, "ExperimentsHas#{String.capitalize(model_name)}s")
-
-    model
-    |> Repo.get_by!([{:"#{model_name}_id", record_id}, {:experiment_id, experiment_id}])
-    |> Repo.delete!
-  end
-
-  defp assoc_query(model_name, experiment_id) do
-    model = Module.concat(EmotionsWheelBackend, "ExperimentsHas#{String.capitalize(model_name)}")
-
-    from m in model,
-      where: m.experiment_id == ^experiment_id,
-      select: m
   end
 
   defp participants_with_uuid(experiment) do
