@@ -21,6 +21,7 @@ import Input from 'components/Input';
 import DateTimeField from 'components/DateTimeField';
 import DualListbox from 'components/DualListbox';
 import PhotosSelection from 'components/PhotosSelection';
+import PhotosReorder from 'components/PhotosReorder';
 
 import LinkButton from 'containers/common/LinkButton';
 
@@ -30,12 +31,30 @@ const radioStyle = {
 };
 
 class ExperimentForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedPhotos: []
+    };
+  }
+
   componentDidMount() {
 
     // Fetch all free participants
     this.props.dispatch(fetchParticipants(true));
 
     this.props.dispatch(fetchPhotos());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps) return;
+
+    const { experiment = {} } = nextProps;
+
+    this.setState({
+      selectedPhotos: experiment.photos
+    });
   }
 
   handleSubmit(e) {
@@ -48,8 +67,7 @@ class ExperimentForm extends React.Component {
       kind,
       start_date,
       end_date,
-      participants_ids,
-      photos_ids
+      selectedParticipants
     } = this.refs;
 
     const requestData = {
@@ -58,8 +76,8 @@ class ExperimentForm extends React.Component {
       start_date: start_date.state.value,
       end_date: end_date.state.value,
       researcher_id: this.props.session.currentUser.id,
-      participants_ids: participants_ids.state.selection,
-      photos_ids: photos_ids.state.selection
+      participants_ids: selectedParticipants.state.selection,
+      photos_ids: this.mapCollectionToIds(this.state.selectedPhotos)
     };
 
     if (this.props.actionType === 'create') {
@@ -113,6 +131,21 @@ class ExperimentForm extends React.Component {
     );
   }
 
+  mapCollectionToIds(collection) {
+    return collection.map(i => i['id']);
+  }
+
+  onPhotoSelectionChange() {
+    const selectedPhotos = this.refs.selectedPhotos.state.selection;
+    this.setState({ selectedPhotos });
+  }
+
+  selectedPhotos(photosSelection) {
+    return this.props.photos.filter((photo) => {
+      return photosSelection.indexOf(photo.id) !== -1;
+    });
+  }
+
   render() {
     const {
       name,
@@ -162,7 +195,7 @@ class ExperimentForm extends React.Component {
         </Paper>
 
         <DualListbox
-          ref="participants_ids"
+          ref="selectedParticipants"
           leftLabel="All participants"
           rightLabel="Participants in that experiment"
           collection={this.props.participants.collection}
@@ -172,11 +205,16 @@ class ExperimentForm extends React.Component {
           listItemLabel={this.listItemLabel} />
 
         <PhotosSelection
-          ref="photos_ids"
+          ref="selectedPhotos"
           title="Photos in experiment"
+          onChange={this.onPhotoSelectionChange.bind(this)}
           collection={this.props.photos.collection}
-          selected={this.props.experiment.photos}
-          selectBy="id" />
+          selected={this.state.selectedPhotos} />
+
+        <PhotosReorder
+          ref="photosReorder"
+          title="Photos order"
+          collection={this.state.selectedPhotos} />
 
         <div className="form-row--splitted form-row--submit">
           <div className="form-row__column--4"></div>

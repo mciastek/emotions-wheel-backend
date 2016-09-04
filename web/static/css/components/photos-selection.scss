@@ -29,3 +29,33 @@
     width: 96px;
   }
 }
+
+
+/**
+ * Photos selection reorder
+ */
+
+.photos-selection--reorder {
+  counter-reset: photo;
+
+  .photos-selection__item {
+    position: relative;
+    counter-increment: photo;
+    cursor: grab;
+  }
+
+  .photos-selection__item:before {
+    content: counter(photo);
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    background-color: material-color('pink', '500');
+    color: #fff;
+    text-align: center;
+  }
+}

@@ -3,10 +3,9 @@ import 'css/components/photos-selection.scss';
 import React from 'react';
 import classNames from 'classnames';
 
-import { GridList } from 'material-ui/lib/grid-list';
+import { GridList, GridTile } from 'material-ui/lib/grid-list';
 import Checkbox from 'material-ui/lib/checkbox';
 
-import PhotosSelectionItem from 'components/PhotosSelectionItem';
 import PhotoPreviewButton from 'containers/photo/PhotoPreviewButton';
 
 const checkboxIconStyle = {
@@ -18,9 +17,7 @@ class PhotosSelection extends React.Component {
     super(props);
 
     this.state = {
-      selection: [],
-      photos: [],
-      draggingIndex: null
+      selection: []
     };
   }
 
@@ -29,49 +26,37 @@ class PhotosSelection extends React.Component {
 
     const { selected = [] } = nextProps;
 
-    if (selected.length) {
-      this.setState({
-        selection: this.mappedToProp(selected)
-      });
-    }
+    this.setState({
+      selection: selected
+    });
   }
 
   handleChange(photo, e, isChecked) {
     if (isChecked) {
-      this.pushToSelection(photo[this.props.selectBy]);
+      this.pushToSelection(photo, this.props.onChange);
     } else {
-      this.removeFromSelection(photo[this.props.selectBy]);
+      this.removeFromSelection(photo.id, this.props.onChange);
     }
   }
 
-  pushToSelection(prop) {
+  pushToSelection(photo, callback) {
     this.setState({
       selection: [
         ...this.state.selection,
-        prop
+        photo
       ]
-    });
+    }, callback);
   }
 
-  removeFromSelection(prop) {
+  removeFromSelection(photoId, callback) {
     this.setState({
-      selection: this.state.selection.filter((selected) => selected !== prop)
-    });
-  }
-
-  mappedToProp(collection) {
-    return collection.map((item) => item[this.props.selectBy]);
-  }
-
-  onOrderUpdate(dragState) {
-    this.setState({
-      draggingIndex: dragState.draggingIndex
-    });
+      selection: this.state.selection.filter((selected) => selected.id !== photoId)
+    }, callback);
   }
 
   render() {
     const thumbs = this.props.collection.map((photo, index) => {
-      const isChecked = this.state.selection.indexOf(photo[this.props.selectBy]) !== -1;
+      const isChecked = !!this.state.selection.find(s => s.id === photo.id);
 
       const actions = (() => {
         return (
@@ -88,23 +73,10 @@ class PhotosSelection extends React.Component {
         'is-active': isChecked
       });
 
-      const itemProps = {
-        className,
-        title: photo.name,
-        actionIcon: actions
-      };
-
       return (
-        <PhotosSelectionItem
-          key={index}
-          items={this.state.selection}
-          outline="list"
-          sortId={index}
-          draggingIndex={this.state.draggingIndex}
-          updateState={this.onOrderUpdate.bind(this)}
-          childProps={itemProps}>
+        <GridTile key={index} className={className} title={photo.name} actionIcon={actions}>
           <img src={photo.thumb} alt={photo.name} />
-        </PhotosSelectionItem>
+        </GridTile>
       );
     });
 
