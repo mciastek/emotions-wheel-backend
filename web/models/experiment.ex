@@ -10,6 +10,7 @@ defmodule EmotionsWheelBackend.Experiment do
     field :end_date, Ecto.DateTime
     field :participants_ids, {:array, :integer}, virtual: true
     field :photos_ids, {:array, :integer}, virtual: true
+    field :photos_order, :map, virtual: true
     timestamps
 
     belongs_to :researcher, Researcher
@@ -99,7 +100,7 @@ defmodule EmotionsWheelBackend.Experiment do
     from e in Experiment,
       left_join: ehp in assoc(e, :experiments_has_photos),
       left_join: p in assoc(ehp, :photo),
-      preload: [:researcher, photos: p]
+      preload: [:researcher, photos: p, experiments_has_photos: ehp]
   end
 
   def with_participants_and_photos do
@@ -108,6 +109,6 @@ defmodule EmotionsWheelBackend.Experiment do
       left_join: pa in assoc(ehp, :participant),
       left_join: ehph in assoc(e, :experiments_has_photos),
       left_join: ph in assoc(ehph, :photo),
-      preload: [participants: pa, photos: ph, experiments_has_participants: ehp]
+      preload: [participants: pa, photos: ph, experiments_has_participants: ehp, experiments_has_photos: ehph]
   end
 end

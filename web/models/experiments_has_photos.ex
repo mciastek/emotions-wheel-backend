@@ -12,7 +12,7 @@ defmodule EmotionsWheelBackend.ExperimentsHasPhotos do
   end
 
   @required_fields ~w(experiment_id photo_id)
-  @optional_fields ~w()
+  @optional_fields ~w(order_no)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
